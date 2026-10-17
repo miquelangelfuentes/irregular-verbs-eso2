@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ca" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verb Quest 2n ESO · Verbs Irregulars en Anglès (Active Minds 2)</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- CAPÇALERA SUPERIOR NAVEGACIÓ -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logotip i Títol -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-pink-500 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+          <i data-lucide="zap" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-display font-bold text-lg text-slate-900 tracking-tight">Verb Quest</span>
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100 text-indigo-700">2n ESO</span>
+          </div>
+          <p class="text-[11px] text-slate-500 hidden sm:block">Active Minds 2 · Burlington English (Pàg. 114-115)</p>
+        </div>
+      </div>
+
+      <!-- Menú de navegació principal -->
+      <nav class="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-600">
+        <button onclick="navigateTo('home')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Inici</button>
+        <button onclick="navigateTo('packs-list')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Packs de 10</button>
+        <button onclick="navigateTo('checkpoints-list')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Checkpoints</button>
+        <button onclick="navigateTo('all-verbs-hub')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Jocs Finals (108)</button>
+        <button onclick="navigateTo('explorer')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Diccionari</button>
+      </nav>
+
+      <!-- Puntuació i So -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700">
+          <span id="header-stars">0 / 33 ⭐</span>
+          <span class="text-slate-300">|</span>
+          <span id="header-badges">0 / 6 🏅</span>
+        </div>
+
+        <button onclick="state.soundEnabled = !state.soundEnabled; showNotification(state.soundEnabled ? 'So activat 🔊' : 'So silenciat 🔇', 'info')" 
+          class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors" title="Activa / desactiva efectes sonors">
+          <i data-lucide="volume-2" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- CONTINGUT PRINCIPAL DE LES VISTES -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+    <!-- ============================================== -->
+    <!-- 1. VISTA: INICI (HOME / DASHBOARD) -->
+    <!-- ============================================== -->
+    <section id="view-home" class="view-screen space-y-8">
+      
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-700 via-indigo-800 to-purple-900 text-white p-6 sm:p-10 shadow-2xl">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-10 -top-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-2xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-indigo-200">
+            <span>✨ Plataforma oficial de pràctica d'Active Minds 2</span>
+          </div>
+          <h1 class="font-display font-extrabold text-3xl sm:text-5xl tracking-tight leading-tight">
+            Domina els 108 verbs irregulars de 2n d'ESO!
+          </h1>
+          <p class="text-indigo-100 text-sm sm:text-base leading-relaxed">
+            Aprèn pas a pas en packs de 10 alfabèticament, consolida la memòria amb els checkpoints acumulatius i enfronta't als jocs finals amb tots els verbs.
+          </p>
+          
+          <!-- Botons crida a l'acció -->
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="navigateTo('packs-list')" class="px-5 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-900 font-display font-bold text-sm shadow-lg shadow-amber-500/30 transition-all flex items-center gap-2 active:scale-95">
+              <span>Començar pels Packs de 10</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+            <button onclick="navigateTo('checkpoints-list')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm backdrop-blur-md border border-white/20 transition-all flex items-center gap-2">
+              <i data-lucide="flag" class="w-4 h-4 text-pink-300"></i>
+              <span>Reptes Checkpoint</span>
+            </button>
+            <button onclick="navigateTo('all-verbs-hub')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm backdrop-blur-md border border-white/20 transition-all flex items-center gap-2">
+              <i data-lucide="crown" class="w-4 h-4 text-yellow-300"></i>
+              <span>Arena de Tots els Verbs</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de progrés global -->
+        <div class="relative z-10 mt-8 pt-6 border-t border-white/10 max-w-xl">
+          <div class="flex items-center justify-between text-xs font-semibold text-indigo-200 mb-2">
+            <span>El teu progrés global</span>
+            <span id="home-progress-text">0 de 11 packs dominats</span>
+          </div>
+          <div class="w-full h-3 rounded-full bg-white/10 overflow-hidden p-0.5">
+            <div id="home-overall-progress" class="h-full rounded-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Els 3 Pilars de Pràctica -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Pilar 1: Packs de 10 -->
+        <div onclick="navigateTo('packs-list')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+              📦
+            </div>
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Metodologia Pas a Pas</span>
+            <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Packs de 10 alfabèticament</h3>
+            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              11 nivells ordenats alfabèticament de la A a la W. Cada pack té 5 jocs diferents: Flashcards 3D, Quiz, Escriure, Memory i Lletres Desordenades.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-indigo-600">
+            <span>11 Packs disponibles</span>
+            <span class="group-hover:translate-x-1 transition-transform">Entrar ➔</span>
+          </div>
+        </div>
+
+        <!-- Pilar 2: Checkpoints Acumulatius -->
+        <div onclick="navigateTo('checkpoints-list')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-amber-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+              🚩
+            </div>
+            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Repàs Acumulat</span>
+            <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Checkpoints Acumulatius</h3>
+            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              Consolida la memòria a llarg termini! Cada checkpoint avalua tots els packs apresos fins al moment (20, 40, 60, 80, 100 i 108 verbs) per guanyar medalles.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-amber-600">
+            <span>6 Medalles per desbloquejar</span>
+            <span class="group-hover:translate-x-1 transition-transform">Entrar ➔</span>
+          </div>
+        </div>
+
+        <!-- Pilar 3: Jocs amb Tots els Verbs -->
+        <div onclick="navigateTo('all-verbs-hub')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-rose-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+              👑
+            </div>
+            <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">El Gran Repte</span>
+            <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Arena de Tots els Verbs</h3>
+            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              Jocs complets amb els 108 verbs: Contrarellotge Speed Rush, Supervivència amb 3 vides, Simulacre d'Examen oficial amb informe i la Ruleta!
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-rose-600">
+            <span>5 Modes de joc finals</span>
+            <span class="group-hover:translate-x-1 transition-transform">Entrar ➔</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Accés ràpid al diccionari i botó reiniciar -->
+      <div class="bg-indigo-50/60 rounded-3xl p-6 border border-indigo-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-md">
+            📚
+          </div>
+          <div>
+            <h4 class="font-display font-bold text-slate-900">Vols consultar la llista sencera dels 108 verbs?</h4>
+            <p class="text-xs text-slate-600">Amb àudio de pronunciació nativa, cerca instantània i filtres per famílies.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="navigateTo('explorer')" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition-all">
+            Obrir Diccionari
+          </button>
+          <button onclick="resetAllData()" class="px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-500 hover:text-rose-600 hover:bg-white transition-colors" title="Reiniciar progrés">
+            Reiniciar dades
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 2. VISTA: LLISTA DE PACKS DE 10 -->
+    <!-- ============================================== -->
+    <section id="view-packs-list" class="view-screen hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <button onclick="navigateTo('home')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'inici
+          </button>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Packs de 10 verbs alfabèticament</h2>
+          <p class="text-sm text-slate-600">Aprèn i consolida els 108 verbs en 11 blocs progressius de 10 verbs (Active Minds 2).</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="navigateTo('checkpoints-list')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-sm flex items-center gap-2">
+            <i data-lucide="flag" class="w-3.5 h-3.5"></i> Checkpoints Acumulatius
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid de Packs -->
+      <div id="packs-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Generat dinàmicament per JS -->
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 3. VISTA: DETALL DEL PACK I ELS SEUS 5 JOCS -->
+    <!-- ============================================== -->
+    <section id="view-pack-detail" class="view-screen hidden space-y-6">
+      
+      <!-- Capçalera del Pack -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+        <div>
+          <button onclick="navigateTo('packs-list')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Veure tots els packs
+          </button>
+          <h2 id="pack-detail-title" class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Pack 1: Be – Break</h2>
+          <p id="pack-detail-subtitle" class="text-sm text-slate-600">Verbs 1 - 10 (10 verbs)</p>
+        </div>
+      </div>
+
+      <!-- Selector de modes de joc dins del pack -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <button onclick="setPackGameMode('flashcards')" data-game="flashcards" class="pack-game-tab">
+          <span>🗂️ Flashcards 3D</span>
+        </button>
+        <button onclick="setPackGameMode('quiz')" data-game="quiz" class="pack-game-tab">
+          <span>🎯 Quiz 4 Opcions</span>
+        </button>
+        <button onclick="setPackGameMode('type')" data-game="type" class="pack-game-tab">
+          <span>✍️ Escriu les Formes</span>
+        </button>
+        <button onclick="setPackGameMode('memory')" data-game="memory" class="pack-game-tab">
+          <span>🧩 Memory Parelles</span>
+        </button>
+        <button onclick="setPackGameMode('scramble')" data-game="scramble" class="pack-game-tab">
+          <span>🔤 Lletres Desordenades</span>
+        </button>
+      </div>
+
+      <!-- SUB-JOC 1: FLASHCARDS 3D -->
+      <div id="pack-subgame-flashcards" class="pack-subgame hidden max-w-xl mx-auto space-y-6">
+        
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500">
+          <span id="fc-counter">1 / 10</span>
+          <span>Fes clic a la targeta per girar-la 🔄</span>
+        </div>
+
+        <!-- Targeta 3D Flotant -->
+        <div class="perspective-1000 w-full h-80 cursor-pointer" onclick="flipFlashcard()">
+          <div id="fc-card-inner" class="card-inner">
+            
+            <!-- Cara A: Davant (V1 + Català) -->
+            <div class="card-front bg-gradient-to-tr from-white to-indigo-50 border-2 border-indigo-200 shadow-xl flex flex-col items-center justify-between p-8">
+              <div class="w-full flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">Base Form (V1)</span>
+                <button onclick="event.stopPropagation(); playFcAudioCurrent()" class="p-2 rounded-full bg-white hover:bg-indigo-100 text-indigo-600 shadow-sm" title="Escoltar">
+                  <i data-lucide="volume-2" class="w-5 h-5"></i>
+                </button>
+              </div>
+
+              <div class="text-center my-auto">
+                <h3 id="fc-front-v1" class="font-display font-extrabold text-5xl text-slate-900 tracking-tight">be</h3>
+                <p id="fc-front-phonetic" class="text-sm font-semibold text-slate-400 mt-1">/biː/</p>
+                <div class="mt-4 px-4 py-1.5 rounded-full bg-white border border-indigo-100 text-slate-600 text-sm font-medium">
+                  Català: <strong id="fc-front-cat" class="text-indigo-700">ser, estar</strong>
+                </div>
+              </div>
+
+              <div class="text-xs font-semibold text-indigo-400 flex items-center gap-1">
+                <span>Gira per veure V2 i V3</span>
+                <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+              </div>
+            </div>
+
+            <!-- Cara B: Darrere (V1 - V2 - V3 + Explicació) -->
+            <div class="card-back bg-gradient-to-tr from-indigo-700 to-purple-900 text-white border-2 border-indigo-500 shadow-xl flex flex-col items-center justify-between p-8">
+              <div class="w-full flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/20 text-white">Les 3 Formes</span>
+                <button onclick="event.stopPropagation(); playFcAudioCurrent()" class="p-2 rounded-full bg-white/20 hover:bg-white/30 text-white shadow-sm" title="Escoltar">
+                  <i data-lucide="volume-2" class="w-5 h-5"></i>
+                </button>
+              </div>
+
+              <div class="text-center my-auto space-y-4">
+                <div class="grid grid-cols-3 gap-2 text-center">
+                  <div class="p-2 rounded-xl bg-white/10">
+                    <span class="text-[10px] uppercase font-bold text-indigo-200">V1 (Base)</span>
+                    <p id="fc-back-v1" class="font-display font-bold text-lg mt-1">be</p>
+                  </div>
+                  <div class="p-2 rounded-xl bg-amber-400/20 border border-amber-300/40">
+                    <span class="text-[10px] uppercase font-bold text-amber-300">V2 (Past)</span>
+                    <p id="fc-back-v2" class="font-display font-bold text-lg text-amber-300 mt-1">was/were</p>
+                  </div>
+                  <div class="p-2 rounded-xl bg-emerald-400/20 border border-emerald-300/40">
+                    <span class="text-[10px] uppercase font-bold text-emerald-300">V3 (Participle)</span>
+                    <p id="fc-back-v3" class="font-display font-bold text-lg text-emerald-300 mt-1">been</p>
+                  </div>
+                </div>
+
+                <p id="fc-back-cat" class="text-sm font-semibold text-indigo-100">ser, estar</p>
+                <p id="fc-back-phonetics" class="text-xs text-indigo-200 font-mono">/biː/ · /wɒz/wɜː/ · /biːn/</p>
+                <div id="fc-back-tip" class="hidden text-xs text-amber-200 bg-amber-500/20 px-3 py-1.5 rounded-xl border border-amber-400/30"></div>
+              </div>
+
+              <div class="text-xs font-semibold text-indigo-200 flex items-center gap-1">
+                <span>Fes clic per tornar</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Controls de navegació Flashcards -->
+        <div class="flex items-center justify-between gap-4">
+          <button id="fc-btn-prev" onclick="nextFlashcard(-1)" class="px-5 py-2.5 rounded-xl bg-white border border-slate-200 font-bold text-sm text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition-all flex items-center gap-2">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i> Anterior
+          </button>
+          <button onclick="flipFlashcard()" class="px-5 py-2.5 rounded-xl bg-indigo-50 border border-indigo-200 font-bold text-sm text-indigo-700 hover:bg-indigo-100 transition-all">
+            Girar targeta 🔄
+          </button>
+          <button id="fc-btn-next" onclick="nextFlashcard(1)" class="px-5 py-2.5 rounded-xl bg-indigo-600 font-bold text-sm text-white hover:bg-indigo-700 disabled:opacity-40 shadow-sm transition-all flex items-center gap-2">
+            Següent <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- SUB-JOC 2: QUIZ 4 OPCIONS -->
+      <div id="pack-subgame-quiz" class="pack-subgame hidden max-w-xl mx-auto space-y-6">
+        
+        <!-- Zona de Joc Quiz -->
+        <div id="quiz-play-area" class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-lg space-y-6">
+          
+          <div class="flex items-center justify-between text-xs font-bold text-slate-500 pb-3 border-b border-slate-100">
+            <span id="quiz-progress">Pregunta 1 de 10</span>
+            <div class="flex items-center gap-3">
+              <span id="quiz-score-badge" class="text-indigo-600">Encerts: 0</span>
+              <span id="quiz-streak-badge" class="text-amber-500">Ratxa: 0 🔥</span>
+            </div>
+          </div>
+
+          <h3 id="quiz-question-title" class="font-display font-bold text-xl text-slate-900 leading-snug">
+            Quin és el Past Simple de "break"?
+          </h3>
+
+          <div id="quiz-options-container" class="space-y-3">
+            <!-- 4 Opcions generades dinàmicament -->
+          </div>
+
+          <div id="quiz-feedback-box" class="hidden"></div>
+
+          <button id="quiz-btn-next" onclick="nextQuizQuestion()" class="hidden w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-display font-bold text-base shadow-md transition-all">
+            Següent pregunta ➔
+          </button>
+
+        </div>
+
+        <!-- Zona de Resultats Quiz -->
+        <div id="quiz-results-area" class="hidden bg-white rounded-3xl p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
+          <div class="w-16 h-16 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-3xl mx-auto">
+            🏆
+          </div>
+          <div>
+            <h3 class="font-display font-extrabold text-2xl text-slate-900">Quiz completat!</h3>
+            <p class="text-sm text-slate-500 mt-1">Has finalitzat el test del pack.</p>
+          </div>
+
+          <div class="flex justify-center items-center gap-6 py-4 border-y border-slate-100">
+            <div>
+              <span class="text-xs text-slate-400 font-bold uppercase">Puntuació</span>
+              <p id="quiz-final-score" class="font-display font-extrabold text-2xl text-slate-900 mt-0.5">8 / 10</p>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 font-bold uppercase">Precisió</span>
+              <p id="quiz-final-pct" class="font-display font-extrabold text-2xl text-emerald-600 mt-0.5">80%</p>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 font-bold uppercase">Estrelles</span>
+              <p id="quiz-final-stars" class="text-2xl mt-0.5">⭐⭐☆</p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-3">
+            <button onclick="setPackGameMode('quiz')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition-all">
+              Tornar a jugar
+            </button>
+            <button onclick="setPackGameMode('type')" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all">
+              Jugar a Escriure ➔
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SUB-JOC 3: ESCRIU LA FORMA QUE FALTA -->
+      <div id="pack-subgame-type" class="pack-subgame hidden max-w-xl mx-auto space-y-6">
+        
+        <div id="type-play-area" class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-lg space-y-6">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-500 pb-3 border-b border-slate-100">
+            <span id="type-counter">Verb 1 de 10</span>
+            <span class="text-slate-400">Escriu V2 i V3</span>
+          </div>
+
+          <!-- Targeta del verb a omplir -->
+          <div class="text-center p-6 rounded-2xl bg-indigo-50/60 border border-indigo-100">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500">Base Form (V1)</span>
+            <h3 id="type-v1-label" class="font-display font-extrabold text-4xl text-slate-900 mt-1">break</h3>
+            <p id="type-cat-label" class="text-sm font-semibold text-indigo-700 mt-2">trencar</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-500 mb-1">Past Simple (V2)</label>
+              <input type="text" id="type-input-v2" placeholder="ex: broke" autocomplete="off" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 mb-1">Past Participle (V3)</label>
+              <input type="text" id="type-input-v3" placeholder="ex: broken" autocomplete="off" />
+            </div>
+          </div>
+
+          <div id="type-feedback" class="hidden"></div>
+
+          <div class="pt-2">
+            <button id="type-btn-check" onclick="checkTypeAnswer()" class="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-display font-bold text-base shadow-md transition-all">
+              Comprova les formes
+            </button>
+            <button id="type-btn-next" onclick="nextTypeItem()" class="hidden w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-base shadow-md transition-all">
+              Següent verb ➔
+            </button>
+          </div>
+        </div>
+
+        <div id="type-results-area" class="hidden bg-white rounded-3xl p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
+          <div class="text-4xl">✍️</div>
+          <h3 class="font-display font-extrabold text-2xl text-slate-900">Molt bona pràctica d'escriptura!</h3>
+          <p class="text-sm text-slate-600">Has encertat <strong id="type-final-score" class="text-indigo-600">10 / 10</strong> verbs.</p>
+          <button onclick="setPackGameMode('type')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition-all">
+            Repetir pràctica
+          </button>
+        </div>
+
+      </div>
+
+      <!-- SUB-JOC 4: MEMORY PARELLES -->
+      <div id="pack-subgame-memory" class="pack-subgame hidden max-w-2xl mx-auto space-y-6">
+        
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 bg-white p-3 rounded-2xl border border-slate-200">
+          <div class="flex items-center gap-3">
+            <span id="memory-moves">0 intents</span>
+            <span>·</span>
+            <span id="memory-timer">0s</span>
+          </div>
+          <div>
+            <span>Parelles: </span>
+            <span id="memory-pairs" class="text-indigo-600">0 / 6</span>
+          </div>
+          <button onclick="initMemoryGame(VERBS_DATA.filter(v => v.pack === state.activePackId))" class="text-indigo-600 hover:underline">
+            Reiniciar
+          </button>
+        </div>
+
+        <!-- Graella de targetes de memòria -->
+        <div id="memory-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+          <!-- 12 cartes generades per JS -->
+        </div>
+
+        <!-- Caixa de victòria Memory -->
+        <div id="memory-win-box" class="hidden bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-6 text-center space-y-3">
+          <span class="text-3xl">🎉</span>
+          <h4 class="font-display font-bold text-xl text-emerald-900">Fantàstic! Has trobat totes les parelles!</h4>
+          <p class="text-sm text-emerald-700">Temps: <strong id="memory-win-time">25s</strong> · Intents: <strong id="memory-win-moves">9</strong></p>
+          <button onclick="initMemoryGame(VERBS_DATA.filter(v => v.pack === state.activePackId))" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-all shadow-sm">
+            Jugar de nou
+          </button>
+        </div>
+
+      </div>
+
+      <!-- SUB-JOC 5: LLETRES DESORDENADES (SCRAMBLE) -->
+      <div id="pack-subgame-scramble" class="pack-subgame hidden max-w-xl mx-auto space-y-6">
+        
+        <div id="scramble-play-area" class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-lg space-y-6">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-500 pb-3 border-b border-slate-100">
+            <span id="scramble-counter">Verb 1 de 10</span>
+            <span id="scramble-type-badge" class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-700 font-bold">Ordena el Past Simple</span>
+          </div>
+
+          <!-- Pista -->
+          <div class="text-center p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100">
+            <p class="text-xs text-slate-500 font-medium">Verb base: <strong id="scramble-v1" class="text-slate-900">blow</strong></p>
+            <p class="text-xs text-slate-500 mt-1">Significat: <strong id="scramble-cat" class="text-indigo-700">bufar</strong></p>
+          </div>
+
+          <!-- Slots de lletres ordenades -->
+          <div id="scramble-word-display" class="flex justify-center gap-2"></div>
+
+          <!-- Pool de lletres desordenades -->
+          <div>
+            <div class="flex items-center justify-between text-xs font-semibold text-slate-500 mb-2">
+              <span>Prem les lletres en l'ordre correcte:</span>
+              <button onclick="undoScramble()" class="text-indigo-600 hover:underline flex items-center gap-1 font-bold">
+                <i data-lucide="delete" class="w-3.5 h-3.5"></i> Esborra lletra
+              </button>
+            </div>
+            <div id="scramble-letter-pool" class="flex flex-wrap justify-center gap-2"></div>
+          </div>
+
+          <div id="scramble-feedback" class="hidden"></div>
+
+          <button id="scramble-btn-next" onclick="nextScrambleItem()" class="hidden w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-display font-bold text-base shadow-md transition-all">
+            Següent paraula ➔
+          </button>
+        </div>
+
+        <div id="scramble-results-area" class="hidden bg-white rounded-3xl p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
+          <div class="text-4xl">🔤</div>
+          <h3 class="font-display font-extrabold text-2xl text-slate-900">Bona feina d'spelling!</h3>
+          <p class="text-sm text-slate-600">Has encertat <strong id="scramble-final-score" class="text-indigo-600">10 / 10</strong> paraules.</p>
+          <button onclick="setPackGameMode('scramble')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition-all">
+            Jugar una altra vegada
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 4. VISTA: LLISTA DE CHECKPOINTS ACUMULATIUS -->
+    <!-- ============================================== -->
+    <section id="view-checkpoints-list" class="view-screen hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <button onclick="navigateTo('home')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'inici
+          </button>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Checkpoints Acumulatius</h2>
+          <p class="text-sm text-slate-600">Posa a prova la teva memòria acumulant packs anteriors. Supera el 80% per guanyar cada insígnia!</p>
+        </div>
+      </div>
+
+      <!-- Grid de Checkpoints -->
+      <div id="checkpoints-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Generat per JS -->
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 4B. VISTA: JOC DEL CHECKPOINT -->
+    <!-- ============================================== -->
+    <section id="view-checkpoint-game" class="view-screen hidden max-w-xl mx-auto space-y-6">
+      
+      <div>
+        <button onclick="navigateTo('checkpoints-list')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Sortir del checkpoint
+        </button>
+        <h2 id="cp-game-title" class="font-display font-extrabold text-2xl text-slate-900">Checkpoint 1</h2>
+        <p id="cp-game-subtitle" class="text-sm text-slate-600">Repàs acumulat</p>
+      </div>
+
+      <!-- Zona de joc -->
+      <div id="cp-play-area" class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-xl space-y-6">
+        
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 pb-3 border-b border-slate-100">
+          <span id="cp-progress">Pregunta 1 de 15</span>
+          <span id="cp-score-badge" class="text-indigo-600 font-bold">Puntuació: 0</span>
+        </div>
+
+        <div class="text-center p-6 rounded-2xl bg-amber-50/60 border border-amber-200">
+          <h3 id="cp-question-text" class="font-display font-bold text-xl text-slate-900">
+            Escriu el Past Simple (V2) de "break":
+          </h3>
+          <p id="cp-verb-cat" class="text-sm font-semibold text-amber-800 mt-2">Significat: "trencar"</p>
+        </div>
+
+        <div>
+          <input type="text" id="cp-answer-input" placeholder="Escriu la forma aquí..." autocomplete="off" />
+        </div>
+
+        <div id="cp-feedback" class="hidden"></div>
+
+        <div class="pt-2">
+          <button id="cp-btn-check" onclick="checkCheckpointAnswer()" class="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-display font-bold text-base shadow-md transition-all">
+            Comprova resposta
+          </button>
+          <button id="cp-btn-next" onclick="nextCheckpointQuestion()" class="hidden w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-display font-bold text-base shadow-md transition-all">
+            Següent pregunta ➔
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Resultats del Checkpoint -->
+      <div id="cp-results-area" class="hidden bg-white rounded-3xl p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
+        <div id="cp-result-icon" class="text-6xl">🏆</div>
+        <div>
+          <h3 id="cp-result-title" class="font-display font-extrabold text-2xl text-slate-900">Felicitats!</h3>
+          <p id="cp-result-desc" class="text-sm text-slate-600 mt-2 leading-relaxed">Has superat el repte.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <span class="text-xs text-slate-400 font-bold uppercase">Resultat final</span>
+          <p id="cp-result-score" class="font-display font-extrabold text-3xl text-indigo-600 mt-1">14 / 15 (93%)</p>
+        </div>
+
+        <div class="flex items-center justify-center gap-3">
+          <button onclick="startCheckpointGame()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition-all">
+            Tornar a jugar
+          </button>
+          <button onclick="navigateTo('checkpoints-list')" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all">
+            Veure medalles
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 5. VISTA: JOCS AMB TOTS ELS VERBS (108 VERBS) -->
+    <!-- ============================================== -->
+    <section id="view-all-verbs-hub" class="view-screen hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <button onclick="navigateTo('home')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'inici
+          </button>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Arena de Tots els Verbs Irregulars</h2>
+          <p class="text-sm text-slate-600">Reptes finals que inclouen els 108 verbs de la llista d'Active Minds 2 (Burlington English).</p>
+        </div>
+      </div>
+
+      <div id="all-verbs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Generat per JS -->
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 5B. JOC: CONTRARELLOTGE (SPEED RUSH) -->
+    <!-- ============================================== -->
+    <section id="view-game-speedrun" class="view-screen hidden max-w-xl mx-auto space-y-6">
+      
+      <div>
+        <button onclick="navigateTo('all-verbs-hub')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Sortir del joc
+        </button>
+        <h2 class="font-display font-extrabold text-2xl text-slate-900">Contrarellotge (Speed Rush) ⚡</h2>
+        <p class="text-sm text-slate-600">Com més ràpid responguis, més combo acumules!</p>
+      </div>
+
+      <div id="speed-play-area" class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-xl space-y-6">
+        
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl font-display font-extrabold text-amber-500" id="speed-timer">60s</span>
+            <span class="text-xs font-bold text-slate-400 uppercase">Restants</span>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-bold text-slate-400 uppercase">Punts</span>
+            <p id="speed-score" class="font-display font-extrabold text-2xl text-slate-900">0</p>
+          </div>
+        </div>
+
+        <div class="text-center p-6 rounded-2xl bg-amber-50/50 border border-amber-200">
+          <span id="speed-streak" class="text-xs font-bold text-amber-600 uppercase">Ratxa: 0 🔥</span>
+          <h3 id="speed-question-prompt" class="font-display font-bold text-2xl text-slate-900 mt-1">Past Simple de "write"?</h3>
+          <p id="speed-verb-cat" class="text-sm text-slate-500 font-medium mt-1">(escriure)</p>
+        </div>
+
+        <div id="speed-options" class="grid grid-cols-2 gap-3">
+          <!-- 4 botons ràpids -->
+        </div>
+
+      </div>
+
+      <div id="speed-results-area" class="hidden bg-white rounded-3xl p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
+        <div class="text-5xl">⚡</div>
+        <h3 class="font-display font-extrabold text-2xl text-slate-900">Temps esgotat!</h3>
+        <p class="text-sm text-slate-600">Has aconseguit una puntuació de:</p>
+        <p id="speed-final-score" class="font-display font-extrabold text-4xl text-amber-500">180 punts</p>
+        
+        <div id="speed-record-notice" class="hidden p-3 rounded-xl bg-amber-100 text-amber-800 text-xs font-bold">
+          🎉 NOU RÈCORD PERSONAL!
+        </div>
+
+        <div class="flex justify-center gap-3">
+          <button onclick="startSpeedrun()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm shadow-sm transition-all">
+            Tornar a provar
+          </button>
+          <button onclick="navigateTo('all-verbs-hub')" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all">
+            Menú de jocs
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 5C. JOC: SUPERVIVÈNCIA (SURVIVAL - 3 VIDES) -->
+    <!-- ============================================== -->
+    <section id="view-game-survival" class="view-screen hidden max-w-xl mx-auto space-y-6">
+      
+      <div>
+        <button onclick="navigateTo('all-verbs-hub')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Sortir del joc
+        </button>
+        <h2 class="font-display font-extrabold text-2xl text-slate-900">Mode Supervivència ❤️</h2>
+        <p class="text-sm text-slate-600">Fins a quin nombre de verbs consecutius pots arribar?</p>
+      </div>
+
+      <div id="surv-play-area" class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-xl space-y-6">
+        
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-400 uppercase">Vides:</span>
+            <span id="surv-lives-display" class="text-xl tracking-widest">❤️❤️❤️</span>
+          </div>
+          <span id="surv-score-display" class="font-display font-bold text-indigo-600 text-base">Encerts: 0</span>
+        </div>
+
+        <!-- Comodins -->
+        <div class="flex items-center justify-center gap-2">
+          <button id="surv-lifeline-half" onclick="useSurvLifeline('half')" class="px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold hover:bg-indigo-100 disabled:opacity-30 disabled:pointer-events-none">
+            50/50 ✂️
+          </button>
+          <button id="surv-lifeline-skip" onclick="useSurvLifeline('skip')" class="px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold hover:bg-indigo-100 disabled:opacity-30 disabled:pointer-events-none">
+            Saltar ⏭️
+          </button>
+          <button id="surv-lifeline-hint" onclick="useSurvLifeline('hint')" class="px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold hover:bg-indigo-100 disabled:opacity-30 disabled:pointer-events-none">
+            Pista 💡
+          </button>
+        </div>
+
+        <div class="text-center p-6 rounded-2xl bg-rose-50/50 border border-rose-200">
+          <p id="surv-question-title" class="text-xs font-bold text-rose-600 uppercase">Quin és el Past Simple de:</p>
+          <h3 id="surv-verb-v1" class="font-display font-extrabold text-4xl text-slate-900 mt-1">sing</h3>
+          <p id="surv-verb-cat" class="text-sm font-semibold text-slate-500 mt-2">(cantar)</p>
+        </div>
+
+        <div id="surv-options" class="grid grid-cols-2 gap-3">
+          <!-- 4 Opcions -->
+        </div>
+
+      </div>
+
+      <div id="surv-gameover-area" class="hidden bg-white rounded-3xl p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
+        <div class="text-5xl">💀</div>
+        <h3 class="font-display font-extrabold text-2xl text-slate-900">Partida finalitzada!</h3>
+        <p class="text-sm text-slate-600">Has sobreviscut durant:</p>
+        <p id="surv-final-score" class="font-display font-extrabold text-3xl text-rose-600">12 verbs consecutius</p>
+
+        <div id="surv-record-notice" class="hidden p-3 rounded-xl bg-rose-100 text-rose-800 text-xs font-bold">
+          🎉 NOU RÈCORD DE SUPERVIVÈNCIA!
+        </div>
+
+        <div class="flex justify-center gap-3">
+          <button onclick="startSurvival()" class="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm shadow-sm transition-all">
+            Provar una altra vegada
+          </button>
+          <button onclick="navigateTo('all-verbs-hub')" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all">
+            Tornar al menú
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 5D. JOC: SIMULACRE D'EXAMEN OFICIAL -->
+    <!-- ============================================== -->
+    <section id="view-game-exam" class="view-screen hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <button onclick="navigateTo('all-verbs-hub')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'arena de jocs
+          </button>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Simulacre d'Examen de 2n d'ESO 📝</h2>
+          <p class="text-sm text-slate-600">Format d'avaluació idèntic al de l'institut. Completa les columnes i avalua la teva nota sobre 10.</p>
+        </div>
+        
+        <!-- Selector de quantitat de verbs -->
+        <div class="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 text-xs font-bold">
+          <span class="px-2 text-slate-400">Verbs:</span>
+          <button onclick="setupExam(10)" class="px-3 py-1 rounded-xl hover:bg-indigo-50 text-indigo-700">10</button>
+          <button onclick="setupExam(20)" class="px-3 py-1 rounded-xl bg-indigo-600 text-white shadow-sm">20</button>
+          <button onclick="setupExam(30)" class="px-3 py-1 rounded-xl hover:bg-indigo-50 text-indigo-700">30</button>
+        </div>
+      </div>
+
+      <!-- Resum de Nota (després de corregir) -->
+      <div id="exam-eval-summary" class="hidden bg-gradient-to-r from-indigo-700 to-purple-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="text-center sm:text-left">
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-200">Resultat de l'Examen</span>
+          <h3 id="exam-grade-display" class="font-display font-extrabold text-4xl sm:text-5xl text-amber-300 mt-1">8.5 / 10</h3>
+          <p id="exam-verdict-display" class="text-sm text-indigo-100 font-medium mt-2">Molt bona feina!</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button onclick="openExamPrintModal()" class="px-5 py-3 rounded-xl bg-white hover:bg-indigo-50 text-indigo-900 font-bold text-sm shadow-md transition-all flex items-center gap-2">
+            <i data-lucide="printer" class="w-4 h-4"></i> Imprimir / Descarregar Certificat
+          </button>
+          <button onclick="setupExam(20)" class="px-4 py-3 rounded-xl bg-white/20 hover:bg-white/30 text-white font-bold text-sm transition-all">
+            Nou examen aleatori
+          </button>
+        </div>
+      </div>
+
+      <!-- Taula d'Examen -->
+      <div class="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-lg">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-display font-bold text-xs uppercase tracking-wider">
+                <th class="p-3.5 text-center w-12">#</th>
+                <th class="p-3.5">Base Form (V1)</th>
+                <th class="p-3.5">Past Simple (V2)</th>
+                <th class="p-3.5">Past Participle (V3)</th>
+                <th class="p-3.5">Català</th>
+                <th class="p-3.5 text-center w-24">Estat</th>
+              </tr>
+            </thead>
+            <tbody id="exam-table-body">
+              <!-- Files generades per JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-xs text-slate-400">Verbs extrets aleatòriament dels 108 d'Active Minds 2</span>
+          <button id="exam-btn-submit" onclick="evaluateExam()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-display font-bold text-sm shadow-md transition-all">
+            Avalua el meu examen ➔
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 5E. JOC: LA RULETA DELS VERBS (LUCKY WHEEL) -->
+    <!-- ============================================== -->
+    <section id="view-game-wheel" class="view-screen hidden max-w-2xl mx-auto space-y-6">
+      
+      <div class="text-center">
+        <button onclick="navigateTo('all-verbs-hub')" class="text-xs font-bold text-indigo-600 hover:underline inline-flex items-center gap-1 mb-2">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'arena de jocs
+        </button>
+        <h2 class="font-display font-extrabold text-3xl text-slate-900">La Ruleta dels Verbs 🎡</h2>
+        <p class="text-sm text-slate-600">Gira la ruleta per triar un verb a l'atzar i superar el repte a classe o individualment!</p>
+      </div>
+
+      <!-- Ruleta Visual -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
+        
+        <div class="wheel-container">
+          <!-- Fletxa indicadora -->
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-20 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[24px] border-t-amber-500 filter drop-shadow"></div>
+          
+          <canvas id="wheel-canvas" width="380" height="380" class="w-full h-full"></canvas>
+        </div>
+
+        <div>
+          <button id="wheel-spin-btn" onclick="spinWheel()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-display font-bold text-lg shadow-lg shadow-indigo-300 transition-all active:scale-95">
+            Gira la Ruleta! 🎯
+          </button>
+        </div>
+
+        <!-- Targeta de resultat de la ruleta -->
+        <div id="wheel-result-card" class="hidden p-6 rounded-2xl bg-indigo-50 border-2 border-indigo-200 text-left space-y-4 animate-float">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-600 text-white">Verb Seleccionat</span>
+            <button onclick="speakEnglish(state.game.wheelSelectedVerb.v1)" class="p-2 rounded-full bg-white text-indigo-600 shadow-sm" title="Escoltar">
+              <i data-lucide="volume-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="bg-white p-3 rounded-xl border border-indigo-100">
+              <span class="text-[10px] font-bold text-slate-400 uppercase">Base Form (V1)</span>
+              <p id="wheel-res-v1" class="font-display font-bold text-xl text-slate-900">break</p>
+            </div>
+            <div class="bg-white p-3 rounded-xl border border-amber-200">
+              <span class="text-[10px] font-bold text-amber-500 uppercase">Past Simple (V2)</span>
+              <p id="wheel-res-v2" class="font-display font-bold text-xl text-amber-600">broke</p>
+            </div>
+            <div class="bg-white p-3 rounded-xl border border-emerald-200">
+              <span class="text-[10px] font-bold text-emerald-500 uppercase">Past Participle (V3)</span>
+              <p id="wheel-res-v3" class="font-display font-bold text-xl text-emerald-600">broken</p>
+            </div>
+          </div>
+
+          <p id="wheel-res-cat" class="text-xs font-semibold text-slate-600">Significat: trencar</p>
+          
+          <div class="p-3 rounded-xl bg-white border border-indigo-200">
+            <p id="wheel-res-challenge" class="text-sm text-indigo-950 font-medium">Repte: Fes una frase amb el Past Simple!</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 6. VISTA: EXPLORADOR & CERCADOR DELS 108 VERBS -->
+    <!-- ============================================== -->
+    <section id="view-explorer" class="view-screen hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <button onclick="navigateTo('home')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'inici
+          </button>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Diccionari dels 108 Verbs Irregulars</h2>
+          <p class="text-sm text-slate-600">Consulta les 3 formes, fonètica oficial d'Active Minds 2 i escolta la pronúncia nativa britànica.</p>
+        </div>
+        <span id="explorer-count" class="text-xs font-bold text-slate-400">108 verbs</span>
+      </div>
+
+      <!-- Cercador i Filtres -->
+      <div class="bg-white rounded-3xl p-4 sm:p-6 border-2 border-slate-200 shadow-sm space-y-4">
+        
+        <div class="relative">
+          <input type="text" id="explorer-search-input" placeholder="Cerca per verb en anglès o significat en català (ex: break, córrer, brought...)" 
+            class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-indigo-500" />
+          <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5"></i>
+        </div>
+
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <span class="text-xs font-bold text-slate-400 whitespace-nowrap">Famílies:</span>
+          <button onclick="filterExplorer('all')" data-filter="all" class="explorer-filter-btn">Tots (108)</button>
+          <button onclick="filterExplorer('no-change')" data-filter="no-change" class="explorer-filter-btn">No canvien (cut-cut)</button>
+          <button onclick="filterExplorer('ought')" data-filter="ought" class="explorer-filter-btn">-ought / -aught</button>
+          <button onclick="filterExplorer('iau')" data-filter="iau" class="explorer-filter-btn">Patró i - a - u</button>
+          <button onclick="filterExplorer('ow-ew')" data-filter="ow-ew" class="explorer-filter-btn">-ew / -own</button>
+          <button onclick="filterExplorer('end-t')" data-filter="end-t" class="explorer-filter-btn">Acabats en -t</button>
+        </div>
+
+      </div>
+
+      <!-- Taula de Verbs -->
+      <div class="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-display font-bold text-xs uppercase tracking-wider">
+                <th class="p-3 text-center w-12">#</th>
+                <th class="p-3">Base Form (V1)</th>
+                <th class="p-3">Past Simple (V2)</th>
+                <th class="p-3">Past Participle (V3)</th>
+                <th class="p-3">Català</th>
+                <th class="p-3 text-center w-24">Pack</th>
+              </tr>
+            </thead>
+            <tbody id="explorer-table-body">
+              <!-- Files generades dinàmicament -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- PEU DE PÀGINA -->
+  <footer class="bg-white border-t border-slate-200 mt-12 py-8 text-center text-xs text-slate-500 space-y-2">
+    <p class="font-semibold text-slate-700">Verb Quest 2n d'ESO · Active Minds 2 (Burlington English)</p>
+    <p>Creat per al professorat i alumnat de 2n d'ESO per al domini autònom i lúdic dels verbs irregulars en anglès.</p>
+    <p class="text-slate-400">Desplegable de forma gratuïta a GitHub Pages.</p>
+  </footer>
+
+  <!-- CONTENIDOR DE TOASTS DE NOTIFICACIÓ -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- PLANTILLA D'INFORME D'EXAMEN PER IMPRIMIR (FORMAT A4) -->
+  <div id="examReportModal" class="hidden print-page">
+    <div class="border-b-2 border-slate-800 pb-4 mb-6 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold font-display text-slate-900">CERTIFICAT D'AVALUACIÓ: VERBS IRREGULARS</h1>
+        <p class="text-sm text-slate-600">English 2n d'ESO · Active Minds 2 (Burlington English)</p>
+      </div>
+      <div class="text-right">
+        <span class="text-xs uppercase text-slate-500 font-bold">Data d'avaluació</span>
+        <p id="print-exam-date" class="font-bold text-sm text-slate-800"></p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 p-4 rounded-xl border border-slate-300 mb-6 bg-slate-50">
+      <div>
+        <span class="text-xs uppercase text-slate-500 font-bold">Nom de l'alumne/a</span>
+        <p id="print-student-name" class="font-bold text-base text-slate-900 mt-1"></p>
+      </div>
+      <div>
+        <span class="text-xs uppercase text-slate-500 font-bold">Grup</span>
+        <p id="print-student-group" class="font-bold text-base text-slate-900 mt-1"></p>
+      </div>
+      <div class="text-right">
+        <span class="text-xs uppercase text-slate-500 font-bold">Nota Obtinguda</span>
+        <p id="print-exam-grade" class="font-extrabold text-2xl text-indigo-700 mt-1"></p>
+      </div>
+    </div>
+
+    <p class="text-xs text-slate-500 mb-6 italic">
+      Aquest document certifica que l'alumne/a ha completat un examen aleatori generat a partir del llistat oficial de 108 verbs irregulars d'Active Minds 2.
+    </p>
+
+    <div class="pt-8 border-t border-slate-300 flex justify-between items-center text-xs text-slate-600">
+      <div>
+        <p>Signatura del docent:</p>
+        <div class="w-48 h-12 border-b border-slate-400 mt-2"></div>
+      </div>
+      <div>
+        <p>Segell del centre escolar:</p>
+        <div class="w-32 h-12 border border-dashed border-slate-400 mt-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS DE L'APLICACIÓ -->
+  <script src="verbs-data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // Inicialitza icones Lucide
+    lucide.createIcons();
+  </script>
+</body>
+</html>
