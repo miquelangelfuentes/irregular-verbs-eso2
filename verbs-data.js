@@ -1,4 +1,4 @@
-// Dataset complet dels 108 verbs irregulars d'Active Minds 2 (Burlington English)
+// Dataset complet dels 108 verbs irregulars de 2n d'ESO
 // Adaptat per a l'alumnat de 2n d'ESO de Catalunya.
 
 const VERBS_DATA = [

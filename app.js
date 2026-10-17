@@ -1152,7 +1152,7 @@ function finishCheckpoint() {
   document.getElementById('cp-result-icon').textContent = passed ? cp.badge : '⏳';
   document.getElementById('cp-result-title').textContent = passed ? `Felicitats! Has superat el ${cp.title}!` : `Gairebé ho tens! Has obtingut un ${pct}%`;
   document.getElementById('cp-result-desc').textContent = passed 
-    ? `Has aconseguit la insígnia oficial "${cp.name}". Has demostrat un domini sòlid dels verbs acumulats!`
+    ? `Has aconseguit la insígnia "${cp.name}". Has demostrat un domini sòlid dels verbs acumulats!`
     : `Necessites com a mínim un ${cp.requiredScore}% d'encerts per desbloquejar la medalla. Torna-ho a provar!`;
   document.getElementById('cp-result-score').textContent = `${score} / ${total} (${pct}%)`;
 }
@@ -1415,7 +1415,7 @@ function finishSurvival() {
   }
 }
 
-// --- JOC FINAL 3: SIMULACRE D'EXAMEN OFICIAL (AMB INFORME IMPRIMIBLE) ---
+// --- JOC FINAL 3: SIMULACRE D'EXAMEN (AMB INFORME IMPRIMIBLE) ---
 function setupExam(count = 20) {
   state.game.examVerbs = shuffleArray([...VERBS_DATA]).slice(0, count);
   state.game.examEvaluated = false;

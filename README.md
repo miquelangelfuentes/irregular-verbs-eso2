@@ -1,6 +1,6 @@
 # Verb Quest 2n d'ESO · Irregular Verbs Arena ⚡
 
-Una plataforma web interactiva i gamificada perquè l'alumnat de **2n d'ESO** aprengui, practiqui i consolidi els **108 verbs irregulars** del llibre **Active Minds 2 (Burlington English)**.
+Una plataforma web interactiva i gamificada perquè l'alumnat de **2n d'ESO** aprengui, practiqui i consolidi els **108 verbs irregulars**.
 
 Dissenyada específicament per a desplegar-se de manera gratuïta i immediata a **GitHub Pages**.
 
@@ -34,7 +34,7 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 │ 3. ARENA DE TOTS ELS VERBS (Jocs globals amb els 108 verbs) │
 │    ⚡ Contrarellotge (Speed Rush)                           │
 │    ❤️ Mode supervivència (3 vides i comodins)               │
-│    📝 Simulacre d'examen oficial (nota /10 + certificat A4) │
+│    📝 Simulacre d'examen (nota /10 + certificat A4)         │
 │    🎡 La ruleta dels verbs (reptes orals i de grup)         │
 │    📚 Diccionari i cercador interactiu amb text a veu       │
 └─────────────────────────────────────────────────────────────┘
@@ -42,7 +42,7 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 
 ---
 
-## 📦 Detall dels 11 packs de 10 (Active Minds 2)
+## 📦 Detall dels 11 packs de 10
 
 | Pack | Rang alfabètic | Verbs inclosos | Total |
 | :---: | :--- | :--- | :---: |
@@ -62,7 +62,7 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 
 ## 🎮 Els 5 jocs dins de cada pack
 
-1. **🗂️ Flashcards 3D:** gir tridimensional amb base form (V1), past simple (V2), past participle (V3), transcripció fonètica oficial, pistes mnemotècniques i botó d'àudio.
+1. **🗂️ Flashcards 3D:** gir tridimensional amb base form (V1), past simple (V2), past participle (V3), transcripció fonètica, pistes mnemotècniques i botó d'àudio.
 2. **🎯 Quiz de 4 opcions:** preguntes ràpides generades dinàmicament amb distractors intel·ligents, ratxes i percentatge d'encert.
 3. **✍️ Escriu les formes:** l'alumne escriu el past simple i past participle a partir de la forma base o del català, amb correcció flexible (permet formes dobles com *burnt/burned*).
 4. **🧩 Memory / connecta parelles:** tauler de fitxes per emparellar el verb en present amb el seu passat/participi o català.
@@ -82,7 +82,7 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
 
 - **⚡ Contrarellotge (Speed Rush):** 60 o 90 segons amb multiplicadors de combo per fer el rècord màxim de punts.
 - **❤️ Mode supervivència (3 vides):** quants verbs consecutius pots encertar? Inclou 3 comodins (50/50, saltar pregunta i pista de la 1a lletra).
-- **📝 Simulacre d'examen oficial:**
+- **📝 Simulacre d'examen:**
   - Tria 10, 20 o 30 verbs a l'atzar.
   - Graella d'avaluació idèntica a un examen d'aula.
   - Correcció automàtica amb nota sobre 10.
@@ -123,7 +123,7 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
 ## 🛠️ Tecnologies
 
 - **HTML5 semàntic**
-- **Tailwind CSS** (via CDN oficial)
+- **Tailwind CSS** (via CDN)
 - **Vanilla JavaScript** (sense node_modules ni dependències de compilació)
 - **Web Speech API** per al text a veu en anglès
 - **Web Audio API** per a efectes de so suaus
