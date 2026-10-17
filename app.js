@@ -375,7 +375,7 @@ function renderPacksList() {
       </div>
 
       <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-        <span class="text-xs font-semibold text-slate-400">Active Minds 2</span>
+        <span class="text-xs font-semibold text-slate-400">2n d'ESO</span>
         <span class="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 group-hover:translate-x-1 transition-transform">
           Jugar pack ➔
         </span>
