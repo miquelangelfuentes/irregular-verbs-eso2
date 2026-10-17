@@ -154,30 +154,81 @@ body {
   transform: rotateY(180deg);
 }
 
-/* Estils de mode impressió per al Simulacre d'Examen */
+/* ========================================================= */
+/* MODE IMPRESSIÓ / GENERACIÓ DE PDF (A4 PORTRAIT)           */
+/* ========================================================= */
 @media print {
-  body * {
-    visibility: hidden;
-  }
-  #examReportModal,
-  #examReportModal * {
-    visibility: visible;
-  }
-  #examReportModal {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    background: white !important;
-    box-shadow: none !important;
-  }
+  /* Amaguem tota la interfície interactiva de la web */
+  header,
+  nav,
+  main,
+  footer,
+  #toast-container,
   .no-print {
     display: none !important;
   }
-  .print-page {
-    page-break-after: avoid;
-    break-after: avoid;
+
+  /* El contenidor modal es converteix en contenidor estàtic i visible */
+  #examModalContainer {
+    display: block !important;
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  #examModalContainer > div {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  /* Mostrem el full del certificat amb fons blanc i colors exactes */
+  #examReportModal {
+    display: block !important;
+    visibility: visible !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  #examReportModal * {
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    background: white !important;
+    color: #0f172a !important;
+    font-family: var(--font-sans), system-ui, sans-serif !important;
+    font-size: 10pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 1.2cm;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 }
+

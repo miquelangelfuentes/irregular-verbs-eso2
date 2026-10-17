@@ -1523,16 +1523,149 @@ function evaluateExam() {
 }
 
 function openExamPrintModal() {
-  const studentName = prompt("Introdueix el teu Nom i Cognom (per al document):", "Nom de l'alumne/a") || "Alumne/a de 2n d'ESO";
-  const group = prompt("Grup (ex: 2n ESO A):", "2n ESO") || "2n ESO";
+  const currentName = state.userStats.studentName || '';
+  const currentGroup = state.userStats.studentGroup || '2n ESO';
 
-  document.getElementById('print-student-name').textContent = studentName;
-  document.getElementById('print-student-group').textContent = group;
-  document.getElementById('print-exam-date').textContent = new Date().toLocaleDateString('ca-ES');
-  document.getElementById('print-exam-grade').textContent = `${state.game.examGrade} / 10`;
+  const nameInput = document.getElementById('modal-student-name');
+  const groupInput = document.getElementById('modal-student-group');
 
-  window.print();
+  if (nameInput) {
+    nameInput.value = currentName;
+    nameInput.oninput = () => {
+      const n = nameInput.value.trim() || "Alumne/a de 2n d'ESO";
+      const g = (groupInput ? groupInput.value.trim() : '') || "2n ESO";
+      updatePrintCertificate(n, g);
+    };
+  }
+
+  if (groupInput) {
+    groupInput.value = currentGroup;
+    groupInput.oninput = () => {
+      const n = (nameInput ? nameInput.value.trim() : '') || "Alumne/a de 2n d'ESO";
+      const g = groupInput.value.trim() || "2n ESO";
+      updatePrintCertificate(n, g);
+    };
+  }
+
+  updatePrintCertificate(currentName || "Alumne/a de 2n d'ESO", currentGroup);
+
+  const container = document.getElementById('examModalContainer');
+  if (container) {
+    container.classList.remove('hidden');
+    container.scrollTop = 0;
+  }
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 }
+
+function updatePrintCertificate(name, group) {
+  const nameEl = document.getElementById('print-student-name');
+  const groupEl = document.getElementById('print-student-group');
+  const dateEl = document.getElementById('print-exam-date');
+  const gradeEl = document.getElementById('print-exam-grade');
+  const verdictEl = document.getElementById('print-exam-verdict');
+  const countEl = document.getElementById('print-exam-count');
+  const tableBody = document.getElementById('print-exam-table-body');
+
+  if (nameEl) nameEl.textContent = name;
+  if (groupEl) groupEl.textContent = group;
+  if (dateEl) {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    dateEl.textContent = `${day}/${month}/${year}`;
+  }
+
+  const grade = state.game.examGrade !== undefined ? state.game.examGrade : '0.0';
+  if (gradeEl) gradeEl.textContent = `${grade} / 10`;
+
+  if (verdictEl) {
+    const num = parseFloat(grade);
+    let vText = 'Insuficient';
+    let vColor = 'text-rose-600';
+    if (num >= 9) { vText = 'Excel·lent'; vColor = 'text-emerald-700'; }
+    else if (num >= 7) { vText = 'Notable'; vColor = 'text-indigo-700'; }
+    else if (num >= 6) { vText = 'Bé'; vColor = 'text-blue-700'; }
+    else if (num >= 5) { vText = 'Suficient'; vColor = 'text-amber-700'; }
+    verdictEl.textContent = `(${vText})`;
+    verdictEl.className = `text-[10px] font-bold ${vColor}`;
+  }
+
+  const rows = state.game.examRows || [];
+  if (countEl) countEl.textContent = `${rows.length} verbs avaluats`;
+
+  if (tableBody) {
+    tableBody.innerHTML = '';
+    rows.forEach((row, i) => {
+      const v = row.verb;
+      const inV2 = document.getElementById(`exam-v2-${row.idx}`);
+      const inV3 = document.getElementById(`exam-v3-${row.idx}`);
+      const valV2 = (inV2 ? inV2.value.trim() : '') || '—';
+      const valV3 = (inV3 ? inV3.value.trim() : '') || '—';
+      const v2Ok = checkVerbMatch(valV2, v.v2, v.accept_v2);
+      const v3Ok = checkVerbMatch(valV3, v.v3, v.accept_v3);
+
+      const tr = document.createElement('tr');
+      tr.className = "border-b border-slate-200 text-xs";
+      tr.innerHTML = `
+        <td class="py-1 px-2 text-center font-bold text-slate-500">${i + 1}</td>
+        <td class="py-1 px-2 font-bold text-slate-900">${v.v1}</td>
+        <td class="py-1 px-2 ${v2Ok ? 'text-emerald-700 font-semibold' : 'text-rose-700'}">
+          ${valV2} ${v2Ok ? '✓' : `<span class="text-[10px] text-slate-500 font-normal">(${v.v2})</span>`}
+        </td>
+        <td class="py-1 px-2 ${v3Ok ? 'text-emerald-700 font-semibold' : 'text-rose-700'}">
+          ${valV3} ${v3Ok ? '✓' : `<span class="text-[10px] text-slate-500 font-normal">(${v.v3})</span>`}
+        </td>
+        <td class="py-1 px-2 text-slate-600">${v.cat}</td>
+        <td class="py-1 px-2 text-center font-bold ${v2Ok && v3Ok ? 'text-emerald-600' : (v2Ok || v3Ok ? 'text-amber-600' : 'text-rose-600')}">
+          ${v2Ok && v3Ok ? '2/2' : (v2Ok || v3Ok ? '1/2' : '0/2')}
+        </td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  }
+}
+
+function triggerExamPrint() {
+  const nameInput = document.getElementById('modal-student-name');
+  const groupInput = document.getElementById('modal-student-group');
+  const name = (nameInput ? nameInput.value.trim() : '') || "Alumne/a de 2n d'ESO";
+  const group = (groupInput ? groupInput.value.trim() : '') || "2n ESO";
+
+  state.userStats.studentName = name;
+  state.userStats.studentGroup = group;
+  saveUserStats();
+
+  updatePrintCertificate(name, group);
+
+  // Executar impressió amb breu timeout
+  setTimeout(() => {
+    window.print();
+  }, 100);
+}
+
+function closeExamPrintModal() {
+  const container = document.getElementById('examModalContainer');
+  if (container) {
+    container.classList.add('hidden');
+  }
+}
+
+// Assegurar dades actualitzades abans d'imprimir si s'activa des del menú del navegador (Ctrl+P)
+window.addEventListener('beforeprint', () => {
+  const nameInput = document.getElementById('modal-student-name');
+  const groupInput = document.getElementById('modal-student-group');
+  const name = (nameInput && nameInput.value.trim()) || state.userStats.studentName || "Alumne/a de 2n d'ESO";
+  const group = (groupInput && groupInput.value.trim()) || state.userStats.studentGroup || "2n ESO";
+  updatePrintCertificate(name, group);
+  const container = document.getElementById('examModalContainer');
+  if (container) {
+    container.classList.remove('hidden');
+  }
+});
 
 // --- JOC FINAL 4: LA RULETA DELS VERBS (LUCKY WHEEL) ---
 function setupWheel() {

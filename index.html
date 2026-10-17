@@ -48,7 +48,7 @@
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-  <link rel="stylesheet" href="styles.css?v=2.6" />
+  <link rel="stylesheet" href="styles.css?v=2.7" />
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
@@ -1069,53 +1069,120 @@
   <!-- CONTENIDOR DE TOASTS DE NOTIFICACIÓ -->
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- PLANTILLA D'INFORME D'EXAMEN PER IMPRIMIR (FORMAT A4) -->
-  <div id="examReportModal" class="hidden print-page">
-    <div class="border-b-2 border-slate-800 pb-4 mb-6 flex justify-between items-center">
-      <div>
-        <h1 class="text-2xl font-bold font-display text-slate-900">Certificat d'avaluació: verbs irregulars</h1>
-        <p class="text-sm text-slate-600">English 2n d'ESO · Active Minds 2 (Burlington English)</p>
-      </div>
-      <div class="text-right">
-        <span class="text-xs uppercase text-slate-500 font-bold">Data d'avaluació</span>
-        <p id="print-exam-date" class="font-bold text-sm text-slate-800"></p>
-      </div>
-    </div>
+  <!-- MODAL DE VISTA PRÈVIA I IMPRESSIÓ DEL CERTIFICAT D'EXAMEN -->
+  <div id="examModalContainer" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm overflow-y-auto p-3 sm:p-6 flex items-start justify-center">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full my-4 overflow-hidden border border-slate-200">
+      
+      <!-- Barra superior d'eines (NOMÉS VISIBLE EN PANTALLA, AMAGADA EN IMPRESSIÓ) -->
+      <div class="no-print bg-slate-900 text-white p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">📝</span>
+          <div>
+            <h3 class="font-display font-bold text-base text-white">Certificat Oficial d'Examen</h3>
+            <p class="text-xs text-slate-400">Pots escriure el teu nom i grup abans d'imprimir o desar en PDF</p>
+          </div>
+        </div>
 
-    <div class="grid grid-cols-3 gap-4 p-4 rounded-xl border border-slate-300 mb-6 bg-slate-50">
-      <div>
-        <span class="text-xs uppercase text-slate-500 font-bold">Nom de l'alumne/a</span>
-        <p id="print-student-name" class="font-bold text-base text-slate-900 mt-1"></p>
+        <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+          <input type="text" id="modal-student-name" placeholder="Nom i cognoms de l'alumne/a" 
+            class="px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-400 font-semibold focus:outline-none focus:border-indigo-500 w-full sm:w-56" />
+          <input type="text" id="modal-student-group" placeholder="Grup (ex: 2n ESO A)" 
+            class="px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-400 font-semibold focus:outline-none focus:border-indigo-500 w-full sm:w-32" />
+          <button onclick="triggerExamPrint()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="printer" class="w-4 h-4"></i> Imprimir o Desar en PDF
+          </button>
+          <button onclick="closeExamPrintModal()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all">
+            ✕ Tancar
+          </button>
+        </div>
       </div>
-      <div>
-        <span class="text-xs uppercase text-slate-500 font-bold">Grup</span>
-        <p id="print-student-group" class="font-bold text-base text-slate-900 mt-1"></p>
-      </div>
-      <div class="text-right">
-        <span class="text-xs uppercase text-slate-500 font-bold">Nota Obtinguda</span>
-        <p id="print-exam-grade" class="font-extrabold text-2xl text-indigo-700 mt-1"></p>
-      </div>
-    </div>
 
-    <p class="text-xs text-slate-500 mb-6 italic">
-      Aquest document certifica que l'alumne/a ha completat un examen aleatori generat a partir del llistat oficial de 108 verbs irregulars d'Active Minds 2.
-    </p>
+      <!-- DOCUMENT IMPRIMIBLE DEL CERTIFICAT (A4) -->
+      <div id="examReportModal" class="p-6 sm:p-10 bg-white text-slate-900">
+        
+        <!-- Capçalera del certificat -->
+        <div class="border-b-2 border-slate-900 pb-4 mb-5 flex justify-between items-start gap-4">
+          <div>
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Informe Oficial d'Avaluació</span>
+            <h1 class="text-xl sm:text-2xl font-bold font-display text-slate-900 mt-1">Certificat d'avaluació: verbs irregulars</h1>
+            <p class="text-xs text-slate-600">English 2n d'ESO · Active Minds 2 (Burlington English) · Verb Quest</p>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="text-[10px] uppercase font-bold text-slate-400">Data d'avaluació</span>
+            <p id="print-exam-date" class="font-bold text-xs sm:text-sm text-slate-800 mt-0.5"></p>
+          </div>
+        </div>
 
-    <div class="pt-8 border-t border-slate-300 flex justify-between items-center text-xs text-slate-600">
-      <div>
-        <p>Signatura del docent:</p>
-        <div class="w-48 h-12 border-b border-slate-400 mt-2"></div>
+        <!-- Caixa d'informació de l'alumne/a i qualificació -->
+        <div class="grid grid-cols-4 gap-3 p-3.5 rounded-xl border border-slate-300 mb-5 bg-slate-50 text-xs">
+          <div class="col-span-2">
+            <span class="text-[10px] uppercase font-bold text-slate-500">Nom de l'alumne/a</span>
+            <p id="print-student-name" class="font-bold text-sm text-slate-900 mt-0.5 truncate">Alumne/a de 2n d'ESO</p>
+          </div>
+          <div>
+            <span class="text-[10px] uppercase font-bold text-slate-500">Curs / Grup</span>
+            <p id="print-student-group" class="font-bold text-sm text-slate-900 mt-0.5">2n ESO</p>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] uppercase font-bold text-slate-500">Qualificació</span>
+            <div class="flex items-baseline justify-end gap-1.5 mt-0.5">
+              <span id="print-exam-grade" class="font-extrabold text-base sm:text-lg text-indigo-700">0 / 10</span>
+              <span id="print-exam-verdict" class="text-[10px] font-bold text-slate-600"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Taula de detall dels verbs de l'examen -->
+        <div class="mb-5">
+          <div class="flex justify-between items-center mb-1.5">
+            <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-600">Detall dels verbs avaluats a l'examen</h4>
+            <span id="print-exam-count" class="text-[11px] font-semibold text-slate-500">20 verbs</span>
+          </div>
+          <div class="border border-slate-300 rounded-lg overflow-hidden">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold text-[11px]">
+                  <th class="py-1 px-2 text-center w-8">#</th>
+                  <th class="py-1 px-2">Base Form (V1)</th>
+                  <th class="py-1 px-2">Past Simple (V2)</th>
+                  <th class="py-1 px-2">Past Participle (V3)</th>
+                  <th class="py-1 px-2">Català</th>
+                  <th class="py-1 px-2 text-center w-14">Punts</th>
+                </tr>
+              </thead>
+              <tbody id="print-exam-table-body">
+                <!-- Generat dinàmicament en JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Peu de pàgina oficial i signatures -->
+        <div class="pt-3 border-t border-slate-200 text-[11px] text-slate-600">
+          <p class="italic mb-4 text-[10px] text-slate-500">
+            Aquest document certifica que l'alumne/a ha completat autònomament un examen aleatori generat a partir del llistat oficial de 108 verbs irregulars d'Active Minds 2.
+          </p>
+
+          <div class="flex justify-between items-center text-xs text-slate-700 pt-2">
+            <div>
+              <p class="font-semibold text-slate-800">Signatura del professorat:</p>
+              <div class="w-48 h-10 border-b border-slate-400 mt-1"></div>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-800">Segell del centre escolar:</p>
+              <div class="w-32 h-10 border border-dashed border-slate-400 mt-1"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div>
-        <p>Segell del centre escolar:</p>
-        <div class="w-32 h-12 border border-dashed border-slate-400 mt-2"></div>
-      </div>
+
     </div>
   </div>
 
   <!-- SCRIPTS DE L'APLICACIÓ -->
-  <script src="verbs-data.js?v=2.6"></script>
-  <script src="app.js?v=2.6"></script>
+  <script src="verbs-data.js?v=2.7"></script>
+  <script src="app.js?v=2.7"></script>
   <script>
     // Inicialitza icones Lucide
     lucide.createIcons();
