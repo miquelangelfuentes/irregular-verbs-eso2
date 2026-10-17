@@ -527,7 +527,7 @@ function generateQuizQuestions(verbs) {
     if (r < 0.4) {
       // V1 -> V2
       qType = 'v1_to_v2';
-      questionText = `Quin és el <strong>Past Simple (V2)</strong> del verb <em>"${v.v1}"</em>?`;
+      questionText = `Quin és el <strong>past simple (V2)</strong> del verb <em>"${v.v1}"</em>?`;
       correctAnswer = v.v2;
       distractors = allVerbs
         .filter(other => other.id !== v.id)
@@ -536,7 +536,7 @@ function generateQuizQuestions(verbs) {
     } else if (r < 0.75) {
       // V1 -> V3
       qType = 'v1_to_v3';
-      questionText = `Quin és el <strong>Past Participle (V3)</strong> del verb <em>"${v.v1}"</em>?`;
+      questionText = `Quin és el <strong>past participle (V3)</strong> del verb <em>"${v.v1}"</em>?`;
       correctAnswer = v.v3;
       distractors = allVerbs
         .filter(other => other.id !== v.id)
@@ -907,7 +907,7 @@ function renderScrambleItem() {
   document.getElementById('scramble-counter').textContent = `Verb ${state.game.scrambleIndex + 1} de ${state.game.scrambleItems.length}`;
   document.getElementById('scramble-v1').textContent = verb.v1;
   document.getElementById('scramble-cat').textContent = verb.cat;
-  document.getElementById('scramble-type-badge').textContent = target === verb.v2 ? 'Ordena el PAST SIMPLE' : 'Ordena el PAST PARTICIPLE';
+  document.getElementById('scramble-type-badge').textContent = target === verb.v2 ? 'Ordena el past simple' : 'Ordena el past participle';
 
   // Lletres desordenades
   const letters = cleanTarget.replace(/\s+/g, '').split('');
@@ -1066,8 +1066,8 @@ function generateCheckpointQuestions(verbs, count) {
       verb: v,
       qType,
       question: qType === 'write_v2' 
-        ? `Escriu el <strong>Past Simple (V2)</strong> de <em>"${v.v1}"</em>:` 
-        : `Escriu el <strong>Past Participle (V3)</strong> de <em>"${v.v1}"</em>:`,
+        ? `Escriu el <strong>past simple (V2)</strong> de <em>"${v.v1}"</em>:` 
+        : `Escriu el <strong>past participle (V3)</strong> de <em>"${v.v1}"</em>:`,
       expected: qType === 'write_v2' ? v.v2 : v.v3,
       accepted: qType === 'write_v2' ? v.accept_v2 : v.accept_v3
     };
@@ -1236,7 +1236,7 @@ function nextSpeedQuestion() {
   state.game.speedCurrentQ = {
     verb: randVerb,
     isV2,
-    prompt: isV2 ? `Past Simple (V2) de "${randVerb.v1}"?` : `Past Participle (V3) de "${randVerb.v1}"?`,
+    prompt: isV2 ? `Past simple (V2) de "${randVerb.v1}"?` : `Past participle (V3) de "${randVerb.v1}"?`,
     correct: isV2 ? randVerb.v2 : randVerb.v3
   };
 
@@ -1332,7 +1332,7 @@ function nextSurvivalQuestion() {
     correct
   };
 
-  document.getElementById('surv-question-title').innerHTML = `Quin és el <strong>${isV2 ? 'Past Simple (V2)' : 'Past Participle (V3)'}</strong> de:`;
+  document.getElementById('surv-question-title').innerHTML = `Quin és el <strong>${isV2 ? 'past simple (V2)' : 'past participle (V3)'}</strong> de:`;
   document.getElementById('surv-verb-v1').textContent = randVerb.v1;
   document.getElementById('surv-verb-cat').textContent = `(${randVerb.cat})`;
 

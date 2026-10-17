@@ -16,12 +16,12 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ 1. PACKS DE 10 ALFABÈTICAMENT (11 nivells de 10 verbs)      │
-│    Flashcards 3D · Quiz 4 Opcions · Escriure · Memory ·     │
-│    Lletres Desordenades                                     │
+│    Flashcards 3D · Quiz de 4 opcions · Escriure · Memory ·  │
+│    Lletres desordenades                                     │
 └──────────────────────────────┬──────────────────────────────┘
                                ▼
 ┌─────────────────────────────────────────────────────────────┐
-│ 2. CHECKPOINTS ACUMULATIUS (Repàs acumulatiu a llarg termini│
+│ 2. CHECKPOINTS ACUMULATIUS (Repàs acumulat a llarg termini) │
 │    🥉 Checkpoint 1 (Packs 1-2: 20 verbs)                    │
 │    🥈 Checkpoint 2 (Packs 1-4: 40 verbs)                    │
 │    🥇 Checkpoint 3 (Packs 1-6: 60 verbs)                    │
@@ -33,62 +33,62 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 ┌─────────────────────────────────────────────────────────────┐
 │ 3. ARENA DE TOTS ELS VERBS (Jocs globals amb els 108 verbs) │
 │    ⚡ Contrarellotge (Speed Rush)                           │
-│    ❤️ Mode Supervivència (3 Vides i comodins)               │
-│    📝 Simulacre d'Examen Oficial (nota /10 + Certificat A4) │
-│    🎡 La Ruleta dels Verbs (reptes orals i de grup)         │
-│    📚 Diccionari & Cercador interactiu amb text a veu       │
+│    ❤️ Mode supervivència (3 vides i comodins)               │
+│    📝 Simulacre d'examen oficial (nota /10 + certificat A4) │
+│    🎡 La ruleta dels verbs (reptes orals i de grup)         │
+│    📚 Diccionari i cercador interactiu amb text a veu       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📦 Detall dels 11 Packs de 10 (Active Minds 2)
+## 📦 Detall dels 11 packs de 10 (Active Minds 2)
 
 | Pack | Rang alfabètic | Verbs inclosos | Total |
 | :---: | :--- | :--- | :---: |
-| **Pack 1** | **Be – Break** | *be, beat, become, begin, bend, bet, bite, bleed, blow, break* | 10 |
-| **Pack 2** | **Bring – Deal** | *bring, build, burn, buy, catch, choose, come, cost, cut, deal* | 10 |
-| **Pack 3** | **Dig – Feel** | *dig, do, draw, dream, drink, drive, eat, fall, feed, feel* | 10 |
-| **Pack 4** | **Fight – Grow** | *fight, find, fly, forget, forgive, freeze, get, give, go, grow* | 10 |
-| **Pack 5** | **Hang – Lay** | *hang, have, hear, hide, hit, hold, hurt, keep, know, lay* | 10 |
-| **Pack 6** | **Lead – Mean** | *lead, learn, leave, lend, let, lie, light, lose, make, mean* | 10 |
-| **Pack 7** | **Meet – Run** | *meet, overcome, pay, put, quit, read, ride, ring, rise, run* | 10 |
-| **Pack 8** | **Say – Show** | *say, see, seek, sell, send, set, shake, shine, shoot, show* | 10 |
-| **Pack 9** | **Shut – Spread** | *shut, sing, sink, sit, sleep, smell, speak, spell, spend, spread* | 10 |
-| **Pack 10** | **Stand – Tear** | *stand, steal, stick, sting, stink, sweep, swim, take, teach, tear* | 10 |
-| **Pack 11** | **Tell – Write** | *tell, think, throw, understand, wake up, wear, win, write* | 8 |
+| **Pack 1** | **Be – break** | *be, beat, become, begin, bend, bet, bite, bleed, blow, break* | 10 |
+| **Pack 2** | **Bring – deal** | *bring, build, burn, buy, catch, choose, come, cost, cut, deal* | 10 |
+| **Pack 3** | **Dig – feel** | *dig, do, draw, dream, drink, drive, eat, fall, feed, feel* | 10 |
+| **Pack 4** | **Fight – grow** | *fight, find, fly, forget, forgive, freeze, get, give, go, grow* | 10 |
+| **Pack 5** | **Hang – lay** | *hang, have, hear, hide, hit, hold, hurt, keep, know, lay* | 10 |
+| **Pack 6** | **Lead – mean** | *lead, learn, leave, lend, let, lie, light, lose, make, mean* | 10 |
+| **Pack 7** | **Meet – run** | *meet, overcome, pay, put, quit, read, ride, ring, rise, run* | 10 |
+| **Pack 8** | **Say – show** | *say, see, seek, sell, send, set, shake, shine, shoot, show* | 10 |
+| **Pack 9** | **Shut – spread** | *shut, sing, sink, sit, sleep, smell, speak, spell, spend, spread* | 10 |
+| **Pack 10** | **Stand – tear** | *stand, steal, stick, sting, stink, sweep, swim, take, teach, tear* | 10 |
+| **Pack 11** | **Tell – write** | *tell, think, throw, understand, wake up, wear, win, write* | 8 |
 
 ---
 
-## 🎮 Els 5 Jocs dins de cada Pack
+## 🎮 Els 5 jocs dins de cada pack
 
-1. **🗂️ Flashcards 3D:** gir tridimensional amb Base Form (V1), Past Simple (V2), Past Participle (V3), transcripció fonètica oficial, pistes mnemotècniques i botó d'àudio.
-2. **🎯 Quiz 4 Opcions:** preguntes ràpides generades dinàmicament amb distractors intel·ligents, ratxes i percentatge d'encert.
-3. **✍️ Escriu les Formes:** l'alumne escriu el Past Simple i Past Participle a partir del Base Form o del català, amb correcció flexible (permet formes dobles com *burnt/burned*).
-4. **🧩 Memory / Connecta Parelles:** tauler de fitxes per emparellar el verb en present amb el seu passat/participi o català.
-5. **🔤 Lletres Desordenades (Word Scramble):** ordenar les lletres per fixar l'ortografia (*spelling*).
+1. **🗂️ Flashcards 3D:** gir tridimensional amb base form (V1), past simple (V2), past participle (V3), transcripció fonètica oficial, pistes mnemotècniques i botó d'àudio.
+2. **🎯 Quiz de 4 opcions:** preguntes ràpides generades dinàmicament amb distractors intel·ligents, ratxes i percentatge d'encert.
+3. **✍️ Escriu les formes:** l'alumne escriu el past simple i past participle a partir de la forma base o del català, amb correcció flexible (permet formes dobles com *burnt/burned*).
+4. **🧩 Memory / connecta parelles:** tauler de fitxes per emparellar el verb en present amb el seu passat/participi o català.
+5. **🔤 Lletres desordenades (Word Scramble):** ordenar les lletres per fixar l'ortografia (*spelling*).
 
 ---
 
-## 🚩 Checkpoints Acumulatius
+## 🚩 Checkpoints acumulatius
 
-Per garantir que l'alumnat no oblida els primers packs a mesura que avança el curs, els **Checkpoints** agafen preguntes a l'atzar de **tots els packs acumulats fins a aquell moment**.
+Per garantir que l'alumnat no oblida els primers packs a mesura que avança el curs, els **checkpoints** agafen preguntes a l'atzar de **tots els packs acumulats fins a aquell moment**.
 - Es requereix un **80% d'encerts** per desbloquejar la medalla.
 - El sistema desa el progrés i les medalles obtingudes a `localStorage`.
 
 ---
 
-## 👑 Arena de Tots els Verbs (108 verbs en joc)
+## 👑 Arena de tots els verbs (108 verbs en joc)
 
 - **⚡ Contrarellotge (Speed Rush):** 60 o 90 segons amb multiplicadors de combo per fer el rècord màxim de punts.
-- **❤️ Supervivència (3 Vides):** quants verbs consecutius pots encertar? Inclou 3 comodins (50/50, saltar pregunta i pista de la 1a lletra).
-- **📝 Simulacre d'Examen Oficial:**
+- **❤️ Mode supervivència (3 vides):** quants verbs consecutius pots encertar? Inclou 3 comodins (50/50, saltar pregunta i pista de la 1a lletra).
+- **📝 Simulacre d'examen oficial:**
   - Tria 10, 20 o 30 verbs a l'atzar.
   - Graella d'avaluació idèntica a un examen d'aula.
   - Correcció automàtica amb nota sobre 10.
   - **Certificat imprimible en format A4**: permet introduir el nom de l'alumne/a i grup per lliurar al docent en paper o PDF.
-- **🎡 La Ruleta dels Verbs:** ruleta física animada per fer reptes orals i dinàmiques de grup classe.
-- **📚 Diccionari & Cercador:** cercador en temps real per anglès o català, amb text a veu en anglès i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
+- **🎡 La ruleta dels verbs:** ruleta física animada per fer reptes orals i dinàmiques de grup classe.
+- **📚 Diccionari i cercador:** cercador en temps real per anglès o català, amb text a veu en anglès i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
 
 ---
 
