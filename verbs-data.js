@@ -908,7 +908,7 @@ const PACKS_META = [
   { id: 6, title: "Pack 6: Lead – Mean", range: "51 - 60", count: 10, color: "from-cyan-500 to-blue-600", accent: "cyan" },
   { id: 7, title: "Pack 7: Meet – Run", range: "61 - 70", count: 10, color: "from-fuchsia-500 to-pink-600", accent: "fuchsia" },
   { id: 8, title: "Pack 8: Say – Show", range: "71 - 80", count: 10, color: "from-lime-500 to-green-600", accent: "lime" },
-  { id: 9, pack: 9, id: 9, title: "Pack 9: Shut – Spread", range: "81 - 90", count: 10, color: "from-orange-500 to-red-600", accent: "orange" },
+  { id: 9, title: "Pack 9: Shut – Spread", range: "81 - 90", count: 10, color: "from-orange-500 to-red-600", accent: "orange" },
   { id: 10, title: "Pack 10: Stand – Tear", range: "91 - 100", count: 10, color: "from-indigo-500 to-purple-600", accent: "indigo" },
   { id: 11, title: "Pack 11: Tell – Write", range: "101 - 108", count: 8, color: "from-yellow-500 to-amber-600", accent: "yellow" }
 ];
