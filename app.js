@@ -110,7 +110,7 @@ function resetAllData() {
 }
 
 // --- SISTEMA D'ÀUDIO ---
-// 1. Web Speech API (Pronunciació nativa d'anglès)
+// 1. Web Speech API (Text a veu en anglès)
 function speakEnglish(text) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel(); // atura reproduccions pendents
@@ -119,7 +119,7 @@ function speakEnglish(text) {
   utterance.rate = 0.9;     // Lleugerament més pausat per a 2n d'ESO
   utterance.pitch = 1.0;
 
-  // Busca veu britànica si n'hi ha disponible
+  // Busca veu en anglès si n'hi ha disponible
   const voices = window.speechSynthesis.getVoices();
   const gbVoice = voices.find(v => v.lang.startsWith('en-GB') || v.lang.startsWith('en_GB'));
   if (gbVoice) utterance.voice = gbVoice;

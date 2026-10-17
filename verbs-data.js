@@ -1020,7 +1020,7 @@ const ALL_VERBS_GAMES_META = [
   {
     id: "explorer",
     title: "Diccionari & Cercador dels 108 Verbs",
-    subtitle: "Amb àudio natiu, regles i filtres per famílies",
+    subtitle: "Amb text a veu en anglès, regles i filtres per famílies",
     badge: "📚",
     color: "from-teal-500 to-emerald-600",
     description: "Consulta les 3 formes, escolta com es pronuncien en anglès britànic i descobreix patrons comuns."
