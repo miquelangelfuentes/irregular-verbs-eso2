@@ -990,6 +990,7 @@ const ALL_VERBS_GAMES_META = [
     title: "Contrarellotge (Speed Rush)",
     subtitle: "60 o 90 segons per fer el rècord màxim",
     badge: "⚡",
+    icon: "zap",
     color: "from-amber-500 to-red-500",
     description: "Posa a prova la teva velocitat de reacció! Com més ràpid responguis, més punts i ratxes acumules."
   },
@@ -998,6 +999,7 @@ const ALL_VERBS_GAMES_META = [
     title: "Mode supervivència (3 vides)",
     subtitle: "Fins on arribaràs sense fallar 3 vegades?",
     badge: "❤️",
+    icon: "heart",
     color: "from-rose-500 to-pink-600",
     description: "Comença tranquil i la dificultat puja! Tens 3 comodins (50/50, saltar i 1a lletra)."
   },
@@ -1006,6 +1008,7 @@ const ALL_VERBS_GAMES_META = [
     title: "Simulacre d'examen de 2n d'ESO",
     subtitle: "Genera un examen aleatori i descarrega o imprimeix l'informe",
     badge: "📝",
+    icon: "file-text",
     color: "from-indigo-600 to-blue-700",
     description: "Com a classe: tria 10, 20 o 30 verbs, completa les caselles buides i obté la teva nota sobre 10."
   },
@@ -1014,6 +1017,7 @@ const ALL_VERBS_GAMES_META = [
     title: "La ruleta dels verbs",
     subtitle: "Pràctica individual o en grup",
     badge: "🎡",
+    icon: "disc",
     color: "from-purple-600 to-fuchsia-600",
     description: "Gira la ruleta, cau en un verb a l'atzar i resol el repte oral o escrit amb punts sorpresa."
   },
@@ -1022,6 +1026,7 @@ const ALL_VERBS_GAMES_META = [
     title: "Diccionari i cercador dels 108 verbs",
     subtitle: "Amb text a veu en anglès, regles i filtres per famílies",
     badge: "📚",
+    icon: "search",
     color: "from-teal-500 to-emerald-600",
     description: "Consulta les 3 formes, escolta com es pronuncien en anglès britànic i descobreix patrons comuns."
   }

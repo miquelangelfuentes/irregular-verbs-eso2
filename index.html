@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>Verb Quest 2n ESO · Verbs irregulars en anglès</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3.1" />
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,7 +48,7 @@
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-  <link rel="stylesheet" href="styles.css?v=3.0" />
+  <link rel="stylesheet" href="styles.css?v=3.1" />
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
@@ -58,8 +58,8 @@
       
       <!-- Logotip i Títol -->
       <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-pink-500 flex items-center justify-center text-white shadow-md shadow-indigo-200">
-          <i data-lucide="zap" class="w-5 h-5"></i>
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 border border-white/20">
+          <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
         </div>
         <div>
           <div class="flex items-center gap-2">
@@ -155,8 +155,8 @@
         <!-- Pilar 1: Packs de 10 -->
         <div onclick="navigateTo('packs-list')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-              📦
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
+              <i data-lucide="package" class="w-6 h-6"></i>
             </div>
             <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Metodologia pas a pas</span>
             <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Packs de 10 alfabèticament</h3>
@@ -166,15 +166,15 @@
           </div>
           <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-indigo-600">
             <span>11 packs disponibles</span>
-            <span class="group-hover:translate-x-1 transition-transform">Entrar ➔</span>
+            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1">Entrar <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
           </div>
         </div>
 
         <!-- Pilar 2: Checkpoints Acumulatius -->
         <div onclick="navigateTo('checkpoints-list')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-amber-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-              🚩
+            <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
+              <i data-lucide="flag" class="w-6 h-6"></i>
             </div>
             <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Repàs acumulat</span>
             <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Checkpoints acumulatius</h3>
@@ -184,15 +184,15 @@
           </div>
           <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-amber-600">
             <span>6 medalles per desbloquejar</span>
-            <span class="group-hover:translate-x-1 transition-transform">Entrar ➔</span>
+            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1">Entrar <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
           </div>
         </div>
 
         <!-- Pilar 3: Jocs amb Tots els Verbs -->
         <div onclick="navigateTo('all-verbs-hub')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-rose-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-              👑
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
+              <i data-lucide="crown" class="w-6 h-6"></i>
             </div>
             <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">El gran repte</span>
             <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Arena de tots els verbs</h3>
@@ -202,7 +202,7 @@
           </div>
           <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-rose-600">
             <span>5 modes de joc finals</span>
-            <span class="group-hover:translate-x-1 transition-transform">Entrar ➔</span>
+            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1">Entrar <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
           </div>
         </div>
 
@@ -211,8 +211,8 @@
       <!-- Accés ràpid al diccionari -->
       <div class="bg-indigo-50/60 rounded-3xl p-6 border border-indigo-100 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-md">
-            📚
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md">
+            <i data-lucide="book-open" class="w-6 h-6"></i>
           </div>
           <div>
             <h4 class="font-display font-bold text-slate-900">Vols consultar la llista sencera dels 108 verbs?</h4>
@@ -220,8 +220,9 @@
           </div>
         </div>
         <div>
-          <button onclick="navigateTo('explorer')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition-all">
-            Obrir el diccionari
+          <button onclick="navigateTo('explorer')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition-all flex items-center gap-2">
+            <span>Obrir el diccionari</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
@@ -229,8 +230,8 @@
       <!-- Explicació de com es desa el progrés i com es pot perdre -->
       <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-sm space-y-4">
         <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
-          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg">
-            💾
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+            <i data-lucide="save" class="w-5 h-5"></i>
           </div>
           <div>
             <h3 class="font-display font-bold text-lg text-slate-900">Com es desa el teu progrés a Verb Quest?</h3>
@@ -320,19 +321,24 @@
       <!-- Selector de modes de joc dins del pack -->
       <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         <button onclick="setPackGameMode('flashcards')" data-game="flashcards" class="pack-game-tab">
-          <span>🗂️ Flashcards 3D</span>
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span>Flashcards 3D</span>
         </button>
         <button onclick="setPackGameMode('quiz')" data-game="quiz" class="pack-game-tab">
-          <span>🎯 Quiz de 4 opcions</span>
+          <i data-lucide="help-circle" class="w-4 h-4"></i>
+          <span>Quiz de 4 opcions</span>
         </button>
         <button onclick="setPackGameMode('type')" data-game="type" class="pack-game-tab">
-          <span>✍️ Escriu les formes</span>
+          <i data-lucide="edit-3" class="w-4 h-4"></i>
+          <span>Escriu les formes</span>
         </button>
         <button onclick="setPackGameMode('memory')" data-game="memory" class="pack-game-tab">
-          <span>🧩 Memory de parelles</span>
+          <i data-lucide="grid" class="w-4 h-4"></i>
+          <span>Memory de parelles</span>
         </button>
         <button onclick="setPackGameMode('scramble')" data-game="scramble" class="pack-game-tab">
-          <span>🔤 Lletres desordenades</span>
+          <i data-lucide="shuffle" class="w-4 h-4"></i>
+          <span>Lletres desordenades</span>
         </button>
       </div>
 
@@ -1181,8 +1187,8 @@
   </div>
 
   <!-- SCRIPTS DE L'APLICACIÓ -->
-  <script src="verbs-data.js?v=3.0"></script>
-  <script src="app.js?v=3.0"></script>
+  <script src="verbs-data.js?v=3.1"></script>
+  <script src="app.js?v=3.1"></script>
   <script>
     // Inicialitza icones Lucide
     lucide.createIcons();

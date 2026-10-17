@@ -1185,8 +1185,10 @@ function renderAllVerbsHub() {
 
     card.innerHTML = `
       <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-3xl">${g.badge}</span>
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr ${g.color} text-white flex items-center justify-center shadow-md shadow-indigo-500/10 border border-white/20">
+            <i data-lucide="${g.icon || 'play'}" class="w-6 h-6"></i>
+          </div>
           ${scoreBadge}
         </div>
         <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-indigo-600 transition-colors">${g.title}</h3>
@@ -1196,11 +1198,14 @@ function renderAllVerbsHub() {
 
       <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
         <span class="text-xs font-semibold text-slate-400">108 verbs en joc</span>
-        <span class="text-xs font-bold text-indigo-600 group-hover:translate-x-1 transition-transform">Entrar al joc ➔</span>
+        <span class="text-xs font-bold text-indigo-600 group-hover:translate-x-1 transition-transform flex items-center gap-1">Entrar al joc <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
       </div>
     `;
     grid.appendChild(card);
   });
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 }
 
 // --- JOC FINAL 1: CONTRARELLOTGE (SPEED RUSH) ---
