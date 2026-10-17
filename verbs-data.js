@@ -10,7 +10,7 @@ const VERBS_DATA = [
     p1: "/biː/", p2: "/wɒz/wɜː/", p3: "/biːn/",
     accept_v2: ["was", "were", "was/were", "was / were"],
     accept_v3: ["been"],
-    family: "especial", tip: "Recorda: I/he/she/it was, you/we/they were."
+    family: "especial", tip: "Recorda: amb I/he/she/it s'utilitza was, i amb you/we/they s'utilitza were."
   },
   {
     id: 2, pack: 1,
@@ -900,17 +900,17 @@ const VERBS_DATA = [
 
 // Metadades dels Packs de 10
 const PACKS_META = [
-  { id: 1, title: "Pack 1: Be – Break", range: "1 - 10", count: 10, color: "from-blue-500 to-indigo-600", accent: "blue" },
-  { id: 2, title: "Pack 2: Bring – Deal", range: "11 - 20", count: 10, color: "from-emerald-500 to-teal-600", accent: "emerald" },
-  { id: 3, title: "Pack 3: Dig – Feel", range: "21 - 30", count: 10, color: "from-amber-500 to-orange-600", accent: "amber" },
-  { id: 4, title: "Pack 4: Fight – Grow", range: "31 - 40", count: 10, color: "from-rose-500 to-pink-600", accent: "rose" },
-  { id: 5, title: "Pack 5: Hang – Lay", range: "41 - 50", count: 10, color: "from-purple-500 to-violet-600", accent: "purple" },
-  { id: 6, title: "Pack 6: Lead – Mean", range: "51 - 60", count: 10, color: "from-cyan-500 to-blue-600", accent: "cyan" },
-  { id: 7, title: "Pack 7: Meet – Run", range: "61 - 70", count: 10, color: "from-fuchsia-500 to-pink-600", accent: "fuchsia" },
-  { id: 8, title: "Pack 8: Say – Show", range: "71 - 80", count: 10, color: "from-lime-500 to-green-600", accent: "lime" },
-  { id: 9, title: "Pack 9: Shut – Spread", range: "81 - 90", count: 10, color: "from-orange-500 to-red-600", accent: "orange" },
-  { id: 10, title: "Pack 10: Stand – Tear", range: "91 - 100", count: 10, color: "from-indigo-500 to-purple-600", accent: "indigo" },
-  { id: 11, title: "Pack 11: Tell – Write", range: "101 - 108", count: 8, color: "from-yellow-500 to-amber-600", accent: "yellow" }
+  { id: 1, title: "Pack 1: be – break", range: "1 - 10", count: 10, color: "from-blue-500 to-indigo-600", accent: "blue" },
+  { id: 2, title: "Pack 2: bring – deal", range: "11 - 20", count: 10, color: "from-emerald-500 to-teal-600", accent: "emerald" },
+  { id: 3, title: "Pack 3: dig – feel", range: "21 - 30", count: 10, color: "from-amber-500 to-orange-600", accent: "amber" },
+  { id: 4, title: "Pack 4: fight – grow", range: "31 - 40", count: 10, color: "from-rose-500 to-pink-600", accent: "rose" },
+  { id: 5, title: "Pack 5: hang – lay", range: "41 - 50", count: 10, color: "from-purple-500 to-violet-600", accent: "purple" },
+  { id: 6, title: "Pack 6: lead – mean", range: "51 - 60", count: 10, color: "from-cyan-500 to-blue-600", accent: "cyan" },
+  { id: 7, title: "Pack 7: meet – run", range: "61 - 70", count: 10, color: "from-fuchsia-500 to-pink-600", accent: "fuchsia" },
+  { id: 8, title: "Pack 8: say – show", range: "71 - 80", count: 10, color: "from-lime-500 to-green-600", accent: "lime" },
+  { id: 9, title: "Pack 9: shut – spread", range: "81 - 90", count: 10, color: "from-orange-500 to-red-600", accent: "orange" },
+  { id: 10, title: "Pack 10: stand – tear", range: "91 - 100", count: 10, color: "from-indigo-500 to-purple-600", accent: "indigo" },
+  { id: 11, title: "Pack 11: tell – write", range: "101 - 108", count: 8, color: "from-yellow-500 to-amber-600", accent: "yellow" }
 ];
 
 // Metadades dels Checkpoints Acumulatius

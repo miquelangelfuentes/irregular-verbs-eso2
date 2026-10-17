@@ -62,11 +62,11 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 
 ## 🎮 Els 5 Jocs dins de cada Pack
 
-1. **🗂️ Flashcards 3D:** Gir tridimensional amb Base Form (V1), Past Simple (V2), Past Participle (V3), transcripció fonètica oficial, pistes mnemotècniques i botó d'àudio.
-2. **🎯 Quiz 4 Opcions:** Preguntes ràpides generades dinàmicament amb distractors intel·ligents, ratxes i percentatge d'encert.
-3. **✍️ Escriu les Formes:** L'alumne escriu el Past Simple i Past Participle a partir del Base Form o del català, amb correcció flexible (permet formes dobles com *burnt/burned*).
-4. **🧩 Memory / Connecta Parelles:** Tauler de fitxes per emparellar el verb en present amb el seu passat/participi o català.
-5. **🔤 Lletres Desordenades (Word Scramble):** Ordenar les lletres per fixar l'ortografia (*spelling*).
+1. **🗂️ Flashcards 3D:** gir tridimensional amb Base Form (V1), Past Simple (V2), Past Participle (V3), transcripció fonètica oficial, pistes mnemotècniques i botó d'àudio.
+2. **🎯 Quiz 4 Opcions:** preguntes ràpides generades dinàmicament amb distractors intel·ligents, ratxes i percentatge d'encert.
+3. **✍️ Escriu les Formes:** l'alumne escriu el Past Simple i Past Participle a partir del Base Form o del català, amb correcció flexible (permet formes dobles com *burnt/burned*).
+4. **🧩 Memory / Connecta Parelles:** tauler de fitxes per emparellar el verb en present amb el seu passat/participi o català.
+5. **🔤 Lletres Desordenades (Word Scramble):** ordenar les lletres per fixar l'ortografia (*spelling*).
 
 ---
 
@@ -81,14 +81,14 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
 ## 👑 Arena de Tots els Verbs (108 verbs en joc)
 
 - **⚡ Contrarellotge (Speed Rush):** 60 o 90 segons amb multiplicadors de combo per fer el rècord màxim de punts.
-- **❤️ Supervivència (3 Vides):** Quants verbs consecutius pots encertar? Inclou 3 comodins (50/50, saltar pregunta i pista de la 1a lletra).
+- **❤️ Supervivència (3 Vides):** quants verbs consecutius pots encertar? Inclou 3 comodins (50/50, saltar pregunta i pista de la 1a lletra).
 - **📝 Simulacre d'Examen Oficial:**
   - Tria 10, 20 o 30 verbs a l'atzar.
   - Graella d'avaluació idèntica a un examen d'aula.
   - Correcció automàtica amb nota sobre 10.
-  - **Certificat imprimible en format A4**: Permet introduir el nom de l'alumne/a i grup per lliurar al docent en paper o PDF.
-- **🎡 La Ruleta dels Verbs:** Ruleta física animada per fer reptes orals i dinàmiques de grup classe.
-- **📚 Diccionari & Cercador:** Cercador en temps real per anglès o català, amb text a veu en anglès i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
+  - **Certificat imprimible en format A4**: permet introduir el nom de l'alumne/a i grup per lliurar al docent en paper o PDF.
+- **🎡 La Ruleta dels Verbs:** ruleta física animada per fer reptes orals i dinàmiques de grup classe.
+- **📚 Diccionari & Cercador:** cercador en temps real per anglès o català, amb text a veu en anglès i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
 
 ---
 

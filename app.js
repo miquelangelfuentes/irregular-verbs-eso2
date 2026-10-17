@@ -746,7 +746,7 @@ function checkTypeAnswer() {
   } else {
     playErrorSound();
     feedback.className = "p-3 rounded-xl bg-rose-100 text-rose-800 font-bold text-center text-sm";
-    feedback.textContent = `Resposta esperada: Past Simple = "${verb.v2}", Past Participle = "${verb.v3}"`;
+    feedback.textContent = `Resposta esperada: past simple = "${verb.v2}", past participle = "${verb.v3}"`;
   }
 
   document.getElementById('type-btn-check').classList.add('hidden');
@@ -1396,7 +1396,7 @@ function useSurvLifeline(type) {
     nextSurvivalQuestion();
   } else if (type === 'hint') {
     const q = state.game.survCurrentQ;
-    showNotification(`Pista: Comença amb la lletra "${q.correct[0]}"`, "info");
+    showNotification(`Pista: comença amb la lletra "${q.correct[0]}"`, "info");
   }
 }
 
@@ -1657,10 +1657,10 @@ function revealWheelChallenge() {
 
   // Reptes orals o d'escriptura
   const challenges = [
-    `🎯 Repte Oral: Fes una frase en <strong>Past Simple (V2)</strong> utilitzant "<em>${v.v2}</em>"!`,
-    `⚡ Repte Ràpid: Pronuncia en veu alta les 3 formes (<strong>${v.v1} - ${v.v2} - ${v.v3}</strong>) sense equivocar-te!`,
-    `✍️ Repte d'Escriptura: Escriu el Past Participle (V3) de "<em>${v.v1}</em>" a la teva llibreta!`,
-    `🗣️ Repte de Traducció: Com es diu "ahir vaig ${v.cat.split(',')[0]}" en anglès?`
+    `🎯 Repte oral: fes una frase en <strong>past simple (V2)</strong> utilitzant "<em>${v.v2}</em>"!`,
+    `⚡ Repte ràpid: pronuncia en veu alta les 3 formes (<strong>${v.v1} - ${v.v2} - ${v.v3}</strong>) sense equivocar-te!`,
+    `✍️ Repte d'escriptura: escriu el past participle (V3) de "<em>${v.v1}</em>" a la teva llibreta!`,
+    `🗣️ Repte de traducció: com es diu "ahir vaig ${v.cat.split(',')[0]}" en anglès?`
   ];
   const randChallenge = challenges[Math.floor(Math.random() * challenges.length)];
   document.getElementById('wheel-res-challenge').innerHTML = randChallenge;
