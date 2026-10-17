@@ -1655,11 +1655,11 @@ function revealWheelChallenge() {
   document.getElementById('wheel-res-v2').textContent = v.v2;
   document.getElementById('wheel-res-v3').textContent = v.v3;
 
-  // Reptes orals o de classe per a la PDI
+  // Reptes orals o d'escriptura
   const challenges = [
     `🎯 Repte Oral: Fes una frase en <strong>Past Simple (V2)</strong> utilitzant "<em>${v.v2}</em>"!`,
     `⚡ Repte Ràpid: Pronuncia en veu alta les 3 formes (<strong>${v.v1} - ${v.v2} - ${v.v3}</strong>) sense equivocar-te!`,
-    `✍️ Repte de Pissarra: Escriu el Past Participle (V3) de "<em>${v.v1}</em>" a la teva llibreta o a la PDI!`,
+    `✍️ Repte d'Escriptura: Escriu el Past Participle (V3) de "<em>${v.v1}</em>" a la teva llibreta!`,
     `🗣️ Repte de Traducció: Com es diu "ahir vaig ${v.cat.split(',')[0]}" en anglès?`
   ];
   const randChallenge = challenges[Math.floor(Math.random() * challenges.length)];

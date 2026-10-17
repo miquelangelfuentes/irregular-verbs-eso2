@@ -35,7 +35,7 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 │    ⚡ Contrarellotge (Speed Rush)                           │
 │    ❤️ Mode Supervivència (3 Vides i comodins)               │
 │    📝 Simulacre d'Examen Oficial (nota /10 + Certificat A4) │
-│    🎡 La Ruleta dels Verbs (dinàmica de grup i PDI)         │
+│    🎡 La Ruleta dels Verbs (reptes orals i de grup)         │
 │    📚 Diccionari & Cercador interactiu amb veu britànica    │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -87,7 +87,7 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
   - Graella d'avaluació idèntica a un examen d'aula.
   - Correcció automàtica amb nota sobre 10.
   - **Certificat imprimible en format A4**: Permet introduir el nom de l'alumne/a i grup per lliurar al docent en paper o PDF.
-- **🎡 La Ruleta dels Verbs:** Ruleta física animada ideal per a la PDI (pissarra digital interactiva) per fer reptes orals i dinàmiques de grup classe.
+- **🎡 La Ruleta dels Verbs:** Ruleta física animada per fer reptes orals i dinàmiques de grup classe.
 - **📚 Diccionari & Cercador:** Cercador en temps real per anglès o català, amb veu britànica nativa i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
 
 ---

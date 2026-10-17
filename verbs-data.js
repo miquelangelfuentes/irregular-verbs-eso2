@@ -1012,7 +1012,7 @@ const ALL_VERBS_GAMES_META = [
   {
     id: "wheel",
     title: "La Ruleta dels Verbs",
-    subtitle: "Ideal per a la PDI de l'aula o pràctica individual",
+    subtitle: "Pràctica individual o en grup",
     badge: "🎡",
     color: "from-purple-600 to-fuchsia-600",
     description: "Gira la ruleta, cau en un verb a l'atzar i resol el repte oral o escrit amb punts sorpresa."
