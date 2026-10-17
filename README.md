@@ -1,6 +1,6 @@
 # Verb Quest 2n d'ESO · Irregular Verbs Arena ⚡
 
-Una plataforma web interactiva i gamificada perquè l'alumnat de **2n d'ESO** aprengui, practiqui i consolidi els **108 verbs irregulars** del llibre **Active Minds 2 (Burlington English, pàgines 114 i 115)**.
+Una plataforma web interactiva i gamificada perquè l'alumnat de **2n d'ESO** aprengui, practiqui i consolidi els **108 verbs irregulars** del llibre **Active Minds 2 (Burlington English)**.
 
 Dissenyada específicament per a desplegar-se de manera gratuïta i immediata a **GitHub Pages**.
 
