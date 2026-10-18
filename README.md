@@ -129,3 +129,11 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
 - **Web Audio API** per a efectes de so suaus
 - **Canvas-Confetti** per a les celebracions
 - **Lucide Icons**
+
+---
+
+## 📄 Llicències
+
+- **Codi:** sota llicència [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
+- **Continguts educatius:** sota llicència [Creative Commons CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca).
+
