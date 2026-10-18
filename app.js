@@ -362,7 +362,7 @@ function renderPacksList() {
       <div>
         <div class="flex items-center justify-between mb-3">
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700">
-            Nivell ${pack.id} · ${pack.count} verbs
+            Nivell ${pack.id} - ${pack.count} verbs
           </span>
           <span class="text-sm tracking-widest text-amber-500 font-bold">${starsHtml}</span>
         </div>
@@ -454,7 +454,7 @@ function renderFlashcard(verbs) {
   document.getElementById('fc-back-v2').textContent = verb.v2;
   document.getElementById('fc-back-v3').textContent = verb.v3;
   document.getElementById('fc-back-cat').textContent = verb.cat;
-  document.getElementById('fc-back-phonetics').textContent = `${verb.p1}  ·  ${verb.p2}  ·  ${verb.p3}`;
+  document.getElementById('fc-back-phonetics').textContent = `${verb.p1}  -  ${verb.p2}  -  ${verb.p3}`;
   
   const tipBox = document.getElementById('fc-back-tip');
   if (verb.tip) {
@@ -1045,7 +1045,7 @@ function isCheckpointUnlocked(cpId) {
 function startCheckpointGame() {
   const cp = CHECKPOINTS_META.find(c => c.id === state.activeCheckpointId) || CHECKPOINTS_META[0];
   document.getElementById('cp-game-title').textContent = cp.title;
-  document.getElementById('cp-game-subtitle').textContent = `${cp.subtitle} · Objectiu: ${cp.requiredScore}% d'encerts`;
+  document.getElementById('cp-game-subtitle').textContent = `${cp.subtitle} - Objectiu: ${cp.requiredScore}% d'encerts`;
 
   // Filtra tots els verbs acumulats des del verb 1 fins a maxVerbs
   const accumulatedVerbs = VERBS_DATA.slice(0, cp.maxVerbs);

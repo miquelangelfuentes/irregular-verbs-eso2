@@ -1,4 +1,4 @@
-# Verb Quest 2n d'ESO · Irregular Verbs Arena ⚡
+# Verb Quest 2n d'ESO - Irregular Verbs Arena ⚡
 
 Una plataforma web interactiva i gamificada perquè l'alumnat de **2n d'ESO** aprengui, practiqui i consolidi els **108 verbs irregulars**.
 
@@ -16,7 +16,7 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ 1. PACKS DE 10 ALFABÈTICAMENT (11 nivells de 10 verbs)      │
-│    Flashcards 3D · Quiz de 4 opcions · Escriure · Memory ·  │
+│    Flashcards 3D - Quiz de 4 opcions - Escriure - Memory -  │
 │    Lletres desordenades                                     │
 └──────────────────────────────┬──────────────────────────────┘
                                ▼
