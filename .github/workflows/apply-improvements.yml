@@ -35,14 +35,22 @@ jobs:
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
-          theme = '<link rel="stylesheet" href="portal-theme.css?v=1" />'
-          text = re.sub(r'portal-theme\.css(?:\?v=\d+)?', 'portal-theme.css?v=1', text)
+          theme_css = '<link rel="stylesheet" href="portal-theme.css?v=2" />'
+          theme_js = '<script src="portal-theme.js?v=1"></script>'
+
+          text = re.sub(r'portal-theme\.css(?:\?v=\d+)?', 'portal-theme.css?v=2', text)
+          text = re.sub(r'portal-theme\.js(?:\?v=\d+)?', 'portal-theme.js?v=1', text)
+
           if 'portal-theme.css' not in text:
               text = text.replace(
                   '<link rel="stylesheet" href="styles.css?v=4.0" />',
-                  '<link rel="stylesheet" href="styles.css?v=4.0" />\n  ' + theme,
+                  '<link rel="stylesheet" href="styles.css?v=4.0" />\n  ' + theme_css,
                   1,
               )
+
+          if 'portal-theme.js' not in text:
+              text = text.replace('</head>', '  ' + theme_js + '\n</head>', 1)
+
           path.write_text(text, encoding='utf-8')
           PY
 
@@ -73,5 +81,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Aplicar tema visual compartit a Verb Quest"
+          git commit -m "Activar mode clar i fosc compartit"
           git push
