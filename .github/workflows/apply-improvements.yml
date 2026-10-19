@@ -35,15 +35,14 @@ jobs:
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
-          updated, count = re.subn(
+          updated = re.sub(
               r'\s*<div>\s*<p class="font-semibold text-slate-800">Segell del centre escolar:</p>\s*<div class="w-32 h-10 border border-dashed border-slate-400 mt-1"></div>\s*</div>',
               '',
               text,
               count=1,
           )
-          if count != 1:
-              raise RuntimeError('No s’ha trobat el bloc del segell del centre')
-          path.write_text(updated, encoding='utf-8')
+          if updated != text:
+              path.write_text(updated, encoding='utf-8')
           PY
 
       - name: Commit generated updates
