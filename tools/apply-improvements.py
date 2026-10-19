@@ -110,6 +110,12 @@ def polish_index(html: str) -> str:
     html = html.replace('<!-- 2. VISTA: LLISTA DE PACKS DE 10 -->', '<!-- 2. VISTA: LLISTA DE PACKS D’APRENENTATGE -->')
     html = html.replace('>Packs de 10 verbs alfabèticament</h2>', '>Packs d’aprenentatge</h2>')
 
+    # El menú principal comparteix el mateix comportament visual a tots els botons.
+    html = html.replace(
+        'hover:text-rose-600 hover:bg-rose-50 transition-colors">Repàs d\'errors</button>',
+        'hover:text-indigo-600 hover:bg-slate-100 transition-colors">Repàs d\'errors</button>',
+    )
+
     logo_open = '<div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo(\'home\')">'
     if logo_open in html:
         html = html.replace(
