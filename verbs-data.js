@@ -336,12 +336,12 @@ const VERBS_DATA = [
   // --- PACK 5 (41 - 50) ---
   {
     id: 41, pack: 5,
-    v1: "hang", v2: "hung/hanged", v3: "hung/hanged",
+    v1: "hang", v2: "hung", v3: "hung",
     cat: "penjar",
-    p1: "/hæŋ/", p2: "/hʌŋ//hæŋd/", p3: "/hʌŋ//hæŋd/",
-    accept_v2: ["hung", "hanged", "hung/hanged"],
-    accept_v3: ["hung", "hanged", "hung/hanged"],
-    family: "t-or-ed"
+    p1: "/hæŋ/", p2: "/hʌŋ/", p3: "/hʌŋ/",
+    accept_v2: ["hung"],
+    accept_v3: ["hung"],
+    family: "especial", tip: "Per penjar objectes fem servir hang-hung-hung. Hanged s'utilitza sobretot quan hang significa executar una persona per penjament."
   },
   {
     id: 42, pack: 5,
@@ -868,8 +868,8 @@ const VERBS_DATA = [
     v1: "wake up", v2: "woke up", v3: "woken up",
     cat: "despertar(-se)",
     p1: "/weɪk ˈʌp/", p2: "/wəʊk ˈʌp/", p3: "/ˈwəʊkən ˈʌp/",
-    accept_v2: ["woke up", "woke"],
-    accept_v3: ["woken up", "woken"],
+    accept_v2: ["woke up"],
+    accept_v3: ["woken up"],
     family: "o-en"
   },
   {

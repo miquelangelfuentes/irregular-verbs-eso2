@@ -11,11 +11,11 @@ Dissenyada específicament per a desplegar-se de manera gratuïta i immediata a 
 
 ## 🌟 Estructura pedagògica de l'aplicació
 
-L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatge (*scaffolding*) i la repetició espaiada acumulativa (*spaced retrieval*):
+L'aprenentatge combina bastides de suport amb pràctica de recuperació acumulativa. Els checkpoints recuperen verbs de packs anteriors, però l'aplicació no programa els repassos segons intervals temporals, de manera que no es presenta com un sistema de repetició espaiada.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ 1. PACKS DE 10 ALFABÈTICAMENT (11 nivells de 10 verbs)      │
+│ 1. PACKS D’APRENENTATGE (10 packs de 10 + un pack de 8)    │
 │    Flashcards 3D - Quiz de 4 opcions - Escriure - Memory -  │
 │    Lletres desordenades                                     │
 └──────────────────────────────┬──────────────────────────────┘
@@ -42,7 +42,7 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 
 ---
 
-## 📦 Detall dels 11 packs de 10
+## 📦 Detall dels 11 packs d’aprenentatge
 
 | Pack | Rang alfabètic | Verbs inclosos | Total |
 | :---: | :--- | :--- | :---: |
@@ -60,7 +60,7 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 
 ---
 
-## 🎮 Els 5 jocs dins de cada pack
+## 🎮 Activitats dins de cada pack
 
 1. **🗂️ Flashcards 3D:** gir tridimensional amb base form (V1), past simple (V2), past participle (V3), transcripció fonètica, pistes mnemotècniques i botó d'àudio.
 2. **🎯 Quiz de 4 opcions:** preguntes ràpides generades dinàmicament amb distractors intel·ligents, ratxes i percentatge d'encert.
@@ -70,11 +70,20 @@ L'aprenentatge està dissenyat seguint els principis de la bastida d'aprenentatg
 
 ---
 
+
+## 🧠 Repàs dels meus errors
+
+L'aplicació registra localment els verbs en què l'alumnat s'equivoca i crea una cua de repàs personalitzada. Els verbs amb més dificultat apareixen primer i es practiquen mitjançant recuperació escrita de V2 i V3. Aquest historial es desa només al navegador mitjançant `localStorage`.
+
+El domini d'un pack ja no depèn només del reconeixement en un quiz. Per obtenir dues estrelles, cal arribar com a mínim al **80% tant al quiz com a l'activitat escrita**. Les tres estrelles exigeixen com a mínim un **90% en totes dues evidències**.
+
+---
+
 ## 🚩 Checkpoints acumulatius
 
 Per garantir que l'alumnat no oblida els primers packs a mesura que avança el curs, els **checkpoints** agafen preguntes a l'atzar de **tots els packs acumulats fins a aquell moment**.
 - Es requereix un **80% d'encerts** per desbloquejar la medalla.
-- El sistema desa el progrés i les medalles obtingudes a `localStorage`.
+- El sistema desa el progrés, les medalles, les puntuacions de quiz i producció escrita i l’historial d’errors a `localStorage`.
 
 ---
 
@@ -89,6 +98,7 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
   - **Certificat imprimible en format A4**: permet introduir el nom de l'alumne/a i grup per lliurar al docent en paper o PDF.
 - **🎡 La ruleta dels verbs:** ruleta física animada per fer reptes orals i dinàmiques de grup classe.
 - **📚 Diccionari i cercador:** cercador en temps real per anglès o català, amb text a veu en anglès i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
+- **Navegació compartible:** les vistes principals utilitzen fragments d’URL (`#packs`, `#review`, `#dictionary`, etc.) perquè es puguin enllaçar directament i el botó Enrere del navegador funcioni de manera coherent.
 
 ---
 

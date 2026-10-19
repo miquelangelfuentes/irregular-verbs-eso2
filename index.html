@@ -48,7 +48,7 @@
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-  <link rel="stylesheet" href="styles.css?v=3.1" />
+  <link rel="stylesheet" href="styles.css?v=4.0" />
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
@@ -73,8 +73,9 @@
       <!-- Menú de navegació principal -->
       <nav class="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-600">
         <button onclick="navigateTo('home')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Inici</button>
-        <button onclick="navigateTo('packs-list')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Packs de 10</button>
+        <button onclick="navigateTo('packs-list')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Packs d'aprenentatge</button>
         <button onclick="navigateTo('checkpoints-list')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Checkpoints</button>
+        <button onclick="navigateTo('review-errors')" class="px-3 py-1.5 rounded-lg hover:text-rose-600 hover:bg-rose-50 transition-colors">Repàs d'errors</button>
         <button onclick="navigateTo('all-verbs-hub')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Jocs finals (108)</button>
         <button onclick="navigateTo('explorer')" class="px-3 py-1.5 rounded-lg hover:text-indigo-600 hover:bg-slate-100 transition-colors">Diccionari</button>
       </nav>
@@ -88,7 +89,7 @@
         </div>
 
         <button onclick="state.soundEnabled = !state.soundEnabled; showNotification(state.soundEnabled ? 'So activat 🔊' : 'So silenciat 🔇', 'info')" 
-          class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors" title="Activa / desactiva efectes sonors">
+          class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors" title="Activa / desactiva efectes sonors" aria-label="Activa o desactiva els efectes sonors">
           <i data-lucide="volume-2" class="w-4 h-4"></i>
         </button>
       </div>
@@ -117,22 +118,18 @@
             Domina els 108 verbs irregulars de 2n d'ESO!
           </h1>
           <p class="text-indigo-100 text-sm sm:text-base leading-relaxed">
-            Aprèn pas a pas en packs de 10 alfabèticament, consolida la memòria amb els checkpoints acumulatius i enfronta't als jocs finals amb tots els verbs.
+            Aprèn els 108 verbs en 11 packs d'aprenentatge, recupera'ls sense mirar la resposta i posa't a prova amb repassos acumulatius. El teu progrés i els verbs que et costen més es desen només en aquest navegador.
           </p>
           
           <!-- Botons crida a l'acció -->
           <div class="pt-2 flex flex-wrap gap-3">
             <button onclick="navigateTo('packs-list')" class="px-5 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-900 font-display font-bold text-sm shadow-lg shadow-amber-500/30 transition-all flex items-center gap-2 active:scale-95">
-              <span>Començar pels packs de 10</span>
+              <span>Aprèn i practica</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </button>
             <button onclick="navigateTo('checkpoints-list')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm backdrop-blur-md border border-white/20 transition-all flex items-center gap-2">
               <i data-lucide="flag" class="w-4 h-4 text-pink-300"></i>
-              <span>Reptes de checkpoint</span>
-            </button>
-            <button onclick="navigateTo('all-verbs-hub')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm backdrop-blur-md border border-white/20 transition-all flex items-center gap-2">
-              <i data-lucide="crown" class="w-4 h-4 text-yellow-300"></i>
-              <span>Arena de tots els verbs</span>
+              <span>Posa't a prova</span>
             </button>
           </div>
         </div>
@@ -149,63 +146,37 @@
         </div>
       </div>
 
-      <!-- Els 3 Pilars de Pràctica -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- Pilar 1: Packs de 10 -->
-        <div onclick="navigateTo('packs-list')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-indigo-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
-              <i data-lucide="package" class="w-6 h-6"></i>
-            </div>
-            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Metodologia pas a pas</span>
-            <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Packs de 10 alfabèticament</h3>
-            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
-              11 nivells ordenats alfabèticament de la A a la W. Cada pack té 5 jocs diferents: flashcards 3D, quiz, escriure, memory i lletres desordenades.
-            </p>
+      <!-- Dues rutes principals -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <section class="bg-white rounded-3xl p-6 border-2 border-slate-200 shadow-sm">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mb-4">
+            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-indigo-600">
-            <span>11 packs disponibles</span>
-            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1">Entrar <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Ruta d'aprenentatge</span>
+          <h3 class="font-display font-bold text-2xl text-slate-900 mt-1">Aprèn i practica</h3>
+          <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+            Treballa els verbs en 11 packs ordenats alfabèticament. Els 10 primers contenen 10 verbs i el pack final en conté 8. Combina reconeixement amb producció escrita abans de considerar un pack dominat.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-5">
+            <button onclick="navigateTo('packs-list')" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm">Obrir els packs</button>
+            <button onclick="navigateTo('review-errors')" class="px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-sm">Repassar els meus errors</button>
           </div>
-        </div>
+        </section>
 
-        <!-- Pilar 2: Checkpoints Acumulatius -->
-        <div onclick="navigateTo('checkpoints-list')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-amber-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
-              <i data-lucide="flag" class="w-6 h-6"></i>
-            </div>
-            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Repàs acumulat</span>
-            <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Checkpoints acumulatius</h3>
-            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
-              Consolida la memòria a llarg termini! Cada checkpoint avalua tots els packs apresos fins al moment (20, 40, 60, 80, 100 i 108 verbs) per guanyar medalles.
-            </p>
+        <section class="bg-white rounded-3xl p-6 border-2 border-slate-200 shadow-sm">
+          <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center mb-4">
+            <i data-lucide="target" class="w-6 h-6"></i>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-amber-600">
-            <span>6 medalles per desbloquejar</span>
-            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1">Entrar <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Ruta d'autoavaluació</span>
+          <h3 class="font-display font-bold text-2xl text-slate-900 mt-1">Posa't a prova</h3>
+          <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+            Recupera verbs de packs anteriors amb checkpoints acumulatius. Quan vulguis treballar amb els 108 verbs, passa als jocs finals i al simulacre d'examen.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-5">
+            <button onclick="navigateTo('checkpoints-list')" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm">Obrir checkpoints</button>
+            <button onclick="navigateTo('all-verbs-hub')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 font-bold text-sm">Jocs amb els 108 verbs</button>
           </div>
-        </div>
-
-        <!-- Pilar 3: Jocs amb Tots els Verbs -->
-        <div onclick="navigateTo('all-verbs-hub')" class="bg-white rounded-3xl p-6 border-2 border-slate-200 hover:border-rose-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
-              <i data-lucide="crown" class="w-6 h-6"></i>
-            </div>
-            <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">El gran repte</span>
-            <h3 class="font-display font-bold text-xl text-slate-900 mt-1">Arena de tots els verbs</h3>
-            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
-              Jocs complets amb els 108 verbs: contrarellotge Speed Rush, supervivència amb 3 vides, simulacre d'examen amb informe i la ruleta!
-            </p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-rose-600">
-            <span>5 modes de joc finals</span>
-            <span class="group-hover:translate-x-1 transition-transform flex items-center gap-1">Entrar <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
-          </div>
-        </div>
-
+        </section>
       </div>
 
       <!-- Accés ràpid al diccionari -->
@@ -1011,6 +982,22 @@
     <!-- ============================================== -->
     <!-- 6. VISTA: EXPLORADOR & CERCADOR DELS 108 VERBS -->
     <!-- ============================================== -->
+
+    <!-- ============================================== -->
+    <!-- VISTA: REPÀS ADAPTATIU DELS ERRORS            -->
+    <!-- ============================================== -->
+    <section id="view-review-errors" class="view-screen hidden space-y-6" aria-labelledby="review-errors-title">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-600">Pràctica personalitzada</span>
+          <h1 id="review-errors-title" class="font-display font-bold text-3xl text-slate-900 mt-1">Repàs dels meus errors</h1>
+        </div>
+        <button onclick="navigateTo('home')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">Tornar a l'inici</button>
+      </div>
+      <div id="review-errors-content"></div>
+    </section>
+
+
     <section id="view-explorer" class="view-screen hidden space-y-6">
       
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -1206,8 +1193,9 @@
   </div>
 
   <!-- SCRIPTS DE L'APLICACIÓ -->
-  <script src="verbs-data.js?v=3.1"></script>
-  <script src="app.js?v=3.1"></script>
+  <script src="verbs-data.js?v=4.0"></script>
+  <script src="app.js?v=4.0"></script>
+  <script src="enhancements.js?v=4.0"></script>
   <script>
     // Inicialitza icones Lucide
     lucide.createIcons();
