@@ -27,7 +27,7 @@ jobs:
       - name: Apply final polish and build production CSS
         run: python tools/apply-improvements.py
 
-      - name: Apply shared portal theme
+      - name: Apply shared portal theme and contrast layer
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -36,10 +36,12 @@ jobs:
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
           theme_css = '<link rel="stylesheet" href="portal-theme.css?v=3" />'
-          theme_js = '<script src="portal-theme.js?v=2"></script>'
+          contrast_css = '<link rel="stylesheet" href="portal-contrast.css?v=1" />'
+          theme_js = '<script src="portal-theme.js?v=3"></script>'
 
           text = re.sub(r'portal-theme\.css(?:\?v=\d+)?', 'portal-theme.css?v=3', text)
-          text = re.sub(r'portal-theme\.js(?:\?v=\d+)?', 'portal-theme.js?v=2', text)
+          text = re.sub(r'portal-contrast\.css(?:\?v=\d+)?', 'portal-contrast.css?v=1', text)
+          text = re.sub(r'portal-theme\.js(?:\?v=\d+)?', 'portal-theme.js?v=3', text)
 
           if 'portal-theme.css' not in text:
               text = text.replace(
@@ -48,8 +50,28 @@ jobs:
                   1,
               )
 
+          if 'portal-contrast.css' not in text:
+              text = re.sub(
+                  r'(<link rel="stylesheet" href="portal-theme\.css\?v=3"\s*/?>)',
+                  r'\1\n  ' + contrast_css,
+                  text,
+                  count=1,
+              )
+
           if 'portal-theme.js' not in text:
               text = text.replace('</head>', '  ' + theme_js + '\n</head>', 1)
+
+          if 'class="portal-theme-toggle"' not in text:
+              button = '<button type="button" class="portal-theme-toggle" aria-label="Activa el mode fosc" title="Activa el mode fosc"></button>'
+              updated, count = re.subn(
+                  r'(\n\s*)(<button onclick="state\.soundEnabled)',
+                  r'\1' + button + r'\1\2',
+                  text,
+                  count=1,
+              )
+              if count != 1:
+                  raise RuntimeError('No s’ha pogut inserir el botó de mode abans del botó de so')
+              text = updated
 
           path.write_text(text, encoding='utf-8')
           PY
@@ -81,5 +103,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Corregir contrast i controls de tema"
+          git commit -m "Aplicar auditoria de contrast clar i fosc"
           git push
