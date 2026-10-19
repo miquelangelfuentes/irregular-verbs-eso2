@@ -1,11 +1,13 @@
-name: Apply Verb Quest improvements
+name: Build and polish Verb Quest
 
 on:
   push:
     branches: [main]
     paths:
       - 'tools/apply-improvements.py'
-      - 'enhancements.js'
+      - '*.html'
+      - '*.js'
+      - '*.css'
       - '.github/workflows/apply-improvements.yml'
   workflow_dispatch:
 
@@ -13,7 +15,8 @@ permissions:
   contents: write
 
 jobs:
-  improve-site:
+  build-and-polish:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,17 +24,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Apply improvements
+      - name: Apply final polish and build production CSS
         run: python tools/apply-improvements.py
 
       - name: Commit generated updates
         run: |
-          if git diff --quiet; then
+          if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html styles.css verbs-data.js README.md
-          git commit -m "Aplicar millores pedagògiques i d'accessibilitat a Verb Quest"
+          git add -A
+          git commit -m "Polir Verb Quest i compilar Tailwind"
           git push
