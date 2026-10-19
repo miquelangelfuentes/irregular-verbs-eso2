@@ -15,39 +15,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              50: '#f5f3ff',
-              100: '#ede9fe',
-              200: '#ddd6fe',
-              300: '#c4b5fd',
-              400: '#a78bfa',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
-              800: '#5b21b6',
-              900: '#4c1d95',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Lucide Icons -->
+<!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
+  <link rel="stylesheet" href="tailwind.css?v=1.0">
   <link rel="stylesheet" href="styles.css?v=4.0" />
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
@@ -57,7 +30,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
       <!-- Logotip i Títol -->
-      <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+      <button type="button" class="flex items-center gap-3 cursor-pointer text-left" onclick="navigateTo('home')" aria-label="Torna a l’inici">
         <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 border border-white/20">
           <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
         </div>
@@ -68,7 +41,7 @@
           </div>
           <p class="text-[11px] text-slate-500 hidden sm:block">Verbs irregulars en anglès</p>
         </div>
-      </div>
+      </button>
 
       <!-- Menú de navegació principal -->
       <nav class="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-600">
@@ -257,7 +230,7 @@
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'inici
           </button>
           <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Packs de 10 verbs alfabèticament</h2>
-          <p class="text-sm text-slate-600">Aprèn i consolida els 108 verbs en 11 blocs progressius de 10 verbs.</p>
+          <p class="text-sm text-slate-600">Aprèn i consolida els 108 verbs en 11 packs d’aprenentatge - 10 packs de 10 verbs i un últim de 8.</p>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="navigateTo('checkpoints-list')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-sm flex items-center gap-2">
@@ -329,7 +302,7 @@
             <div class="card-front bg-gradient-to-tr from-white to-indigo-50 border-2 border-indigo-200 shadow-xl flex flex-col items-center justify-between p-8">
               <div class="w-full flex items-center justify-between">
                 <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">Base Form (V1)</span>
-                <button onclick="event.stopPropagation(); playFcAudioCurrent()" class="p-2 rounded-full bg-white hover:bg-indigo-100 text-indigo-600 shadow-sm" title="Escoltar">
+                <button onclick="event.stopPropagation(); playFcAudioCurrent()" class="p-2 rounded-full bg-white hover:bg-indigo-100 text-indigo-600 shadow-sm" title="Escoltar" aria-label="Escolta la pronunciació">
                   <i data-lucide="volume-2" class="w-5 h-5"></i>
                 </button>
               </div>
@@ -352,7 +325,7 @@
             <div class="card-back bg-gradient-to-tr from-indigo-700 to-purple-900 text-white border-2 border-indigo-500 shadow-xl flex flex-col items-center justify-between p-8">
               <div class="w-full flex items-center justify-between">
                 <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/20 text-white">Les 3 formes</span>
-                <button onclick="event.stopPropagation(); playFcAudioCurrent()" class="p-2 rounded-full bg-white/20 hover:bg-white/30 text-white shadow-sm" title="Escoltar">
+                <button onclick="event.stopPropagation(); playFcAudioCurrent()" class="p-2 rounded-full bg-white/20 hover:bg-white/30 text-white shadow-sm" title="Escoltar" aria-label="Escolta la pronunciació">
                   <i data-lucide="volume-2" class="w-5 h-5"></i>
                 </button>
               </div>
@@ -948,7 +921,7 @@
         <div id="wheel-result-card" class="hidden p-6 rounded-2xl bg-indigo-50 border-2 border-indigo-200 text-left space-y-4 animate-float">
           <div class="flex items-center justify-between">
             <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-600 text-white">Verb seleccionat</span>
-            <button onclick="speakEnglish(state.game.wheelSelectedVerb.v1)" class="p-2 rounded-full bg-white text-indigo-600 shadow-sm" title="Escoltar">
+            <button onclick="speakEnglish(state.game.wheelSelectedVerb.v1)" class="p-2 rounded-full bg-white text-indigo-600 shadow-sm" title="Escoltar" aria-label="Escolta la pronunciació">
               <i data-lucide="volume-2" class="w-4 h-4"></i>
             </button>
           </div>

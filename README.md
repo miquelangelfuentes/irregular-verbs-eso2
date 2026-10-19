@@ -148,3 +148,5 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
 - **Codi:** sota llicència [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
 - **Continguts educatius:** sota llicència [Creative Commons CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca).
 
+
+- **CSS de producció:** Tailwind es compila a `tailwind.css`; la web no depèn del Play CDN de Tailwind.
