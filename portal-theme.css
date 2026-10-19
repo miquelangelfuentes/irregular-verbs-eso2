@@ -1,0 +1,333 @@
+/* Shared visual system - Grammar Lab + Verb Quest */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');
+
+:root {
+  --portal-font-body: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+  --portal-font-display: 'Space Grotesk', 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+  --portal-brand-50: #eef2ff;
+  --portal-brand-100: #e0e7ff;
+  --portal-brand-200: #c7d2fe;
+  --portal-brand-600: #4f46e5;
+  --portal-brand-700: #4338ca;
+  --portal-brand-900: #312e81;
+  --portal-page: #f8fafc;
+  --portal-surface: #ffffff;
+  --portal-text: #1e293b;
+  --portal-muted: #64748b;
+  --portal-border: #e2e8f0;
+  --portal-radius-card: 1rem;
+  --portal-radius-control: .75rem;
+  --portal-shadow: 0 1px 3px rgba(15, 23, 42, .08);
+}
+
+html { font-size: 16px; }
+
+body,
+button,
+input,
+select,
+textarea,
+.font-sans {
+  font-family: var(--portal-font-body) !important;
+}
+
+.font-display,
+main h1,
+main h2,
+main h3,
+main h4 {
+  font-family: var(--portal-font-display) !important;
+}
+
+body {
+  background: var(--portal-page) !important;
+  color: var(--portal-text);
+  line-height: 1.6;
+}
+
+:focus-visible {
+  outline: 3px solid var(--portal-brand-600) !important;
+  outline-offset: 3px;
+}
+
+/* One-line global header on both sites. */
+header {
+  background: rgba(255, 255, 255, .96) !important;
+  border-bottom: 1px solid var(--portal-border) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+}
+
+header > div > div {
+  height: 4rem !important;
+  min-height: 4rem !important;
+}
+
+header nav {
+  white-space: nowrap;
+}
+
+header a[href="index.html"] > div:first-child,
+header button[aria-label="Torna a l’inici"] > div:first-child {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  border-radius: .75rem !important;
+  background: var(--portal-brand-600) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+header a[href="index.html"] > .shrink-0.whitespace-nowrap {
+  display: flex !important;
+  align-items: center;
+  gap: .5rem;
+}
+
+header a[href="index.html"] > .shrink-0.whitespace-nowrap > div:first-child {
+  display: none !important;
+}
+
+header a[href="index.html"] > .shrink-0.whitespace-nowrap > div:last-child {
+  display: flex !important;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--portal-font-display) !important;
+  line-height: 1 !important;
+}
+
+header a[href="index.html"] > .shrink-0.whitespace-nowrap > div:last-child::after {
+  content: "2n ESO";
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.4rem;
+  padding: .15rem .5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--portal-brand-200);
+  background: var(--portal-brand-50);
+  color: var(--portal-brand-700);
+  font-family: var(--portal-font-body);
+  font-size: .68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+header button[aria-label="Torna a l’inici"] > div:last-child {
+  display: flex !important;
+  align-items: center !important;
+  gap: .5rem;
+}
+
+header button[aria-label="Torna a l’inici"] > div:last-child > p {
+  display: none !important;
+}
+
+header button[aria-label="Torna a l’inici"] > div:last-child > div {
+  gap: .5rem !important;
+}
+
+header button[aria-label="Torna a l’inici"] > div:last-child > div > span:last-child {
+  min-height: 1.4rem;
+  padding: .15rem .5rem !important;
+  border: 1px solid var(--portal-brand-200) !important;
+  background: var(--portal-brand-50) !important;
+  color: var(--portal-brand-700) !important;
+  font-family: var(--portal-font-body) !important;
+  font-size: .68rem !important;
+  font-weight: 700 !important;
+}
+
+/* Shared type rhythm. */
+main .text-\[10px\],
+main .text-\[11px\],
+main .text-xs,
+#units-modal .text-\[10px\],
+#units-modal .text-\[11px\],
+#units-modal .text-xs {
+  font-size: .875rem !important;
+  line-height: 1.35rem !important;
+}
+
+main .text-sm,
+main .text-base {
+  font-size: 1rem !important;
+  line-height: 1.6rem !important;
+}
+
+main .uppercase,
+#units-modal .uppercase {
+  text-transform: none !important;
+}
+
+main .tracking-widest,
+main .tracking-wider,
+main .tracking-wide,
+#units-modal .tracking-widest,
+#units-modal .tracking-wider,
+#units-modal .tracking-wide {
+  letter-spacing: .01em !important;
+}
+
+/* Shared surfaces and geometry. */
+main .rounded-3xl,
+#units-modal .rounded-3xl {
+  border-radius: var(--portal-radius-card) !important;
+}
+
+main .rounded-2xl,
+#units-modal .rounded-2xl {
+  border-radius: var(--portal-radius-control) !important;
+}
+
+main .border-2,
+#units-modal .border-2 {
+  border-width: 1px !important;
+}
+
+main .shadow-2xl,
+main .shadow-xl,
+main .shadow-lg,
+main .shadow-md,
+main .shadow-sm,
+#units-modal .shadow-2xl,
+#units-modal .shadow-xl,
+#units-modal .shadow-lg,
+#units-modal .shadow-md,
+#units-modal .shadow-sm {
+  box-shadow: var(--portal-shadow) !important;
+}
+
+main .bg-white,
+#units-modal .bg-white {
+  background-color: var(--portal-surface) !important;
+}
+
+main input,
+main select,
+main textarea {
+  font-family: var(--portal-font-body) !important;
+  font-size: 1rem !important;
+  border-radius: var(--portal-radius-control) !important;
+}
+
+/* Indigo is the only decorative accent. Emerald and rose are kept for success/error. */
+[class^="bg-purple-"],
+[class*=" bg-purple-"],
+[class^="bg-pink-"],
+[class*=" bg-pink-"],
+[class^="bg-blue-"],
+[class*=" bg-blue-"],
+[class^="bg-sky-"],
+[class*=" bg-sky-"],
+[class^="bg-orange-"],
+[class*=" bg-orange-"],
+[class^="bg-amber-"],
+[class*=" bg-amber-"] {
+  background-color: var(--portal-brand-50) !important;
+}
+
+[class^="text-purple-"],
+[class*=" text-purple-"],
+[class^="text-pink-"],
+[class*=" text-pink-"],
+[class^="text-blue-"],
+[class*=" text-blue-"],
+[class^="text-sky-"],
+[class*=" text-sky-"],
+[class^="text-orange-"],
+[class*=" text-orange-"],
+[class^="text-amber-"],
+[class*=" text-amber-"] {
+  color: var(--portal-brand-700) !important;
+}
+
+[class^="border-purple-"],
+[class*=" border-purple-"],
+[class^="border-pink-"],
+[class*=" border-pink-"],
+[class^="border-blue-"],
+[class*=" border-blue-"],
+[class^="border-sky-"],
+[class*=" border-sky-"],
+[class^="border-orange-"],
+[class*=" border-orange-"],
+[class^="border-amber-"],
+[class*=" border-amber-"] {
+  border-color: var(--portal-brand-200) !important;
+}
+
+[class^="hover:bg-purple-"]:hover,
+[class*=" hover:bg-purple-"]:hover,
+[class^="hover:bg-pink-"]:hover,
+[class*=" hover:bg-pink-"]:hover,
+[class^="hover:bg-blue-"]:hover,
+[class*=" hover:bg-blue-"]:hover,
+[class^="hover:bg-sky-"]:hover,
+[class*=" hover:bg-sky-"]:hover,
+[class^="hover:bg-orange-"]:hover,
+[class*=" hover:bg-orange-"]:hover,
+[class^="hover:bg-amber-"]:hover,
+[class*=" hover:bg-amber-"]:hover {
+  background-color: var(--portal-brand-100) !important;
+}
+
+[class^="hover:text-purple-"]:hover,
+[class*=" hover:text-purple-"]:hover,
+[class^="hover:text-pink-"]:hover,
+[class*=" hover:text-pink-"]:hover,
+[class^="hover:text-blue-"]:hover,
+[class*=" hover:text-blue-"]:hover,
+[class^="hover:text-sky-"]:hover,
+[class*=" hover:text-sky-"]:hover,
+[class^="hover:text-orange-"]:hover,
+[class*=" hover:text-orange-"]:hover,
+[class^="hover:text-amber-"]:hover,
+[class*=" hover:text-amber-"]:hover {
+  color: var(--portal-brand-700) !important;
+}
+
+main .bg-gradient-to-r,
+main .bg-gradient-to-tr,
+main .bg-gradient-to-br,
+#units-modal .bg-gradient-to-r,
+#units-modal .bg-gradient-to-tr,
+#units-modal .bg-gradient-to-br {
+  background-image: linear-gradient(135deg, var(--portal-brand-700), var(--portal-brand-900)) !important;
+}
+
+/* Primary navigation/action buttons share the same treatment. */
+header [class~="bg-emerald-600"],
+header [class~="bg-emerald-500"],
+main a[href*="-reforc.html"][class~="bg-emerald-50"],
+main a[href*="-reforc.html"][class~="bg-emerald-600"],
+main a[href*="-ampliacio.html"][class~="bg-purple-50"],
+main a[href*="-ampliacio.html"][class~="bg-purple-600"] {
+  background-color: var(--portal-brand-600) !important;
+  border-color: var(--portal-brand-600) !important;
+  color: #fff !important;
+}
+
+header [class~="hover:bg-emerald-700"]:hover,
+header [class~="hover:bg-emerald-600"]:hover {
+  background-color: var(--portal-brand-700) !important;
+}
+
+header [class~="bg-slate-100"],
+main [class~="bg-slate-100"] {
+  border-color: var(--portal-border) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media (max-width: 767px) {
+  header a[href="index.html"] > .shrink-0.whitespace-nowrap > div:last-child::after,
+  header button[aria-label="Torna a l’inici"] > div:last-child > div > span:last-child {
+    display: none !important;
+  }
+}
