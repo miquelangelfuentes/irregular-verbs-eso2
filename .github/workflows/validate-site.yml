@@ -25,11 +25,13 @@ jobs:
           node --check app.js
           node --check verbs-data.js
           node --check enhancements.js
+          node --check accessibility.js
 
       - name: Check required interface hooks
         run: |
           grep -q 'id="view-review-errors"' index.html
           grep -q 'enhancements.js?v=4.0' index.html
+          grep -q 'accessibility.js?v=4.0' index.html
           grep -q "navigateTo('packs-list')" index.html
           grep -q "navigateTo('checkpoints-list')" index.html
           grep -q "navigateTo('explorer')" index.html
