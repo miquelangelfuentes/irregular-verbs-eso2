@@ -99,6 +99,7 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
 - **🎡 La ruleta dels verbs:** ruleta física animada per fer reptes orals i dinàmiques de grup classe.
 - **📚 Diccionari i cercador:** cercador en temps real per anglès o català, amb text a veu en anglès i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
 - **Navegació compartible:** les vistes principals utilitzen fragments d’URL (`#packs`, `#review`, `#dictionary`, etc.) perquè es puguin enllaçar directament i el botó Enrere del navegador funcioni de manera coherent.
+- **Navegació compartible:** les vistes principals utilitzen fragments d’URL (`#packs`, `#review`, `#dictionary`, etc.) perquè es puguin enllaçar directament i el botó Enrere del navegador funcioni de manera coherent.
 
 ---
 
