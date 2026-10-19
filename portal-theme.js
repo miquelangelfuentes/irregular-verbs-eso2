@@ -17,6 +17,19 @@
     return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
+  function renderToggle(theme = root.dataset.theme || 'light') {
+    const button = document.querySelector('.portal-theme-toggle');
+    if (!button) return;
+
+    const dark = theme === 'dark';
+    const label = dark ? 'Activa el mode clar' : 'Activa el mode fosc';
+    button.setAttribute('aria-label', label);
+    button.setAttribute('title', label);
+    button.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    button.innerHTML = `<i data-lucide="${dark ? 'sun' : 'moon'}" class="portal-theme-icon" aria-hidden="true"></i>`;
+    window.lucide?.createIcons();
+  }
+
   function applyTheme(theme, persist = false) {
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
@@ -27,17 +40,7 @@
         // La web continua funcionant encara que l'emmagatzematge estigui bloquejat.
       }
     }
-    updateToggle(theme);
-  }
-
-  function updateToggle(theme = root.dataset.theme || 'light') {
-    const button = document.querySelector('.portal-theme-toggle');
-    if (!button) return;
-    const dark = theme === 'dark';
-    const label = dark ? 'Activa el mode clar' : 'Activa el mode fosc';
-    button.setAttribute('aria-label', label);
-    button.setAttribute('title', label);
-    button.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    renderToggle(theme);
   }
 
   function addToggle() {
@@ -51,20 +54,13 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'portal-theme-toggle';
-    button.innerHTML = [
-      '<i data-lucide="moon" class="portal-theme-icon portal-theme-icon-moon" aria-hidden="true"></i>',
-      '<i data-lucide="sun" class="portal-theme-icon portal-theme-icon-sun" aria-hidden="true"></i>',
-      '<span class="sr-only">Canvia el mode de color</span>'
-    ].join('');
-
     button.addEventListener('click', () => {
       const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
       applyTheme(next, true);
     });
 
     actions.prepend(button);
-    updateToggle();
-    window.lucide?.createIcons();
+    renderToggle();
   }
 
   applyTheme(getInitialTheme());
