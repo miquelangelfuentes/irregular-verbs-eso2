@@ -84,6 +84,7 @@ def build_tailwind() -> None:
 def migrate_tailwind(html: str) -> str:
     html = TAILWIND_CDN_RE.sub('\n', html)
     html = TAILWIND_CONFIG_RE.sub('\n', html)
+    html = html.replace('<!-- Tailwind CSS -->', '<!-- CSS de producció -->')
     link = '<link rel="stylesheet" href="tailwind.css?v=1.0">'
     if link not in html:
         html = html.replace(
@@ -97,11 +98,17 @@ def migrate_tailwind(html: str) -> str:
 def polish_index(html: str) -> str:
     html = migrate_tailwind(html)
     html = html.replace(
+        "Aprèn els 108 verbs en 11 packs d'aprenentatge, recupera'ls sense mirar la resposta i posa't a prova amb repassos acumulatius. El teu progrés i els verbs que et costen més es desen només en aquest navegador.",
+        "Treballa els 108 verbs en 11 packs d'aprenentatge i recupera'ls sense mirar la resposta. Després posa't a prova amb repassos acumulatius. El teu progrés i els verbs que et costen més es desen només en aquest navegador.",
+    )
+    html = html.replace(
         'Aprèn i consolida els 108 verbs en 11 blocs progressius de 10 verbs.',
         'Aprèn i consolida els 108 verbs en 11 packs d’aprenentatge - 10 packs de 10 verbs i un últim de 8.',
     )
     html = html.replace('11 nivells de 10 verbs', '10 packs de 10 verbs i un últim pack de 8')
     html = html.replace('11 packs de 10 alfabèticament', '11 packs d’aprenentatge')
+    html = html.replace('<!-- 2. VISTA: LLISTA DE PACKS DE 10 -->', '<!-- 2. VISTA: LLISTA DE PACKS D’APRENENTATGE -->')
+    html = html.replace('>Packs de 10 verbs alfabèticament</h2>', '>Packs d’aprenentatge</h2>')
 
     logo_open = '<div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo(\'home\')">'
     if logo_open in html:
@@ -148,8 +155,8 @@ def validate() -> None:
         raise RuntimeError('Tailwind Play CDN encara és present a index.html')
     if 'tailwind.css?v=1.0' not in html:
         raise RuntimeError('Falta l’enllaç al CSS compilat')
-    if '11 blocs progressius de 10 verbs' in html:
-        raise RuntimeError('Encara queda la descripció incorrecta dels packs')
+    if '11 blocs progressius de 10 verbs' in html or 'Packs de 10 verbs alfabèticament' in html:
+        raise RuntimeError('Encara queda una descripció incorrecta dels packs')
     if not (ROOT / 'tailwind.css').exists():
         raise RuntimeError('No s’ha generat tailwind.css')
 
