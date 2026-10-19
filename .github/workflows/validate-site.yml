@@ -1,0 +1,41 @@
+name: Validate Verb Quest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.js'
+      - '*.html'
+      - '*.css'
+      - '.github/workflows/validate-site.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check verbs-data.js
+          node --check enhancements.js
+
+      - name: Check required interface hooks
+        run: |
+          grep -q 'id="view-review-errors"' index.html
+          grep -q 'enhancements.js?v=4.0' index.html
+          grep -q "navigateTo('packs-list')" index.html
+          grep -q "navigateTo('checkpoints-list')" index.html
+          grep -q "navigateTo('explorer')" index.html
+
+      - name: Check corrected verb data
+        run: |
+          grep -q 'v1: "hang", v2: "hung", v3: "hung"' verbs-data.js
+          grep -q 'accept_v2: \["woke up"\]' verbs-data.js
+          grep -q 'accept_v3: \["woken up"\]' verbs-data.js
