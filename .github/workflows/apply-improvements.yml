@@ -27,6 +27,23 @@ jobs:
       - name: Apply final polish and build production CSS
         run: python tools/apply-improvements.py
 
+      - name: Remove school stamp from exam certificate
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          block = '''            <div>
+              <p class="font-semibold text-slate-800">Segell del centre escolar:</p>
+              <div class="w-32 h-10 border border-dashed border-slate-400 mt-1"></div>
+            </div>
+'''
+          if block in text:
+              text = text.replace(block, '', 1)
+              path.write_text(text, encoding='utf-8')
+          PY
+
       - name: Commit generated updates
         run: |
           if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
@@ -36,5 +53,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Polir Verb Quest i compilar Tailwind"
+          git commit -m "Polir Verb Quest i eliminar el segell del simulacre"
           git push
