@@ -31,17 +31,19 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
-          block = '''            <div>
-              <p class="font-semibold text-slate-800">Segell del centre escolar:</p>
-              <div class="w-32 h-10 border border-dashed border-slate-400 mt-1"></div>
-            </div>
-'''
-          if block in text:
-              text = text.replace(block, '', 1)
-              path.write_text(text, encoding='utf-8')
+          updated, count = re.subn(
+              r'\s*<div>\s*<p class="font-semibold text-slate-800">Segell del centre escolar:</p>\s*<div class="w-32 h-10 border border-dashed border-slate-400 mt-1"></div>\s*</div>',
+              '',
+              text,
+              count=1,
+          )
+          if count != 1:
+              raise RuntimeError('No s’ha trobat el bloc del segell del centre')
+          path.write_text(updated, encoding='utf-8')
           PY
 
       - name: Commit generated updates
