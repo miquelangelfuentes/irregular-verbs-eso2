@@ -23,7 +23,8 @@
   <link rel="stylesheet" href="tailwind.css?v=1.0">
   <link rel="stylesheet" href="styles.css?v=4.0" />
   <link rel="stylesheet" href="portal-theme.css?v=3" />
-  <script src="portal-theme.js?v=2"></script>
+  <link rel="stylesheet" href="portal-contrast.css?v=1" />
+  <script src="portal-theme.js?v=3"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
@@ -62,6 +63,8 @@
           <span class="text-slate-300">|</span>
           <span id="header-badges">0 / 6 🏅</span>
         </div>
+
+        <button type="button" class="portal-theme-toggle" aria-label="Activa el mode fosc" title="Activa el mode fosc"></button>
 
         <button onclick="state.soundEnabled = !state.soundEnabled; showNotification(state.soundEnabled ? 'So activat 🔊' : 'So silenciat 🔇', 'info')" 
           class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors" title="Activa / desactiva efectes sonors" aria-label="Activa o desactiva els efectes sonors">
