@@ -43,31 +43,53 @@
     renderToggle(theme);
   }
 
+  function findHeaderActions(header) {
+    const soundButton = header.querySelector(
+      'button[aria-label*="efectes sonors"], button[title*="efectes sonors"]'
+    );
+    if (soundButton?.parentElement) {
+      return { actions: soundButton.parentElement, soundButton };
+    }
+
+    const quickLink = header.querySelector('a[href="#units-grid"], a[href="unit1.html"]');
+    if (quickLink?.parentElement) {
+      return { actions: quickLink.parentElement, soundButton: null };
+    }
+
+    const bar = header.querySelector(':scope > div > div');
+    const actions = bar?.lastElementChild || header.querySelector(':scope > div > div:last-child');
+    return { actions, soundButton: null };
+  }
+
   function addToggle() {
     const header = document.querySelector('header');
-    if (!header || header.querySelector('.portal-theme-toggle')) return;
+    if (!header) return;
 
-    const headerBar = header.querySelector(':scope > div > div');
-    const actions = headerBar?.lastElementChild;
+    const { actions, soundButton } = findHeaderActions(header);
     if (!actions) return;
 
     actions.style.display = 'flex';
     actions.style.alignItems = 'center';
     actions.style.columnGap = '.5rem';
 
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'portal-theme-toggle';
-    button.addEventListener('click', () => {
-      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      applyTheme(next, true);
-    });
+    let button = header.querySelector('.portal-theme-toggle');
+    if (!button) {
+      button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'portal-theme-toggle';
+      if (soundButton) soundButton.insertAdjacentElement('beforebegin', button);
+      else actions.prepend(button);
+    } else if (soundButton && button.parentElement !== actions) {
+      soundButton.insertAdjacentElement('beforebegin', button);
+    }
 
-    const soundButton = actions.querySelector(
-      'button[aria-label*="efectes sonors"], button[title*="efectes sonors"]'
-    );
-    if (soundButton) soundButton.insertAdjacentElement('beforebegin', button);
-    else actions.prepend(button);
+    if (button.dataset.themeBound !== 'true') {
+      button.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(next, true);
+      });
+      button.dataset.themeBound = 'true';
+    }
 
     renderToggle();
   }
