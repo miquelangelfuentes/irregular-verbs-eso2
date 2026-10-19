@@ -51,6 +51,10 @@
     const actions = headerBar?.lastElementChild;
     if (!actions) return;
 
+    actions.style.display = 'flex';
+    actions.style.alignItems = 'center';
+    actions.style.columnGap = '.5rem';
+
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'portal-theme-toggle';
@@ -59,7 +63,12 @@
       applyTheme(next, true);
     });
 
-    actions.prepend(button);
+    const soundButton = actions.querySelector(
+      'button[aria-label*="efectes sonors"], button[title*="efectes sonors"]'
+    );
+    if (soundButton) soundButton.insertAdjacentElement('beforebegin', button);
+    else actions.prepend(button);
+
     renderToggle();
   }
 
