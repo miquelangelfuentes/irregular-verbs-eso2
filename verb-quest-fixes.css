@@ -40,3 +40,95 @@ html[data-theme='dark'] #wheel-result-card button[aria-label='Escolta la pronunc
   color: #c7d2fe !important;
   border: 1px solid #334155 !important;
 }
+
+/* Exam report - printing must always use a light, paper-safe palette. */
+@media print {
+  html[data-theme='dark'] #examReportModal {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='text-slate-950'],
+  html[data-theme='dark'] #examReportModal [class~='text-slate-900'],
+  html[data-theme='dark'] #examReportModal [class~='text-slate-800'],
+  html[data-theme='dark'] #examReportModal [class~='text-slate-700'] {
+    color: #0f172a !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='text-slate-600'],
+  html[data-theme='dark'] #examReportModal [class~='text-slate-500'] {
+    color: #475569 !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='text-slate-400'],
+  html[data-theme='dark'] #examReportModal [class~='text-slate-300'] {
+    color: #64748b !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='text-indigo-600'],
+  html[data-theme='dark'] #examReportModal [class~='text-indigo-700'],
+  html[data-theme='dark'] #examReportModal [class~='text-indigo-800'],
+  html[data-theme='dark'] #examReportModal [class~='text-indigo-900'] {
+    color: #3730a3 !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='text-blue-600'],
+  html[data-theme='dark'] #examReportModal [class~='text-blue-700'] {
+    color: #1d4ed8 !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='text-emerald-600'],
+  html[data-theme='dark'] #examReportModal [class~='text-emerald-700'],
+  html[data-theme='dark'] #examReportModal [class~='text-emerald-800'] {
+    color: #047857 !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='text-amber-600'],
+  html[data-theme='dark'] #examReportModal [class~='text-amber-700'],
+  html[data-theme='dark'] #examReportModal [class~='text-amber-800'] {
+    color: #92400e !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='text-rose-600'],
+  html[data-theme='dark'] #examReportModal [class~='text-rose-700'],
+  html[data-theme='dark'] #examReportModal [class~='text-rose-800'] {
+    color: #be123c !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='bg-white'] {
+    background-color: #ffffff !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='bg-slate-50'],
+  html[data-theme='dark'] #examReportModal [class~='bg-slate-100'] {
+    background-color: #f8fafc !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='border-slate-100'],
+  html[data-theme='dark'] #examReportModal [class~='border-slate-200'],
+  html[data-theme='dark'] #examReportModal [class~='border-slate-300'],
+  html[data-theme='dark'] #examReportModal [class~='border-slate-400'] {
+    border-color: #cbd5e1 !important;
+  }
+
+  /* Elements intentionally dark in the printed design keep white text. */
+  html[data-theme='dark'] #examReportModal [class~='bg-slate-800'],
+  html[data-theme='dark'] #examReportModal [class~='bg-slate-900'] {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='bg-slate-800'] *,
+  html[data-theme='dark'] #examReportModal [class~='bg-slate-900'] * {
+    color: #ffffff !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='bg-indigo-900'] {
+    background-color: #312e81 !important;
+    color: #ffffff !important;
+  }
+
+  html[data-theme='dark'] #examReportModal [class~='bg-indigo-900'] * {
+    color: #ffffff !important;
+  }
+}
