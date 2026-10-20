@@ -7,6 +7,7 @@ on:
       - '*.js'
       - '*.html'
       - '*.css'
+      - 'tools/audit-contrast.mjs'
       - '.github/workflows/validate-site.yml'
   workflow_dispatch:
 
@@ -26,6 +27,7 @@ jobs:
           node --check verbs-data.js
           node --check enhancements.js
           node --check accessibility.js
+          node --check tools/audit-contrast.mjs
 
       - name: Check required interface hooks
         run: |
@@ -41,3 +43,17 @@ jobs:
           grep -q 'v1: "hang", v2: "hung", v3: "hung"' verbs-data.js
           grep -q 'accept_v2: \["woke up"\]' verbs-data.js
           grep -q 'accept_v3: \["woken up"\]' verbs-data.js
+
+      - name: Install contrast audit dependencies
+        run: |
+          npm install --no-save --no-package-lock playwright @axe-core/playwright
+          npx playwright install --with-deps chromium
+
+      - name: Start local site
+        run: |
+          python3 -m http.server 4173 > /tmp/verb-quest-http.log 2>&1 &
+          echo $! > /tmp/verb-quest-http.pid
+          sleep 2
+
+      - name: Audit light and dark contrast
+        run: node tools/audit-contrast.mjs
