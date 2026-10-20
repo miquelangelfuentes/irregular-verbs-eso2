@@ -37,12 +37,12 @@ jobs:
           text = path.read_text(encoding='utf-8')
           theme_css = '<link rel="stylesheet" href="portal-theme.css?v=3" />'
           contrast_css = '<link rel="stylesheet" href="portal-contrast.css?v=2" />'
-          fixes_css = '<link rel="stylesheet" href="verb-quest-fixes.css?v=1" />'
+          fixes_css = '<link rel="stylesheet" href="verb-quest-fixes.css?v=2" />'
           theme_js = '<script src="portal-theme.js?v=3"></script>'
 
           text = re.sub(r'portal-theme\.css(?:\?v=\d+)?', 'portal-theme.css?v=3', text)
           text = re.sub(r'portal-contrast\.css(?:\?v=\d+)?', 'portal-contrast.css?v=2', text)
-          text = re.sub(r'verb-quest-fixes\.css(?:\?v=\d+)?', 'verb-quest-fixes.css?v=1', text)
+          text = re.sub(r'verb-quest-fixes\.css(?:\?v=\d+)?', 'verb-quest-fixes.css?v=2', text)
           text = re.sub(r'portal-theme\.js(?:\?v=\d+)?', 'portal-theme.js?v=3', text)
 
           if 'portal-theme.css' not in text:
