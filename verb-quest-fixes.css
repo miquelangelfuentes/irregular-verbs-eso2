@@ -1,5 +1,164 @@
 /* Verb Quest specific theme fixes. Loaded after the shared portal layers. */
 
+/* =========================================================
+   Contrast semàntic global - mode clar
+   ========================================================= */
+html:not([data-theme='dark']) main [class~='text-indigo-500'] {
+  color: #4338ca !important;
+}
+
+html:not([data-theme='dark']) main [class~='text-emerald-500'],
+html:not([data-theme='dark']) main [class~='text-emerald-600'] {
+  color: #065f46 !important;
+}
+
+html:not([data-theme='dark']) main [class~='text-amber-500'],
+html:not([data-theme='dark']) main [class~='text-amber-600'] {
+  color: #92400e !important;
+}
+
+html:not([data-theme='dark']) main [class~='text-rose-500'],
+html:not([data-theme='dark']) main [class~='text-rose-600'],
+html:not([data-theme='dark']) main [class~='text-red-500'],
+html:not([data-theme='dark']) main [class~='text-red-600'] {
+  color: #9f1239 !important;
+}
+
+/* Les superfícies semàntiques translúcides es converteixen en superfícies clares estables. */
+html:not([data-theme='dark']) main [class~='bg-indigo-50/50'],
+html:not([data-theme='dark']) main [class~='bg-indigo-50/60'],
+html:not([data-theme='dark']) main [class~='bg-indigo-50/70'] {
+  background-color: #eef2ff !important;
+}
+
+html:not([data-theme='dark']) main [class~='bg-emerald-50/50'],
+html:not([data-theme='dark']) main [class~='bg-emerald-50/60'],
+html:not([data-theme='dark']) main [class~='bg-emerald-50/70'],
+html:not([data-theme='dark']) main [class~='bg-emerald-50/80'] {
+  background-color: #ecfdf5 !important;
+}
+
+html:not([data-theme='dark']) main [class~='bg-amber-50/50'],
+html:not([data-theme='dark']) main [class~='bg-amber-50/60'],
+html:not([data-theme='dark']) main [class~='bg-amber-50/70'],
+html:not([data-theme='dark']) main [class~='bg-amber-50/80'] {
+  background-color: #fffbeb !important;
+}
+
+html:not([data-theme='dark']) main [class~='bg-rose-50/50'],
+html:not([data-theme='dark']) main [class~='bg-rose-50/60'],
+html:not([data-theme='dark']) main [class~='bg-rose-50/70'],
+html:not([data-theme='dark']) main [class~='bg-rose-50/80'],
+html:not([data-theme='dark']) main [class~='bg-red-50/50'],
+html:not([data-theme='dark']) main [class~='bg-red-50/60'] {
+  background-color: #fff1f2 !important;
+}
+
+/* Botons semàntics amb text blanc: fons prou fosc per a text normal. */
+html:not([data-theme='dark']) main button[class~='bg-emerald-600'] {
+  background-color: #047857 !important;
+  color: #ffffff !important;
+}
+html:not([data-theme='dark']) main button[class~='hover:bg-emerald-700']:hover {
+  background-color: #065f46 !important;
+}
+
+html:not([data-theme='dark']) main button[class~='bg-amber-500'][class~='text-white'] {
+  background-color: #b45309 !important;
+  color: #ffffff !important;
+}
+html:not([data-theme='dark']) main button[class~='hover:bg-amber-600'][class~='text-white']:hover {
+  background-color: #92400e !important;
+}
+
+html:not([data-theme='dark']) main button[class~='bg-rose-500'],
+html:not([data-theme='dark']) main button[class~='bg-rose-600'],
+html:not([data-theme='dark']) main button[class~='bg-red-500'],
+html:not([data-theme='dark']) main button[class~='bg-red-600'] {
+  background-color: #be123c !important;
+  color: #ffffff !important;
+}
+html:not([data-theme='dark']) main button[class~='hover:bg-rose-600']:hover,
+html:not([data-theme='dark']) main button[class~='hover:bg-rose-700']:hover,
+html:not([data-theme='dark']) main button[class~='hover:bg-red-600']:hover,
+html:not([data-theme='dark']) main button[class~='hover:bg-red-700']:hover {
+  background-color: #9f1239 !important;
+}
+
+/* =========================================================
+   Contrast semàntic global - mode fosc
+   ========================================================= */
+html[data-theme='dark'] main [class~='text-indigo-500'] {
+  color: #c7d2fe !important;
+}
+html[data-theme='dark'] main [class~='text-emerald-500'] {
+  color: #a7f3d0 !important;
+}
+html[data-theme='dark'] main [class~='text-amber-500'] {
+  color: #fde68a !important;
+}
+html[data-theme='dark'] main [class~='text-rose-500'],
+html[data-theme='dark'] main [class~='text-red-500'] {
+  color: #fecdd3 !important;
+}
+
+html[data-theme='dark'] main [class~='bg-indigo-50/50'],
+html[data-theme='dark'] main [class~='bg-indigo-50/60'],
+html[data-theme='dark'] main [class~='bg-indigo-50/70'] {
+  background-color: #1e1b4b !important;
+}
+
+html[data-theme='dark'] main [class~='bg-emerald-50/50'],
+html[data-theme='dark'] main [class~='bg-emerald-50/60'],
+html[data-theme='dark'] main [class~='bg-emerald-50/70'],
+html[data-theme='dark'] main [class~='bg-emerald-50/80'] {
+  background-color: #052e2b !important;
+}
+
+html[data-theme='dark'] main [class~='bg-amber-50/50'],
+html[data-theme='dark'] main [class~='bg-amber-50/60'],
+html[data-theme='dark'] main [class~='bg-amber-50/70'],
+html[data-theme='dark'] main [class~='bg-amber-50/80'] {
+  background-color: #3a2808 !important;
+}
+
+html[data-theme='dark'] main [class~='bg-rose-50/50'],
+html[data-theme='dark'] main [class~='bg-rose-50/60'],
+html[data-theme='dark'] main [class~='bg-rose-50/70'],
+html[data-theme='dark'] main [class~='bg-rose-50/80'],
+html[data-theme='dark'] main [class~='bg-red-50/50'],
+html[data-theme='dark'] main [class~='bg-red-50/60'] {
+  background-color: #3b1220 !important;
+}
+
+/* En mode fosc, els botons semàntics mantenen text blanc o molt clar. */
+html[data-theme='dark'] main button[class~='bg-emerald-600'] {
+  background-color: #047857 !important;
+  color: #ffffff !important;
+}
+html[data-theme='dark'] main button[class~='bg-amber-500'][class~='text-white'] {
+  background-color: #b45309 !important;
+  color: #ffffff !important;
+}
+html[data-theme='dark'] main button[class~='bg-rose-500'],
+html[data-theme='dark'] main button[class~='bg-rose-600'],
+html[data-theme='dark'] main button[class~='bg-red-500'],
+html[data-theme='dark'] main button[class~='bg-red-600'] {
+  background-color: #be123c !important;
+  color: #ffffff !important;
+}
+
+/* Supervivència: el panell de pregunta no pot heretar un rosa clar translúcid sobre el fons fosc. */
+html[data-theme='dark'] #view-game-survival #surv-question-title {
+  color: #fecdd3 !important;
+}
+html[data-theme='dark'] #view-game-survival #surv-verb-v1 {
+  color: #f8fafc !important;
+}
+html[data-theme='dark'] #view-game-survival #surv-verb-cat {
+  color: #e2e8f0 !important;
+}
+
 /* Lucky wheel - dark mode must not keep pale indigo surfaces or dark indigo text. */
 html[data-theme='dark'] #wheel-result-card {
   background: #111827 !important;
