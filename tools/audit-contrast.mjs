@@ -3,16 +3,18 @@ import AxeBuilder from '@axe-core/playwright';
 
 const baseUrl = process.env.AUDIT_URL || 'http://127.0.0.1:4173/';
 const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+const page = await context.newPage();
 
 const problems = [];
 
 for (const theme of ['light', 'dark']) {
-  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+  await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
   await page.evaluate((value) => {
     localStorage.setItem('eso2-portal-theme', value);
   }, theme);
-  await page.reload({ waitUntil: 'networkidle' });
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(300);
 
   const viewIds = await page.locator('.view-screen').evaluateAll((els) => els.map((el) => el.id).filter(Boolean));
 
@@ -57,6 +59,7 @@ for (const theme of ['light', 'dark']) {
   }
 }
 
+await context.close();
 await browser.close();
 
 if (problems.length) {
