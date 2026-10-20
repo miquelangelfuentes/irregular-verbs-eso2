@@ -1,0 +1,42 @@
+/* Verb Quest specific theme fixes. Loaded after the shared portal layers. */
+
+/* Lucky wheel - dark mode must not keep pale indigo surfaces or dark indigo text. */
+html[data-theme='dark'] #wheel-result-card {
+  background: #111827 !important;
+  color: #f1f5f9 !important;
+  border-color: #4f46e5 !important;
+}
+
+html[data-theme='dark'] #wheel-result-card [class~='bg-white'] {
+  background-color: #0f172a !important;
+}
+
+html[data-theme='dark'] #wheel-result-card [class~='border-indigo-100'],
+html[data-theme='dark'] #wheel-result-card [class~='border-indigo-200'] {
+  border-color: #4338ca !important;
+}
+
+html[data-theme='dark'] #wheel-result-card #wheel-res-pack {
+  background-color: #1e293b !important;
+  color: #e0e7ff !important;
+  border-color: #6366f1 !important;
+}
+
+html[data-theme='dark'] #wheel-result-card #wheel-res-cat {
+  color: #cbd5e1 !important;
+}
+
+html[data-theme='dark'] #wheel-result-card #wheel-res-challenge {
+  color: #f1f5f9 !important;
+}
+
+html[data-theme='dark'] #wheel-result-card #wheel-res-challenge strong,
+html[data-theme='dark'] #wheel-result-card #wheel-res-challenge em {
+  color: #e0e7ff !important;
+}
+
+html[data-theme='dark'] #wheel-result-card button[aria-label='Escolta la pronunciació'] {
+  background-color: #1e293b !important;
+  color: #c7d2fe !important;
+  border: 1px solid #334155 !important;
+}
