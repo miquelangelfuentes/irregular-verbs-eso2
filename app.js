@@ -13,6 +13,8 @@ const state = {
     checkpointBadges: {},   // { cpId: boolean }
     speedrunHighScore: 0,
     survivalHighScore: 0,
+    impostorHighScore: 0,
+    trioMatchBestMoves: 0,
     examsCompleted: 0
   },
   // Estat de jocs puntuals
@@ -68,7 +70,20 @@ const state = {
     // Wheel
     wheelSpinning: false,
     wheelAngle: 0,
-    wheelSelectedVerb: null
+    wheelSelectedVerb: null,
+    // Detector d'intrusos
+    impostorRounds: [],
+    impostorRoundIndex: 0,
+    impostorScore: 0,
+    impostorStreak: 0,
+    impostorAnswered: false,
+    // Trencaclosques de trios
+    trioCards: [],
+    trioSelected: [],
+    trioMatchedCount: 0,
+    trioMoves: 0,
+    trioTimer: 0,
+    trioInterval: null
   }
 };
 
@@ -101,6 +116,8 @@ function resetAllData() {
       checkpointBadges: {},
       speedrunHighScore: 0,
       survivalHighScore: 0,
+      impostorHighScore: 0,
+      trioMatchBestMoves: 0,
       examsCompleted: 0
     };
     saveUserStats();
@@ -260,6 +277,9 @@ function navigateTo(viewId, params = {}) {
 
   // Lògica d'inicialització segons la vista
   if (viewId === 'home') {
+    if (window.location.hash === '#finals') {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
     renderHome();
   } else if (viewId === 'packs-list') {
     renderPacksList();
@@ -272,6 +292,9 @@ function navigateTo(viewId, params = {}) {
     if (params.cpId) state.activeCheckpointId = parseInt(params.cpId, 10);
     startCheckpointGame();
   } else if (viewId === 'all-verbs-hub') {
+    if (window.location.hash !== '#finals') {
+      history.replaceState(null, '', '#finals');
+    }
     renderAllVerbsHub();
   } else if (viewId === 'game-speedrun') {
     startSpeedrun();
@@ -281,6 +304,10 @@ function navigateTo(viewId, params = {}) {
     setupExam();
   } else if (viewId === 'game-wheel') {
     setupWheel();
+  } else if (viewId === 'game-impostor') {
+    startImpostorGame();
+  } else if (viewId === 'game-trio-match') {
+    startTrioMatchGame();
   } else if (viewId === 'explorer') {
     renderExplorer();
   }
@@ -1173,6 +1200,8 @@ function renderAllVerbsHub() {
       else if (g.id === 'survival') navigateTo('game-survival');
       else if (g.id === 'exam') navigateTo('game-exam');
       else if (g.id === 'wheel') navigateTo('game-wheel');
+      else if (g.id === 'impostor') navigateTo('game-impostor');
+      else if (g.id === 'trio-match') navigateTo('game-trio-match');
       else if (g.id === 'explorer') navigateTo('explorer');
     };
 
@@ -1181,6 +1210,10 @@ function renderAllVerbsHub() {
       scoreBadge = `<span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">Rècord: ${state.userStats.speedrunHighScore} pts</span>`;
     } else if (g.id === 'survival' && state.userStats.survivalHighScore) {
       scoreBadge = `<span class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-full">Rècord: ${state.userStats.survivalHighScore} seguits</span>`;
+    } else if (g.id === 'impostor' && state.userStats.impostorHighScore) {
+      scoreBadge = `<span class="text-xs font-bold text-violet-600 bg-violet-50 px-2.5 py-1 rounded-full">Rècord: ${state.userStats.impostorHighScore} pts</span>`;
+    } else if (g.id === 'trio-match' && state.userStats.trioMatchBestMoves) {
+      scoreBadge = `<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">Rècord: ${state.userStats.trioMatchBestMoves} intents</span>`;
     }
 
     card.innerHTML = `
@@ -1844,6 +1877,411 @@ function revealWheelChallenge() {
 }
 
 // ==========================================
+// 5E. JOC FINAL: DETECTOR D'INTRUSOS
+// ==========================================
+function startImpostorGame() {
+  const pool = shuffleArray([...IMPOSTORS_DATA]).slice(0, 10);
+
+  state.game.impostorRounds = pool.map(item => {
+    // Escollim 3 verbs diferents com a distractors genuïns
+    const otherVerbs = shuffleArray(VERBS_DATA.filter(v => v.v1 !== item.v1)).slice(0, 3);
+    const genuineOptions = otherVerbs.map(v => {
+      const formChoice = Math.random() < 0.5 ? v.v2 : v.v3;
+      const cleanForm = formChoice.split('/')[0].trim();
+      return {
+        text: cleanForm,
+        isImpostor: false,
+        v1: v.v1,
+        cat: v.cat
+      };
+    });
+
+    const impostorOption = {
+      text: item.fake,
+      isImpostor: true,
+      v1: item.v1,
+      cat: item.cat,
+      correct: item.correct,
+      explanation: item.explanation
+    };
+
+    const options = shuffleArray([...genuineOptions, impostorOption]);
+    return {
+      impostor: item,
+      options
+    };
+  });
+
+  state.game.impostorRoundIndex = 0;
+  state.game.impostorScore = 0;
+  state.game.impostorStreak = 0;
+  state.game.impostorAnswered = false;
+
+  document.getElementById('impostor-play-area').classList.remove('hidden');
+  document.getElementById('impostor-results-area').classList.add('hidden');
+
+  renderImpostorRound();
+}
+
+function renderImpostorRound() {
+  const current = state.game.impostorRounds[state.game.impostorRoundIndex];
+  if (!current) return;
+
+  state.game.impostorAnswered = false;
+
+  document.getElementById('impostor-round-display').textContent = `${state.game.impostorRoundIndex + 1} / 10`;
+  document.getElementById('impostor-streak-display').textContent = `Ratxa: ${state.game.impostorStreak} 🔥`;
+  document.getElementById('impostor-score-display').textContent = `${state.game.impostorScore}`;
+
+  const feedbackBox = document.getElementById('impostor-feedback-box');
+  feedbackBox.classList.add('hidden');
+  feedbackBox.innerHTML = '';
+
+  const nextBtn = document.getElementById('impostor-next-btn');
+  nextBtn.classList.add('hidden');
+  const nextBtnText = nextBtn.querySelector('span');
+  if (nextBtnText) {
+    nextBtnText.textContent = state.game.impostorRoundIndex === 9 ? "Veure resultats finals" : "Següent ronda";
+  }
+
+  const grid = document.getElementById('impostor-options-grid');
+  grid.innerHTML = '';
+
+  current.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = "impostor-opt-btn bg-white p-4 sm:p-5 rounded-2xl border-2 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/40 transition-all font-display font-bold text-lg text-slate-800 text-center flex items-center justify-between shadow-xs cursor-pointer group";
+    btn.onclick = () => checkImpostorAnswer(idx);
+    btn.innerHTML = `
+      <span class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-slate-100 group-hover:bg-indigo-100 text-slate-500 group-hover:text-indigo-600 text-xs flex items-center justify-center font-mono">
+          ${String.fromCharCode(65 + idx)}
+        </span>
+        <span class="text-base sm:text-lg font-bold">${opt.text}</span>
+      </span>
+      <span class="text-xs text-slate-400 group-hover:text-indigo-500 font-normal">Tria</span>
+    `;
+    grid.appendChild(btn);
+  });
+}
+
+function checkImpostorAnswer(selectedIdx) {
+  if (state.game.impostorAnswered) return;
+  state.game.impostorAnswered = true;
+
+  const current = state.game.impostorRounds[state.game.impostorRoundIndex];
+  const selectedOpt = current.options[selectedIdx];
+  const grid = document.getElementById('impostor-options-grid');
+  const buttons = grid.querySelectorAll('.impostor-opt-btn');
+
+  const feedbackBox = document.getElementById('impostor-feedback-box');
+  feedbackBox.classList.remove('hidden');
+
+  if (selectedOpt.isImpostor) {
+    playSuccessSound();
+    const roundPoints = 100 + (state.game.impostorStreak * 20);
+    state.game.impostorScore += roundPoints;
+    state.game.impostorStreak += 1;
+
+    buttons[selectedIdx].className = "impostor-opt-btn bg-emerald-50 p-4 sm:p-5 rounded-2xl border-2 border-emerald-500 text-emerald-900 font-display font-bold text-lg text-center flex items-center justify-between shadow-sm";
+    buttons[selectedIdx].innerHTML = `
+      <span class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-emerald-200 text-emerald-800 text-xs flex items-center justify-center font-mono font-bold">✓</span>
+        <span class="text-base sm:text-lg line-through decoration-rose-500 decoration-2">${selectedOpt.text}</span>
+      </span>
+      <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">+${roundPoints} pts</span>
+    `;
+
+    feedbackBox.className = "p-4 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950 text-sm space-y-1.5";
+    feedbackBox.innerHTML = `
+      <div class="font-bold flex items-center gap-2 text-emerald-800">
+        <span>🎉 Ben detectat! "${selectedOpt.text}" és un intrús inventat.</span>
+      </div>
+      <p class="text-xs leading-relaxed text-emerald-900">
+        <strong>Forma autèntica:</strong> la forma correcta és <em>${current.impostor.correct}</em> (${current.impostor.cat}).
+      </p>
+      <p class="text-xs text-emerald-800">${current.impostor.explanation}</p>
+    `;
+  } else {
+    playErrorSound();
+    state.game.impostorStreak = 0;
+
+    buttons[selectedIdx].className = "impostor-opt-btn bg-rose-50 p-4 sm:p-5 rounded-2xl border-2 border-rose-400 text-rose-900 font-display font-bold text-lg text-center flex items-center justify-between shadow-sm";
+    buttons[selectedIdx].innerHTML = `
+      <span class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-rose-200 text-rose-800 text-xs flex items-center justify-center font-mono font-bold">✗</span>
+        <span class="text-base sm:text-lg">${selectedOpt.text}</span>
+      </span>
+      <span class="text-xs font-semibold text-rose-600">Forma vàlida</span>
+    `;
+
+    current.options.forEach((opt, idx) => {
+      if (opt.isImpostor) {
+        buttons[idx].className = "impostor-opt-btn bg-amber-50 p-4 sm:p-5 rounded-2xl border-2 border-amber-400 text-amber-950 font-display font-bold text-lg text-center flex items-center justify-between shadow-sm";
+        buttons[idx].innerHTML = `
+          <span class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-lg bg-amber-200 text-amber-800 text-xs flex items-center justify-center font-mono font-bold">🕵️</span>
+            <span class="text-base sm:text-lg line-through decoration-rose-500 decoration-2">${opt.text}</span>
+          </span>
+          <span class="text-xs font-bold text-amber-700">Era aquí</span>
+        `;
+      }
+    });
+
+    feedbackBox.className = "p-4 rounded-2xl border border-rose-200 bg-rose-50 text-rose-950 text-sm space-y-1.5";
+    feedbackBox.innerHTML = `
+      <div class="font-bold flex items-center gap-2 text-rose-800">
+        <span>❌ "${selectedOpt.text}" sí que existeix i és correcta!</span>
+      </div>
+      <p class="text-xs leading-relaxed text-rose-900">
+        <strong>L'intrús era:</strong> la forma inventada era <em>"${current.impostor.fake}"</em>. La forma correcta és <em>${current.impostor.correct}</em> (${current.impostor.cat}).
+      </p>
+      <p class="text-xs text-rose-800">${current.impostor.explanation}</p>
+    `;
+  }
+
+  buttons.forEach(b => {
+    b.onclick = null;
+    b.classList.remove('cursor-pointer', 'hover:border-indigo-400', 'hover:bg-indigo-50/40');
+  });
+
+  document.getElementById('impostor-streak-display').textContent = `Ratxa: ${state.game.impostorStreak} 🔥`;
+  document.getElementById('impostor-score-display').textContent = `${state.game.impostorScore}`;
+
+  const nextBtn = document.getElementById('impostor-next-btn');
+  nextBtn.classList.remove('hidden');
+}
+
+function nextImpostorRound() {
+  state.game.impostorRoundIndex++;
+  if (state.game.impostorRoundIndex >= 10) {
+    finishImpostorGame();
+  } else {
+    renderImpostorRound();
+  }
+}
+
+function finishImpostorGame() {
+  document.getElementById('impostor-play-area').classList.add('hidden');
+  const resultsArea = document.getElementById('impostor-results-area');
+  resultsArea.classList.remove('hidden');
+
+  document.getElementById('impostor-final-score').textContent = `${state.game.impostorScore} punts`;
+
+  const recordNotice = document.getElementById('impostor-record-notice');
+  const prevRecord = state.userStats.impostorHighScore || 0;
+  if (state.game.impostorScore > prevRecord) {
+    state.userStats.impostorHighScore = state.game.impostorScore;
+    saveUserStats();
+    recordNotice.classList.remove('hidden');
+    triggerConfetti();
+    playFanfareSound();
+  } else {
+    recordNotice.classList.add('hidden');
+    if (state.game.impostorScore >= 700) {
+      triggerConfetti();
+      playFanfareSound();
+    }
+  }
+}
+
+// ==========================================
+// 5F. JOC FINAL: TRENCACLOSQUES DE TRIOS
+// ==========================================
+function startTrioMatchGame() {
+  if (state.game.trioInterval) clearInterval(state.game.trioInterval);
+
+  const chosenVerbs = shuffleArray([...VERBS_DATA]).slice(0, 4);
+
+  const rawCards = [];
+  chosenVerbs.forEach(v => {
+    const v2Clean = v.v2.split('/')[0].trim();
+    const v3Clean = v.v3.split('/')[0].trim();
+
+    rawCards.push({ verbId: v.id, formType: 'v1', text: v.v1, label: 'Infinitiu', cat: v.cat });
+    rawCards.push({ verbId: v.id, formType: 'v2', text: v2Clean, label: 'Past simple', cat: v.cat });
+    rawCards.push({ verbId: v.id, formType: 'v3', text: v3Clean, label: 'Past participle', cat: v.cat });
+  });
+
+  const shuffled = shuffleArray(rawCards);
+  state.game.trioCards = shuffled.map((c, idx) => ({
+    ...c,
+    idx,
+    matched: false,
+    selected: false
+  }));
+
+  state.game.trioSelected = [];
+  state.game.trioMatchedCount = 0;
+  state.game.trioMoves = 0;
+  state.game.trioTimer = 0;
+
+  document.getElementById('trio-win-area').classList.add('hidden');
+  document.getElementById('trio-cards-grid').classList.remove('hidden');
+  document.getElementById('trio-selection-helper').classList.remove('hidden');
+  document.getElementById('trio-selection-helper').textContent = "Fes clic a 3 formes del mateix verb (V1 + V2 + V3) per formar un trio.";
+
+  updateTrioStatsUI();
+  renderTrioCardsGrid();
+
+  state.game.trioInterval = setInterval(() => {
+    state.game.trioTimer++;
+    const tEl = document.getElementById('trio-timer-display');
+    if (tEl) tEl.textContent = `${state.game.trioTimer}s`;
+  }, 1000);
+}
+
+function updateTrioStatsUI() {
+  const movesEl = document.getElementById('trio-moves-display');
+  const timerEl = document.getElementById('trio-timer-display');
+  const matchedEl = document.getElementById('trio-matched-display');
+
+  if (movesEl) movesEl.textContent = `${state.game.trioMoves} intents`;
+  if (timerEl) timerEl.textContent = `${state.game.trioTimer}s`;
+  if (matchedEl) matchedEl.textContent = `${state.game.trioMatchedCount} / 4`;
+}
+
+function renderTrioCardsGrid() {
+  const grid = document.getElementById('trio-cards-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  state.game.trioCards.forEach((card, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = `trio-card-${idx}`;
+
+    if (card.matched) {
+      btn.className = "p-3 sm:p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-emerald-800 flex flex-col items-center justify-center text-center opacity-60 cursor-default shadow-xs";
+      btn.innerHTML = `
+        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600">${card.label}</span>
+        <span class="font-display font-extrabold text-base sm:text-lg text-emerald-900 mt-0.5">${card.text}</span>
+        <span class="text-[11px] text-emerald-700 mt-1 font-semibold">✓ Completat</span>
+      `;
+    } else {
+      const isSelected = state.game.trioSelected.includes(idx);
+      const bg = isSelected
+        ? "bg-indigo-600 border-indigo-700 text-white shadow-md scale-[1.02]"
+        : "bg-white border-slate-200 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50/30 shadow-xs";
+
+      btn.className = `p-3 sm:p-4 rounded-2xl border-2 transition-all flex flex-col items-center justify-center text-center cursor-pointer ${bg}`;
+      btn.onclick = () => handleTrioCardClick(idx);
+      btn.innerHTML = `
+        <span class="text-[10px] font-bold uppercase tracking-wider ${isSelected ? 'text-indigo-200' : 'text-slate-400'}">${card.label}</span>
+        <span class="font-display font-extrabold text-base sm:text-lg mt-0.5">${card.text}</span>
+        <span class="text-[11px] ${isSelected ? 'text-indigo-200' : 'text-slate-500'} mt-1 truncate max-w-full">${card.cat}</span>
+      `;
+    }
+
+    grid.appendChild(btn);
+  });
+}
+
+function handleTrioCardClick(idx) {
+  const card = state.game.trioCards[idx];
+  if (!card || card.matched) return;
+
+  if (state.game.trioSelected.includes(idx)) {
+    state.game.trioSelected = state.game.trioSelected.filter(i => i !== idx);
+    renderTrioCardsGrid();
+    speakEnglish(card.text);
+    return;
+  }
+
+  if (state.game.trioSelected.length >= 3) return;
+
+  state.game.trioSelected.push(idx);
+  speakEnglish(card.text);
+  renderTrioCardsGrid();
+
+  const helper = document.getElementById('trio-selection-helper');
+  if (state.game.trioSelected.length === 1) {
+    helper.textContent = "Has triat 1 forma. Selecciona'n dues més del mateix verb.";
+  } else if (state.game.trioSelected.length === 2) {
+    helper.textContent = "Molt bé! Ara tria l'última forma del mateix verb.";
+  } else if (state.game.trioSelected.length === 3) {
+    helper.textContent = "Comprovant el trio...";
+    checkTrioSelection();
+  }
+}
+
+function checkTrioSelection() {
+  state.game.trioMoves++;
+  updateTrioStatsUI();
+
+  const [i1, i2, i3] = state.game.trioSelected;
+  const c1 = state.game.trioCards[i1];
+  const c2 = state.game.trioCards[i2];
+  const c3 = state.game.trioCards[i3];
+
+  const helper = document.getElementById('trio-selection-helper');
+
+  const isMatch = (c1.verbId === c2.verbId && c2.verbId === c3.verbId);
+
+  if (isMatch) {
+    playSuccessSound();
+    c1.matched = true;
+    c2.matched = true;
+    c3.matched = true;
+    state.game.trioMatchedCount++;
+    state.game.trioSelected = [];
+
+    updateTrioStatsUI();
+    renderTrioCardsGrid();
+
+    helper.innerHTML = `<span class="text-emerald-700 font-bold">🎉 Trio completat! ${c1.text} - ${c2.text} - ${c3.text} (${c1.cat})</span>`;
+
+    if (state.game.trioMatchedCount >= 4) {
+      setTimeout(() => finishTrioMatchGame(), 600);
+    }
+  } else {
+    playErrorSound();
+    [i1, i2, i3].forEach(idx => {
+      const btn = document.getElementById(`trio-card-${idx}`);
+      if (btn) {
+        btn.classList.remove('bg-indigo-600', 'border-indigo-700');
+        btn.classList.add('bg-rose-500', 'border-rose-600', 'text-white');
+      }
+    });
+
+    helper.innerHTML = `<span class="text-rose-600 font-bold">❌ Aquestes 3 formes no són del mateix verb. Torna-ho a provar!</span>`;
+
+    setTimeout(() => {
+      state.game.trioSelected = [];
+      renderTrioCardsGrid();
+      helper.textContent = "Fes clic a 3 formes del mateix verb (V1 + V2 + V3) per formar un trio.";
+    }, 900);
+  }
+}
+
+function finishTrioMatchGame() {
+  if (state.game.trioInterval) clearInterval(state.game.trioInterval);
+
+  triggerConfetti();
+  playFanfareSound();
+
+  document.getElementById('trio-cards-grid').classList.add('hidden');
+  document.getElementById('trio-selection-helper').classList.add('hidden');
+  const winArea = document.getElementById('trio-win-area');
+  winArea.classList.remove('hidden');
+
+  document.getElementById('trio-win-moves').textContent = `${state.game.trioMoves} intents`;
+  document.getElementById('trio-win-time').textContent = `${state.game.trioTimer} segons`;
+
+  const recordNotice = document.getElementById('trio-record-notice');
+  const prevBest = state.userStats.trioMatchBestMoves || 0;
+  const isNewRecord = prevBest === 0 || state.game.trioMoves < prevBest;
+
+  if (isNewRecord) {
+    state.userStats.trioMatchBestMoves = state.game.trioMoves;
+    saveUserStats();
+    recordNotice.classList.remove('hidden');
+  } else {
+    recordNotice.classList.add('hidden');
+  }
+}
+
+// ==========================================
 // 6. VISTA: EXPLORADOR & CERCADOR DELS 108 VERBS
 // ==========================================
 let currentExplorerFilter = 'all';
@@ -1940,10 +2378,27 @@ function shuffleArray(arr) {
   return a;
 }
 
+// --- GESTIÓ D'ENLLAÇOS AMB HASH (#finals) ---
+function handleHashNavigation() {
+  const hash = window.location.hash.toLowerCase();
+  if (hash === '#finals' || hash === '#all-verbs' || hash === '#jocs-finals') {
+    navigateTo('all-verbs-hub');
+    return true;
+  }
+  return false;
+}
+
 // --- INICIALITZACIÓ GLOBAL AL CARREGAR EL DOCUMENT ---
 document.addEventListener('DOMContentLoaded', () => {
   loadUserStats();
-  navigateTo('home');
+
+  if (!handleHashNavigation()) {
+    navigateTo('home');
+  }
+
+  window.addEventListener('hashchange', () => {
+    handleHashNavigation();
+  });
 
   // Listener per al cercador de l'explorador
   const searchInp = document.getElementById('explorer-search-input');

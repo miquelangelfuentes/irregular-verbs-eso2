@@ -34,6 +34,8 @@ L'aprenentatge combina bastides de suport amb pràctica de recuperació acumulat
 │ 3. ARENA DE TOTS ELS VERBS (Jocs globals amb els 108 verbs) │
 │    ⚡ Contrarellotge (Speed Rush)                           │
 │    ❤️ Mode supervivència (3 vides i comodins)               │
+│    🕵️ Detector d'intrusos (identificar errors típics)       │
+│    🧩 Trencaclosques de trios (unir V1 + V2 + V3)           │
 │    📝 Simulacre d'examen (nota /10 + certificat A4)         │
 │    🎡 La ruleta dels verbs (reptes orals i de grup)         │
 │    📚 Diccionari i cercador interactiu amb text a veu       │
@@ -91,6 +93,8 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
 
 - **⚡ Contrarellotge (Speed Rush):** 60 o 90 segons amb multiplicadors de combo per fer el rècord màxim de punts.
 - **❤️ Mode supervivència (3 vides):** quants verbs consecutius pots encertar? Inclou 3 comodins (50/50, saltar pregunta i pista de la 1a lletra).
+- **🕵️ Detector d'intrusos:** 10 rondes per identificar formes inventades o regularitzades erròniament (*catched*, *buyed*, *sleeped*...) entre formes irregulars reals.
+- **🧩 Trencaclosques de trios:** tauler de 12 fitxes per connectar els trios complets (infinitiu, past simple i past participle) de 4 verbs irregulars aleatoris.
 - **📝 Simulacre d'examen:**
   - Tria 10, 20 o 30 verbs a l'atzar.
   - Graella d'avaluació idèntica a un examen d'aula.

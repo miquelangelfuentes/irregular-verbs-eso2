@@ -967,6 +967,145 @@
     </section>
 
     <!-- ============================================== -->
+    <!-- 5F. JOC: DETECTOR D'INTRUSOS (VERB IMPOSTOR)   -->
+    <!-- ============================================== -->
+    <section id="view-game-impostor" class="view-screen hidden max-w-xl mx-auto space-y-6">
+      
+      <div>
+        <button onclick="navigateTo('all-verbs-hub')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'arena de jocs
+        </button>
+        <h2 class="font-display font-extrabold text-2xl text-slate-900">El detector d'intrusos 🕵️</h2>
+        <p class="text-sm text-slate-600">Troba la forma inventada o regularitzada incorrectament (*catched*, *buyed*...).</p>
+      </div>
+
+      <div id="impostor-play-area" class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-xl space-y-6">
+        
+        <!-- Capçalera del joc: ronda, ratxa i punts -->
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-400 uppercase">Ronda</span>
+            <span id="impostor-round-display" class="font-display font-bold text-indigo-600 text-lg">1 / 10</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span id="impostor-streak-display" class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Ratxa: 0 🔥</span>
+            <div class="text-right">
+              <span class="text-[10px] font-bold text-slate-400 uppercase block">Punts</span>
+              <span id="impostor-score-display" class="font-display font-bold text-slate-900 text-lg">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Targeta de la pregunta -->
+        <div class="text-center p-5 rounded-2xl bg-indigo-50/70 border border-indigo-100">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-600">Missió de detecció</span>
+          <h3 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 mt-1">Quina d'aquestes 4 formes és un intrús fals?</h3>
+          <p class="text-xs text-slate-500 mt-1">3 són formes irregulars vàlides i 1 és un error inventat.</p>
+        </div>
+
+        <!-- Opcions (4 targetes) -->
+        <div id="impostor-options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- 4 botons generats per JS -->
+        </div>
+
+        <!-- Caixa de retroacció -->
+        <div id="impostor-feedback-box" class="hidden p-4 rounded-2xl border text-sm space-y-2">
+          <!-- Text de retroacció pedagògica -->
+        </div>
+
+        <!-- Botó següent ronda -->
+        <button id="impostor-next-btn" onclick="nextImpostorRound()" class="hidden w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-display font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+          <span>Següent ronda</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+
+      </div>
+
+      <!-- Pantalla final de resultats -->
+      <div id="impostor-results-area" class="hidden bg-white rounded-3xl p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
+        <div class="text-5xl">🕵️‍♂️</div>
+        <h3 class="font-display font-extrabold text-2xl text-slate-900">Missió completada!</h3>
+        <p class="text-sm text-slate-600">Has obtingut una puntuació de:</p>
+        <p id="impostor-final-score" class="font-display font-extrabold text-4xl text-indigo-600">850 punts</p>
+        
+        <div id="impostor-record-notice" class="hidden p-3 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-800 text-xs font-bold">
+          🎉 Nou rècord en el detector d'intrusos!
+        </div>
+
+        <div class="flex justify-center gap-3">
+          <button onclick="startImpostorGame()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition-all">
+            Tornar a jugar
+          </button>
+          <button onclick="navigateTo('all-verbs-hub')" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all">
+            Tornar al menú
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 5G. JOC: TRENCACLOSQUES DE TRIOS (TRIO MATCH)  -->
+    <!-- ============================================== -->
+    <section id="view-game-trio-match" class="view-screen hidden max-w-2xl mx-auto space-y-6">
+      
+      <div>
+        <button onclick="navigateTo('all-verbs-hub')" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1 mb-2">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'arena de jocs
+        </button>
+        <h2 class="font-display font-extrabold text-2xl text-slate-900">Trencaclosques de trios 🧩</h2>
+        <p class="text-sm text-slate-600">Connecta les 3 formes (infinitiu, past simple i past participle) de cada verb per netejar la taula.</p>
+      </div>
+
+      <!-- Barra d'estat del joc: trios completats, intents i temps -->
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
+        <div class="flex items-center gap-3">
+          <span id="trio-moves-display">0 intents</span>
+          <span>-</span>
+          <span id="trio-timer-display">0s</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span>Trios completats:</span>
+          <span id="trio-matched-display" class="text-emerald-600 font-extrabold text-sm">0 / 4</span>
+        </div>
+        <button onclick="startTrioMatchGame()" class="text-indigo-600 hover:underline">
+          Reiniciar
+        </button>
+      </div>
+
+      <!-- Indicador de selecció actual -->
+      <div id="trio-selection-helper" class="p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-center text-xs font-semibold text-indigo-700">
+        Fes clic a 3 formes del mateix verb (V1 + V2 + V3) per formar un trio.
+      </div>
+
+      <!-- Graella de 12 targetes (3 files de 4 a escriptori, 4x3 a mòbil) -->
+      <div id="trio-cards-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-3">
+        <!-- 12 targetes generades per JS -->
+      </div>
+
+      <!-- Caixa de victòria del tauler -->
+      <div id="trio-win-area" class="hidden bg-white rounded-3xl p-8 border-2 border-emerald-300 shadow-xl text-center space-y-6">
+        <div class="text-5xl">🏆</div>
+        <h3 class="font-display font-extrabold text-2xl text-emerald-900">Has completat els 4 trios!</h3>
+        <p class="text-sm text-slate-600">Has resolt el trencaclosques en <strong id="trio-win-moves" class="text-emerald-700">6 intents</strong> i <strong id="trio-win-time" class="text-emerald-700">28 segons</strong>.</p>
+
+        <div id="trio-record-notice" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
+          🎉 Nou rècord en el trencaclosques de trios!
+        </div>
+
+        <div class="flex justify-center gap-3">
+          <button onclick="startTrioMatchGame()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-sm transition-all">
+            Nou tauler (4 verbs)
+          </button>
+          <button onclick="navigateTo('all-verbs-hub')" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all">
+            Tornar al menú
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
     <!-- 6. VISTA: EXPLORADOR & CERCADOR DELS 108 VERBS -->
     <!-- ============================================== -->
 
