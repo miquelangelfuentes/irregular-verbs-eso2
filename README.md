@@ -1,159 +1,107 @@
 # Verb Quest 2n d'ESO - Irregular Verbs Arena ⚡
 
-Una plataforma web interactiva i gamificada perquè l'alumnat de **2n d'ESO** aprengui, practiqui i consolidi els **108 verbs irregulars**.
+Plataforma web interactiva i gamificada perquè l'alumnat de **2n d'ESO** aprengui i consolidi els **108 verbs irregulars** del projecte.
 
-Dissenyada específicament per a desplegar-se de manera gratuïta i immediata a **GitHub Pages**.
+**Web:** https://miquelangelfuentes.github.io/irregular-verbs-eso2/
 
-🔗 **URL del lloc web (un cop activat a GitHub Pages):**  
-`https://miquelangelfuentes.github.io/irregular-verbs-eso2/`
+## Estructura d'aprenentatge
 
----
+Verb Quest distribueix els verbs en **11 packs**. Els deu primers contenen 10 verbs i l'últim en conté 8.
 
-## 🌟 Estructura pedagògica de l'aplicació
+La progressió combina treball per packs amb **6 checkpoints acumulatius**. Els checkpoints recuperen verbs dels packs anteriors, però l'aplicació no programa intervals temporals de repàs i, per tant, no es presenta com un sistema de repetició espaiada.
 
-L'aprenentatge combina bastides de suport amb pràctica de recuperació acumulativa. Els checkpoints recuperen verbs de packs anteriors, però l'aplicació no programa els repassos segons intervals temporals, de manera que no es presenta com un sistema de repetició espaiada.
+L'aplicació incorpora també un **Repàs d'errors** que prioritza els verbs en què l'alumnat ha tingut més dificultats. Aquest historial es conserva només al navegador.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ 1. PACKS D’APRENENTATGE (10 packs de 10 + un pack de 8)    │
-│    Flashcards 3D - Quiz de 4 opcions - Escriure - Memory -  │
-│    Lletres desordenades                                     │
-└──────────────────────────────┬──────────────────────────────┘
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 2. CHECKPOINTS ACUMULATIUS (Repàs acumulat a llarg termini) │
-│    🥉 Checkpoint 1 (Packs 1-2: 20 verbs)                    │
-│    🥈 Checkpoint 2 (Packs 1-4: 40 verbs)                    │
-│    🥇 Checkpoint 3 (Packs 1-6: 60 verbs)                    │
-│    💎 Checkpoint 4 (Packs 1-8: 80 verbs)                    │
-│    👑 Checkpoint 5 (Packs 1-10: 100 verbs)                  │
-│    🏆 Checkpoint Master (Packs 1-11: 108 verbs)             │
-└──────────────────────────────┬──────────────────────────────┘
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 3. ARENA DE TOTS ELS VERBS (Jocs globals amb els 108 verbs) │
-│    ⚡ Contrarellotge (Speed Rush)                           │
-│    ❤️ Mode supervivència (3 vides i comodins)               │
-│    🕵️ Detector d'intrusos (identificar errors típics)       │
-│    🧩 Trencaclosques de trios (unir V1 + V2 + V3)           │
-│    💬 Verbs en context (frases amb pistes de temps)         │
-│    🏷️ Classificador de famílies (patrons fonètics)          │
-│    📝 Simulacre d'examen (nota /10 + certificat A4)         │
-│    🎡 La ruleta dels verbs (reptes orals i de grup)         │
-│    📚 Diccionari i cercador interactiu amb text a veu       │
-└─────────────────────────────────────────────────────────────┘
-```
+## Activitats dels packs
 
----
+Cada pack inclou diferents formes de recuperació i reconeixement:
 
-## 📦 Detall dels 11 packs d’aprenentatge
+- **Flashcards** amb V1, V2 i V3, significat i suport d'àudio.
+- **Quiz de resposta múltiple** amb puntuació i registre del millor resultat.
+- **Producció escrita** de les formes verbals amb correcció flexible quan hi ha variants acceptades.
+- **Memory** per relacionar formes del mateix verb.
+- **Lletres desordenades** per treballar l'ortografia.
 
-| Pack | Rang alfabètic | Verbs inclosos | Total |
-| :---: | :--- | :--- | :---: |
-| **Pack 1** | **Be – break** | *be, beat, become, begin, bend, bet, bite, bleed, blow, break* | 10 |
-| **Pack 2** | **Bring – deal** | *bring, build, burn, buy, catch, choose, come, cost, cut, deal* | 10 |
-| **Pack 3** | **Dig – feel** | *dig, do, draw, dream, drink, drive, eat, fall, feed, feel* | 10 |
-| **Pack 4** | **Fight – grow** | *fight, find, fly, forget, forgive, freeze, get, give, go, grow* | 10 |
-| **Pack 5** | **Hang – lay** | *hang, have, hear, hide, hit, hold, hurt, keep, know, lay* | 10 |
-| **Pack 6** | **Lead – mean** | *lead, learn, leave, lend, let, lie, light, lose, make, mean* | 10 |
-| **Pack 7** | **Meet – run** | *meet, overcome, pay, put, quit, read, ride, ring, rise, run* | 10 |
-| **Pack 8** | **Say – show** | *say, see, seek, sell, send, set, shake, shine, shoot, show* | 10 |
-| **Pack 9** | **Shut – spread** | *shut, sing, sink, sit, sleep, smell, speak, spell, spend, spread* | 10 |
-| **Pack 10** | **Stand – tear** | *stand, steal, stick, sting, stink, sweep, swim, take, teach, tear* | 10 |
-| **Pack 11** | **Tell – write** | *tell, think, throw, understand, wake up, wear, win, write* | 8 |
+El domini d'un pack no depèn només del reconeixement. Per obtenir dues estrelles cal arribar com a mínim al **80% tant al quiz com a l'activitat escrita**. Les tres estrelles exigeixen com a mínim un **90% en totes dues evidències**.
 
----
+## Packs
 
-## 🎮 Activitats dins de cada pack
+| Pack | Rang | Total |
+| ---: | --- | ---: |
+| **1** | *be - break* | 10 |
+| **2** | *bring - deal* | 10 |
+| **3** | *dig - feel* | 10 |
+| **4** | *fight - grow* | 10 |
+| **5** | *hang - lay* | 10 |
+| **6** | *lead - mean* | 10 |
+| **7** | *meet - run* | 10 |
+| **8** | *say - show* | 10 |
+| **9** | *shut - spread* | 10 |
+| **10** | *stand - tear* | 10 |
+| **11** | *tell - write* | 8 |
 
-1. **🗂️ Flashcards 3D:** gir tridimensional amb base form (V1), past simple (V2), past participle (V3), transcripció fonètica, pistes mnemotècniques i botó d'àudio.
-2. **🎯 Quiz de 4 opcions:** preguntes ràpides generades dinàmicament amb distractors intel·ligents, ratxes i percentatge d'encert.
-3. **✍️ Escriu les formes:** l'alumne escriu el past simple i past participle a partir de la forma base o del català, amb correcció flexible (permet formes dobles com *burnt/burned*).
-4. **🧩 Memory / connecta parelles:** tauler de fitxes per emparellar el verb en present amb el seu passat/participi o català.
-5. **🔤 Lletres desordenades (Word Scramble):** ordenar les lletres per fixar l'ortografia (*spelling*).
+## Checkpoints acumulatius
 
----
+Els checkpoints combinen preguntes dels packs treballats fins a aquell punt.
 
+| Checkpoint | Packs inclosos | Verbs acumulats |
+| --- | --- | ---: |
+| **1** | 1-2 | 20 |
+| **2** | 1-4 | 40 |
+| **3** | 1-6 | 60 |
+| **4** | 1-8 | 80 |
+| **5** | 1-10 | 100 |
+| **Master** | 1-11 | 108 |
 
-## 🧠 Repàs dels meus errors
+Cal obtenir com a mínim un **80% d'encerts** per desbloquejar la medalla corresponent.
 
-L'aplicació registra localment els verbs en què l'alumnat s'equivoca i crea una cua de repàs personalitzada. Els verbs amb més dificultat apareixen primer i es practiquen mitjançant recuperació escrita de V2 i V3. Aquest historial es desa només al navegador mitjançant `localStorage`.
+## Jocs finals
 
-El domini d'un pack ja no depèn només del reconeixement en un quiz. Per obtenir dues estrelles, cal arribar com a mínim al **80% tant al quiz com a l'activitat escrita**. Les tres estrelles exigeixen com a mínim un **90% en totes dues evidències**.
+Quan es treballa amb el conjunt complet de verbs, Verb Quest ofereix diversos modes:
 
----
+- **Contrarellotge - Speed Rush** amb temps limitat i combos.
+- **Mode supervivència** amb tres vides i comodins.
+- **Detector d'intrusos** per identificar formes incorrectes habituals.
+- **Trencaclosques de trios** per connectar V1, V2 i V3.
+- **Verbs en context** amb frases contextualitzades.
+- **Classificador de famílies** segons patrons morfològics i fonètics.
+- **Simulacre d'examen** amb nota sobre 10 i certificat A4 imprimible o exportable a PDF.
+- **Ruleta dels verbs** per a activitats orals o de grup.
 
-## 🚩 Checkpoints acumulatius
+El **Diccionari** permet cercar per anglès o català i incorpora text a veu en anglès.
 
-Per garantir que l'alumnat no oblida els primers packs a mesura que avança el curs, els **checkpoints** agafen preguntes a l'atzar de **tots els packs acumulats fins a aquell moment**.
-- Es requereix un **80% d'encerts** per desbloquejar la medalla.
-- El sistema desa el progrés, les medalles, les puntuacions de quiz i producció escrita i l’historial d’errors a `localStorage`.
+## Navegació i progrés
 
----
+Les vistes principals utilitzen fragments d'URL com `#packs`, `#review` o `#dictionary`. Això permet compartir una secció concreta i manté un comportament coherent amb el botó Enrere del navegador.
 
-## 👑 Arena de tots els verbs (108 verbs en joc)
+El progrés, les medalles i l'historial d'errors es desen amb `localStorage`. No cal crear cap compte i aquestes dades no s'envien a cap servidor propi.
 
-- **⚡ Contrarellotge (Speed Rush):** 60 o 90 segons amb multiplicadors de combo per fer el rècord màxim de punts.
-- **❤️ Mode supervivència (3 vides):** quants verbs consecutius pots encertar? Inclou 3 comodins (50/50, saltar pregunta i pista de la 1a lletra).
-- **🕵️ Detector d'intrusos:** 10 rondes per identificar formes inventades o regularitzades erròniament (*catched*, *buyed*, *sleeped*...) entre formes irregulars reals.
-- **🧩 Trencaclosques de trios:** tauler de 12 fitxes per connectar els trios complets (infinitiu, past simple i past participle) de 4 verbs irregulars aleatoris.
-- **💬 Verbs en context:** 10 frases contextualitzades de 2n d'ESO per triar si cal la forma base, el passat simple o el participi segons el temps verbal.
-- **🏷️ Classificador de famílies:** 10 rondes per identificar el patró de cada verb (3 formes idèntiques, patró i-a-u, terminació -ought/-aught, canvi de 'd' a 't', vocals en -o- o sufix -en).
-- **📝 Simulacre d'examen:**
-  - Tria 10, 20 o 30 verbs a l'atzar.
-  - Graella d'avaluació idèntica a un examen d'aula.
-  - Correcció automàtica amb nota sobre 10.
-  - **Certificat imprimible en format A4**: permet introduir el nom de l'alumne/a i grup per lliurar al docent en paper o PDF.
-- **🎡 La ruleta dels verbs:** ruleta física animada per fer reptes orals i dinàmiques de grup classe.
-- **📚 Diccionari i cercador:** cercador en temps real per anglès o català, amb text a veu en anglès i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
-- **Navegació compartible:** les vistes principals utilitzen fragments d’URL (`#packs`, `#review`, `#dictionary`, etc.) perquè es puguin enllaçar directament i el botó Enrere del navegador funcioni de manera coherent.
+## Mode clar, mode fosc i accessibilitat
 
----
+Verb Quest incorpora **mode clar i mode fosc**. La preferència queda desada al navegador; si no n'hi ha cap, la web respecta la configuració del sistema.
 
-## 🚀 Com publicar a GitHub Pages en 3 minuts
+La capa compartida de tema es complementa amb ajustos específics de contrast per als estats dels jocs. El repositori inclou una auditoria automàtica amb **Playwright** i **axe-core** que revisa totes les vistes en mode clar i fosc.
 
-1. **Crea el repositori a GitHub:**
-   - Entra a [GitHub.com/new](https://github.com/new).
-   - Nom del repositori: `irregular-verbs-eso2`
-   - Tipus: **Public** (Públic).
+També hi ha focus visible per a la navegació amb teclat i suport per a la preferència de moviment reduït.
 
-2. **Puja els fitxers des del terminal:**
-   Obre el terminal a la carpeta del projecte:
-   ```bash
-   cd c:\Users\mique\Documents\Antigravity\irregular-verbs-eso2
-   git add .
-   git commit -m "Initial commit: Verb Quest 2n ESO Irregular Verbs"
-   git branch -M main
-   git remote add origin https://github.com/miquelangelfuentes/irregular-verbs-eso2.git
-   git push -u origin main
-   ```
+## Producció i desplegament
 
-3. **Activa GitHub Pages:**
-   - A GitHub, ves a la pestanya **Settings** del teu repositori.
-   - Al menú lateral esquerre, fes clic a **Pages**.
-   - A l'apartat **Branch**, tria `main` i la carpeta `/ (root)`.
-   - Fes clic a **Save**.
-   - En 1-2 minuts, la web estarà en línia a:  
-     `https://miquelangelfuentes.github.io/irregular-verbs-eso2/`
+El projecte es publica com a lloc estàtic a **GitHub Pages**.
 
----
+Tailwind CSS es compila a `tailwind.css`. La versió publicada **no depèn de Tailwind Play CDN**. El navegador executa JavaScript sense framework i no necessita Node.js en temps d'execució.
 
-## 🛠️ Tecnologies
+El workflow `.github/workflows/apply-improvements.yml` aplica els ajustos de producció. El workflow `.github/workflows/validate-site.yml` comprova la sintaxi i executa l'auditoria de contrast.
 
-- **HTML5 semàntic**
-- **Tailwind CSS** (via CDN)
-- **Vanilla JavaScript** (sense node_modules ni dependències de compilació)
-- **Web Speech API** per al text a veu en anglès
-- **Web Audio API** per a efectes de so suaus
-- **Canvas-Confetti** per a les celebracions
-- **Lucide Icons**
+## Tecnologies
 
----
+- HTML5 i CSS compilat amb Tailwind CSS.
+- JavaScript sense framework.
+- Web Speech API i Web Audio API.
+- Lucide Icons i Canvas Confetti.
+- Playwright i axe-core per a la validació de contrast.
+- GitHub Actions per a la construcció i les comprovacions automàtiques.
 
-## 📄 Llicències
+## Llicències
 
-- **Codi:** sota llicència [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
-- **Continguts educatius:** sota llicència [Creative Commons CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca).
-
-
-- **CSS de producció:** Tailwind es compila a `tailwind.css`; la web no depèn del Play CDN de Tailwind.
+- **Codi** - [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
+- **Continguts educatius** - [Creative Commons CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca).
