@@ -36,6 +36,8 @@ L'aprenentatge combina bastides de suport amb pràctica de recuperació acumulat
 │    ❤️ Mode supervivència (3 vides i comodins)               │
 │    🕵️ Detector d'intrusos (identificar errors típics)       │
 │    🧩 Trencaclosques de trios (unir V1 + V2 + V3)           │
+│    💬 Verbs en context (frases amb pistes de temps)         │
+│    🏷️ Classificador de famílies (patrons fonètics)          │
 │    📝 Simulacre d'examen (nota /10 + certificat A4)         │
 │    🎡 La ruleta dels verbs (reptes orals i de grup)         │
 │    📚 Diccionari i cercador interactiu amb text a veu       │
@@ -95,6 +97,8 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
 - **❤️ Mode supervivència (3 vides):** quants verbs consecutius pots encertar? Inclou 3 comodins (50/50, saltar pregunta i pista de la 1a lletra).
 - **🕵️ Detector d'intrusos:** 10 rondes per identificar formes inventades o regularitzades erròniament (*catched*, *buyed*, *sleeped*...) entre formes irregulars reals.
 - **🧩 Trencaclosques de trios:** tauler de 12 fitxes per connectar els trios complets (infinitiu, past simple i past participle) de 4 verbs irregulars aleatoris.
+- **💬 Verbs en context:** 10 frases contextualitzades de 2n d'ESO per triar si cal la forma base, el passat simple o el participi segons el temps verbal.
+- **🏷️ Classificador de famílies:** 10 rondes per identificar el patró de cada verb (3 formes idèntiques, patró i-a-u, terminació -ought/-aught, canvi de 'd' a 't', vocals en -o- o sufix -en).
 - **📝 Simulacre d'examen:**
   - Tria 10, 20 o 30 verbs a l'atzar.
   - Graella d'avaluació idèntica a un examen d'aula.
@@ -102,7 +106,6 @@ Per garantir que l'alumnat no oblida els primers packs a mesura que avança el c
   - **Certificat imprimible en format A4**: permet introduir el nom de l'alumne/a i grup per lliurar al docent en paper o PDF.
 - **🎡 La ruleta dels verbs:** ruleta física animada per fer reptes orals i dinàmiques de grup classe.
 - **📚 Diccionari i cercador:** cercador en temps real per anglès o català, amb text a veu en anglès i filtres per famílies (*no-change*, *-ought/-aught*, *i-a-u*, etc.).
-- **Navegació compartible:** les vistes principals utilitzen fragments d’URL (`#packs`, `#review`, `#dictionary`, etc.) perquè es puguin enllaçar directament i el botó Enrere del navegador funcioni de manera coherent.
 - **Navegació compartible:** les vistes principals utilitzen fragments d’URL (`#packs`, `#review`, `#dictionary`, etc.) perquè es puguin enllaçar directament i el botó Enrere del navegador funcioni de manera coherent.
 
 ---

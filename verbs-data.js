@@ -1022,6 +1022,24 @@ const ALL_VERBS_GAMES_META = [
     description: "12 targetes barrejades a la taula. Agrupa les 3 formes que formen un verb complet (infinitiu, past simple i past participle) per alliberar el tauler!"
   },
   {
+    id: "context",
+    title: "Verbs en context",
+    subtitle: "Aplica la forma correcta (V1, V2 o V3) segons la frase",
+    badge: "💬",
+    icon: "message-square-quote",
+    color: "from-blue-600 to-cyan-600",
+    description: "10 frases d'anglès en context real de 2n d'ESO. Descobreix quina forma toca segons les pistes de temps (past simple, present perfect o infinitiu)."
+  },
+  {
+    id: "family-sorter",
+    title: "Classificador de famílies",
+    subtitle: "Agrupa els verbs segons els seus patrons fonètics",
+    badge: "🏷️",
+    icon: "layers",
+    color: "from-amber-500 to-orange-600",
+    description: "10 rondes per identificar a quina família pertany cada verb: 3 formes idèntiques, patró i-a-u, terminació -ought/-aught, canvi de 'd' a 't' o patrons en -en."
+  },
+  {
     id: "exam",
     title: "Simulacre d'examen de 2n d'ESO",
     subtitle: "Genera un examen aleatori i descarrega o imprimeix l'informe",
@@ -1106,4 +1124,335 @@ const IMPOSTORS_DATA = [
   { fake: "shutted", v1: "shut", correct: "shut", cat: "tancar", explanation: "El verb 'shut' té les 3 formes idèntiques: shut - shut - shut." },
   { fake: "hurted", v1: "hurt", correct: "hurt", cat: "fer mal", explanation: "El verb 'hurt' té les 3 formes idèntiques: hurt - hurt - hurt." },
   { fake: "readed", v1: "read", correct: "read", cat: "llegir", explanation: "El verb 'read' s'escriu igual en les 3 formes (read - read - read, pronunciat /red/ en V2/V3)." }
+];
+
+// Metadades de famílies fonètiques per al joc 'family-sorter'
+const FAMILIES_META = {
+  "no-change": {
+    name: "3 formes idèntiques",
+    example: "cost - cost - cost",
+    explanation: "El verb té exactament la mateixa forma en infinitiu, past simple i past participle."
+  },
+  "ought-aught": {
+    name: "Terminació en -ought / -aught",
+    example: "buy - bought - bought",
+    explanation: "El past simple i past participle acaben en el so /ɔːt/ escrit -ought o -aught."
+  },
+  "i-a-u": {
+    name: "Patró de vocals i - a - u",
+    example: "sing - sang - sung",
+    explanation: "La vocal canvia de 'i' en V1, a 'a' en V2, i a 'u' en V3."
+  },
+  "d-to-t": {
+    name: "Canvi de 'd' final a 't'",
+    example: "send - sent - sent",
+    explanation: "La consonant final 'd' es converteix en 't' en past simple i participi."
+  },
+  "o-en": {
+    name: "V2 amb 'o' i V3 en '-en' / '-n'",
+    example: "break - broke - broken",
+    explanation: "El past simple té vocal 'o' i el participi acaba en el sufix '-en' o '-n'."
+  },
+  "ow-ew-own": {
+    name: "Terminació -ow, -ew, -own",
+    example: "grow - grew - grown",
+    explanation: "L'infinitiu acaba en -ow, el passat en -ew i el participi en -own."
+  },
+  "ee-to-e": {
+    name: "Doble 'ee' que passa a 'e' curta",
+    example: "meet - met - met",
+    explanation: "La vocal llarga 'ee' s'escurça a 'e' simple en passat i participi."
+  }
+};
+
+// Frases en context d'anglès per al joc 'context'
+const CONTEXT_SENTENCES_DATA = [
+  {
+    sentence: "Yesterday afternoon, Emma ______ her keys in the park.",
+    verb: "lose",
+    cat: "perdre",
+    options: ["lost", "losed", "lose", "loses"],
+    correct: "lost",
+    formNeeded: "V2 (past simple)",
+    explanation: "Amb 'yesterday' l'acció és en passat simple (V2): 'lost'."
+  },
+  {
+    sentence: "Have you ever ______ sushi with chopsticks?",
+    verb: "eat",
+    cat: "menjar",
+    options: ["eaten", "ate", "eat", "eated"],
+    correct: "eaten",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'have you ever' s'utilitza el past participle (V3): 'eaten'."
+  },
+  {
+    sentence: "He didn't ______ to school yesterday because he was sick.",
+    verb: "go",
+    cat: "anar",
+    options: ["go", "went", "gone", "goed"],
+    correct: "go",
+    formNeeded: "V1 (infinitiu)",
+    explanation: "Després de l'auxiliar negatiu 'didn't' sempre s'utilitza la forma base (V1): 'go'."
+  },
+  {
+    sentence: "Two days ago, we ______ tickets for the cinema.",
+    verb: "buy",
+    cat: "comprar",
+    options: ["bought", "buyed", "buys", "buying"],
+    correct: "bought",
+    formNeeded: "V2 (past simple)",
+    explanation: "Amb 'two days ago' s'utilitza el past simple (V2): 'bought'."
+  },
+  {
+    sentence: "She has already ______ three emails to the teacher.",
+    verb: "write",
+    cat: "escriure",
+    options: ["written", "wrote", "writed", "writes"],
+    correct: "written",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'has already' en present perfect cal el past participle (V3): 'written'."
+  },
+  {
+    sentence: "Last night, the baby ______ for nine hours without waking up.",
+    verb: "sleep",
+    cat: "dormir",
+    options: ["slept", "sleeped", "sleeps", "sleep"],
+    correct: "slept",
+    formNeeded: "V2 (past simple)",
+    explanation: "Amb 'last night' s'utilitza el past simple (V2): 'slept'."
+  },
+  {
+    sentence: "Look up! A colorful bird has ______ onto our balcony.",
+    verb: "fly",
+    cat: "volar",
+    options: ["flown", "flew", "flied", "flying"],
+    correct: "flown",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb l'auxiliar 'has' en present perfect s'utilitza el past participle (V3): 'flown'."
+  },
+  {
+    sentence: "Did you ______ the beautiful sunset yesterday?",
+    verb: "see",
+    cat: "veure",
+    options: ["see", "saw", "seen", "seed"],
+    correct: "see",
+    formNeeded: "V1 (infinitiu)",
+    explanation: "Després de la partícula auxiliar 'did' s'utilitza la forma base en infinitiu (V1): 'see'."
+  },
+  {
+    sentence: "My grandparents ______ this stone house in 1978.",
+    verb: "build",
+    cat: "construir",
+    options: ["built", "builded", "build", "building"],
+    correct: "built",
+    formNeeded: "V2 (past simple)",
+    explanation: "Una data passada concreta ('in 1978') demana past simple (V2): 'built'."
+  },
+  {
+    sentence: "I haven't ______ my cousins since last summer.",
+    verb: "see",
+    cat: "veure",
+    options: ["seen", "saw", "see", "seed"],
+    correct: "seen",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'haven't' en present perfect cal el past participle (V3): 'seen'."
+  },
+  {
+    sentence: "Last summer, we ______ across the lake every morning.",
+    verb: "swim",
+    cat: "nedar",
+    options: ["swam", "swum", "swimmed", "swimming"],
+    correct: "swam",
+    formNeeded: "V2 (past simple)",
+    explanation: "Amb 'last summer' s'expressa una acció acabada en past simple (V2): 'swam'."
+  },
+  {
+    sentence: "Did Marc ______ his homework before dinner?",
+    verb: "do",
+    cat: "fer",
+    options: ["do", "did", "done", "does"],
+    correct: "do",
+    formNeeded: "V1 (infinitiu)",
+    explanation: "En preguntes amb 'did' s'utilitza sempre la forma base (V1): 'do'."
+  },
+  {
+    sentence: "We have never ______ in such a cold sea before.",
+    verb: "swim",
+    cat: "nedar",
+    options: ["swum", "swam", "swimmed", "swims"],
+    correct: "swum",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'have never' s'utilitza el past participle (V3): 'swum'."
+  },
+  {
+    sentence: "She ______ an apple from the fridge and started eating.",
+    verb: "take",
+    cat: "agafar, prendre",
+    options: ["took", "taken", "taked", "takes"],
+    correct: "took",
+    formNeeded: "V2 (past simple)",
+    explanation: "Seqüència d'accions en el passat en past simple (V2): 'took'."
+  },
+  {
+    sentence: "They have already ______ delicious pizza for the party.",
+    verb: "make",
+    cat: "fer, preparar",
+    options: ["made", "maked", "make", "makes"],
+    correct: "made",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'have already' cal el past participle (V3): 'made'."
+  },
+  {
+    sentence: "I ______ a ten-euro banknote on the pavement yesterday.",
+    verb: "find",
+    cat: "trobar",
+    options: ["found", "finded", "find", "finds"],
+    correct: "found",
+    formNeeded: "V2 (past simple)",
+    explanation: "Amb 'yesterday' l'acció acabada és en past simple (V2): 'found'."
+  },
+  {
+    sentence: "Lucas hasn't ______ a single word during the whole meeting.",
+    verb: "speak",
+    cat: "parlar",
+    options: ["spoken", "spoke", "speaked", "speaks"],
+    correct: "spoken",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'hasn't' en present perfect s'utilitza el past participle (V3): 'spoken'."
+  },
+  {
+    sentence: "Yesterday, after running, we ______ two large bottles of water.",
+    verb: "drink",
+    cat: "beure",
+    options: ["drank", "drunk", "drinked", "drinks"],
+    correct: "drank",
+    formNeeded: "V2 (past simple)",
+    explanation: "Amb 'yesterday' s'utilitza el past simple (V2): 'drank'."
+  },
+  {
+    sentence: "Marta has ______ that green coat all winter.",
+    verb: "wear",
+    cat: "portar posat",
+    options: ["worn", "wore", "weared", "wears"],
+    correct: "worn",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'has' en present perfect cal el past participle (V3): 'worn'."
+  },
+  {
+    sentence: "They ______ to the Pyrenees last weekend to see the snow.",
+    verb: "drive",
+    cat: "conduir",
+    options: ["drove", "driven", "drived", "driving"],
+    correct: "drove",
+    formNeeded: "V2 (past simple)",
+    explanation: "Amb 'last weekend' s'utilitza el past simple (V2): 'drove'."
+  },
+  {
+    sentence: "The teacher has ______ us three extra days to finish the project.",
+    verb: "give",
+    cat: "donar",
+    options: ["given", "gave", "gived", "gives"],
+    correct: "given",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'has' en present perfect s'utilitza el past participle (V3): 'given'."
+  },
+  {
+    sentence: "Pau ______ faster than everyone else in the sports race on Friday.",
+    verb: "run",
+    cat: "córrer",
+    options: ["ran", "run", "runned", "runs"],
+    correct: "ran",
+    formNeeded: "V2 (past simple)",
+    explanation: "Acció en el passat ('on Friday') en past simple (V2): 'ran'."
+  },
+  {
+    sentence: "Did you ______ what the headmaster announced this morning?",
+    verb: "hear",
+    cat: "sentir, escoltar",
+    options: ["hear", "heard", "heared", "hearing"],
+    correct: "hear",
+    formNeeded: "V1 (infinitiu)",
+    explanation: "Després de 'did you' en pregunta cal la forma base (V1): 'hear'."
+  },
+  {
+    sentence: "She ______ proud when she received her music certificate.",
+    verb: "feel",
+    cat: "sentir-se",
+    options: ["felt", "feeled", "feels", "feeling"],
+    correct: "felt",
+    formNeeded: "V2 (past simple)",
+    explanation: "Acció acabada en el passat en past simple (V2): 'felt'."
+  },
+  {
+    sentence: "The choir has ______ that song in three international festivals.",
+    verb: "sing",
+    cat: "cantar",
+    options: ["sung", "sang", "singed", "singing"],
+    correct: "sung",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'has' en present perfect s'utilitza el past participle (V3): 'sung'."
+  },
+  {
+    sentence: "I ______ my best friend four years ago at summer camp.",
+    verb: "meet",
+    cat: "conèixer",
+    options: ["met", "meeted", "meet", "meets"],
+    correct: "met",
+    formNeeded: "V2 (past simple)",
+    explanation: "Amb 'four years ago' l'acció és en past simple (V2): 'met'."
+  },
+  {
+    sentence: "We haven't ______ for the museum tickets yet.",
+    verb: "pay",
+    cat: "pagar",
+    options: ["paid", "payed", "pay", "paying"],
+    correct: "paid",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'haven't' en present perfect cal el past participle (V3): 'paid'."
+  },
+  {
+    sentence: "Our teacher ______ us an interesting story about ancient Rome.",
+    verb: "tell",
+    cat: "explicar, dir",
+    options: ["told", "telled", "tell", "telling"],
+    correct: "told",
+    formNeeded: "V2 (past simple)",
+    explanation: "Narració d'una acció en passat simple (V2): 'told'."
+  },
+  {
+    sentence: "We have ______ each other since we were in kindergarten.",
+    verb: "know",
+    cat: "conèixer-se",
+    options: ["known", "knew", "knowed", "knows"],
+    correct: "known",
+    formNeeded: "V3 (past participle)",
+    explanation: "Amb 'have' i 'since' cal el past participle (V3): 'known'."
+  },
+  {
+    sentence: "Suddenly, the fire alarm ______ and everyone left the room.",
+    verb: "ring",
+    cat: "sonar",
+    options: ["rang", "rung", "ringed", "rings"],
+    correct: "rang",
+    formNeeded: "V2 (past simple)",
+    explanation: "Seqüència d'accions puntuals en passat simple (V2): 'rang'."
+  },
+  {
+    sentence: "He didn't ______ the kitchen glass on purpose.",
+    verb: "break",
+    cat: "trencar",
+    options: ["break", "broke", "broken", "breaked"],
+    correct: "break",
+    formNeeded: "V1 (infinitiu)",
+    explanation: "Després de 'didn't' sempre s'utilitza la forma base (V1): 'break'."
+  },
+  {
+    sentence: "The heavy book ______ from the top shelf onto the carpet.",
+    verb: "fall",
+    cat: "caure",
+    options: ["fell", "fallen", "falled", "falling"],
+    correct: "fell",
+    formNeeded: "V2 (past simple)",
+    explanation: "Acció puntual en el passat en past simple (V2): 'fell'."
+  }
 ];

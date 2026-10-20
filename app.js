@@ -15,6 +15,8 @@ const state = {
     survivalHighScore: 0,
     impostorHighScore: 0,
     trioMatchBestMoves: 0,
+    contextHighScore: 0,
+    familySorterHighScore: 0,
     examsCompleted: 0
   },
   // Estat de jocs puntuals
@@ -83,7 +85,19 @@ const state = {
     trioMatchedCount: 0,
     trioMoves: 0,
     trioTimer: 0,
-    trioInterval: null
+    trioInterval: null,
+    // Verbs en context
+    contextRounds: [],
+    contextRoundIndex: 0,
+    contextScore: 0,
+    contextStreak: 0,
+    contextAnswered: false,
+    // Classificador de famílies
+    familySorterRounds: [],
+    familySorterRoundIndex: 0,
+    familySorterScore: 0,
+    familySorterStreak: 0,
+    familySorterAnswered: false
   }
 };
 
@@ -118,6 +132,8 @@ function resetAllData() {
       survivalHighScore: 0,
       impostorHighScore: 0,
       trioMatchBestMoves: 0,
+      contextHighScore: 0,
+      familySorterHighScore: 0,
       examsCompleted: 0
     };
     saveUserStats();
@@ -308,6 +324,10 @@ function navigateTo(viewId, params = {}) {
     startImpostorGame();
   } else if (viewId === 'game-trio-match') {
     startTrioMatchGame();
+  } else if (viewId === 'game-context') {
+    startContextGame();
+  } else if (viewId === 'game-family-sorter') {
+    startFamilySorterGame();
   } else if (viewId === 'explorer') {
     renderExplorer();
   }
@@ -1202,6 +1222,8 @@ function renderAllVerbsHub() {
       else if (g.id === 'wheel') navigateTo('game-wheel');
       else if (g.id === 'impostor') navigateTo('game-impostor');
       else if (g.id === 'trio-match') navigateTo('game-trio-match');
+      else if (g.id === 'context') navigateTo('game-context');
+      else if (g.id === 'family-sorter') navigateTo('game-family-sorter');
       else if (g.id === 'explorer') navigateTo('explorer');
     };
 
@@ -1214,6 +1236,10 @@ function renderAllVerbsHub() {
       scoreBadge = `<span class="text-xs font-bold text-violet-600 bg-violet-50 px-2.5 py-1 rounded-full">Rècord: ${state.userStats.impostorHighScore} pts</span>`;
     } else if (g.id === 'trio-match' && state.userStats.trioMatchBestMoves) {
       scoreBadge = `<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">Rècord: ${state.userStats.trioMatchBestMoves} intents</span>`;
+    } else if (g.id === 'context' && state.userStats.contextHighScore) {
+      scoreBadge = `<span class="text-xs font-bold text-cyan-700 bg-cyan-50 px-2.5 py-1 rounded-full">Rècord: ${state.userStats.contextHighScore} pts</span>`;
+    } else if (g.id === 'family-sorter' && state.userStats.familySorterHighScore) {
+      scoreBadge = `<span class="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">Rècord: ${state.userStats.familySorterHighScore} pts</span>`;
     }
 
     card.innerHTML = `
@@ -2278,6 +2304,419 @@ function finishTrioMatchGame() {
     recordNotice.classList.remove('hidden');
   } else {
     recordNotice.classList.add('hidden');
+  }
+}
+
+// ==========================================
+// 5G. JOC FINAL: VERBS EN CONTEXT
+// ==========================================
+function startContextGame() {
+  state.game.contextRounds = shuffleArray([...CONTEXT_SENTENCES_DATA]).slice(0, 10);
+  state.game.contextRoundIndex = 0;
+  state.game.contextScore = 0;
+  state.game.contextStreak = 0;
+  state.game.contextAnswered = false;
+
+  document.getElementById('context-play-area').classList.remove('hidden');
+  document.getElementById('context-results-area').classList.add('hidden');
+
+  renderContextRound();
+}
+
+function renderContextRound() {
+  const current = state.game.contextRounds[state.game.contextRoundIndex];
+  if (!current) return;
+
+  state.game.contextAnswered = false;
+
+  document.getElementById('context-round-display').textContent = `${state.game.contextRoundIndex + 1} / 10`;
+  document.getElementById('context-streak-display').textContent = `Ratxa: ${state.game.contextStreak} 🔥`;
+  document.getElementById('context-score-display').textContent = `${state.game.contextScore}`;
+
+  document.getElementById('context-verb-tag').textContent = `Verb base: ${current.verb}`;
+  document.getElementById('context-sentence-text').innerHTML = current.sentence.replace(
+    '______',
+    '<span class="inline-block px-3 py-0.5 rounded-lg border-2 border-dashed border-indigo-400 bg-white text-indigo-700 min-w-[70px] text-center font-mono">______</span>'
+  );
+  document.getElementById('context-verb-hint').textContent = `Infinitiu: "${current.verb}" - Català: "${current.cat}"`;
+
+  const listenBtn = document.getElementById('context-listen-btn');
+  if (listenBtn) {
+    listenBtn.onclick = () => speakEnglish(current.sentence.replace('______', current.correct));
+  }
+
+  const feedbackBox = document.getElementById('context-feedback-box');
+  feedbackBox.classList.add('hidden');
+  feedbackBox.innerHTML = '';
+
+  const nextBtn = document.getElementById('context-next-btn');
+  nextBtn.classList.add('hidden');
+  const nextBtnText = nextBtn.querySelector('span');
+  if (nextBtnText) {
+    nextBtnText.textContent = state.game.contextRoundIndex === 9 ? "Veure resultats finals" : "Següent frase";
+  }
+
+  const grid = document.getElementById('context-options-grid');
+  grid.innerHTML = '';
+
+  const shuffledOptions = shuffleArray([...current.options]);
+  shuffledOptions.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = "context-opt-btn bg-white p-4 sm:p-5 rounded-2xl border-2 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/40 transition-all font-display font-bold text-base sm:text-lg text-slate-800 text-center flex items-center justify-between shadow-xs cursor-pointer group";
+    btn.onclick = () => checkContextAnswer(opt, current);
+    btn.innerHTML = `
+      <span class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-slate-100 group-hover:bg-indigo-100 text-slate-500 group-hover:text-indigo-600 text-xs flex items-center justify-center font-mono">
+          ${String.fromCharCode(65 + idx)}
+        </span>
+        <span class="text-base sm:text-lg">${opt}</span>
+      </span>
+      <span class="text-xs text-slate-400 group-hover:text-indigo-500 font-normal">Tria</span>
+    `;
+    grid.appendChild(btn);
+  });
+}
+
+function checkContextAnswer(chosenOpt, current) {
+  if (state.game.contextAnswered) return;
+  state.game.contextAnswered = true;
+
+  const isCorrect = (chosenOpt === current.correct);
+  const grid = document.getElementById('context-options-grid');
+  const buttons = grid.querySelectorAll('.context-opt-btn');
+
+  // Actualitza la frase mostrant la paraula correcta
+  document.getElementById('context-sentence-text').innerHTML = current.sentence.replace(
+    '______',
+    `<span class="text-indigo-600 font-extrabold underline decoration-2">${current.correct}</span>`
+  );
+
+  speakEnglish(current.sentence.replace('______', current.correct));
+
+  const feedbackBox = document.getElementById('context-feedback-box');
+  feedbackBox.classList.remove('hidden');
+
+  if (isCorrect) {
+    playSuccessSound();
+    const roundPoints = 100 + (state.game.contextStreak * 20);
+    state.game.contextScore += roundPoints;
+    state.game.contextStreak += 1;
+
+    buttons.forEach(btn => {
+      if (btn.textContent.includes(chosenOpt)) {
+        btn.className = "context-opt-btn bg-emerald-50 p-4 sm:p-5 rounded-2xl border-2 border-emerald-500 text-emerald-900 font-display font-bold text-base sm:text-lg text-center flex items-center justify-between shadow-sm";
+        btn.innerHTML = `
+          <span class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-lg bg-emerald-200 text-emerald-800 text-xs flex items-center justify-center font-mono font-bold">✓</span>
+            <span class="text-base sm:text-lg">${chosenOpt}</span>
+          </span>
+          <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">+${roundPoints} pts</span>
+        `;
+      }
+    });
+
+    feedbackBox.className = "p-4 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950 text-sm space-y-1.5";
+    feedbackBox.innerHTML = `
+      <div class="font-bold flex items-center gap-2 text-emerald-800">
+        <span>🎉 Molt bé! La forma correcta és "${current.correct}".</span>
+      </div>
+      <p class="text-xs leading-relaxed text-emerald-900">
+        <strong>Pista de temps:</strong> ${current.explanation}
+      </p>
+    `;
+  } else {
+    playErrorSound();
+    state.game.contextStreak = 0;
+
+    buttons.forEach(btn => {
+      if (btn.textContent.includes(chosenOpt)) {
+        btn.className = "context-opt-btn bg-rose-50 p-4 sm:p-5 rounded-2xl border-2 border-rose-400 text-rose-900 font-display font-bold text-base sm:text-lg text-center flex items-center justify-between shadow-sm";
+        btn.innerHTML = `
+          <span class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-lg bg-rose-200 text-rose-800 text-xs flex items-center justify-center font-mono font-bold">✗</span>
+            <span class="text-base sm:text-lg">${chosenOpt}</span>
+          </span>
+          <span class="text-xs font-semibold text-rose-600">Incorrecte</span>
+        `;
+      } else if (btn.textContent.includes(current.correct)) {
+        btn.className = "context-opt-btn bg-amber-50 p-4 sm:p-5 rounded-2xl border-2 border-amber-400 text-amber-950 font-display font-bold text-base sm:text-lg text-center flex items-center justify-between shadow-sm";
+        btn.innerHTML = `
+          <span class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-lg bg-amber-200 text-amber-800 text-xs flex items-center justify-center font-mono font-bold">✓</span>
+            <span class="text-base sm:text-lg">${current.correct}</span>
+          </span>
+          <span class="text-xs font-bold text-amber-700">Forma correcta</span>
+        `;
+      }
+    });
+
+    feedbackBox.className = "p-4 rounded-2xl border border-rose-200 bg-rose-50 text-rose-950 text-sm space-y-1.5";
+    feedbackBox.innerHTML = `
+      <div class="font-bold flex items-center gap-2 text-rose-800">
+        <span>❌ Calia utilitzar "${current.correct}".</span>
+      </div>
+      <p class="text-xs leading-relaxed text-rose-900">
+        <strong>Pista de temps:</strong> ${current.explanation}
+      </p>
+    `;
+  }
+
+  buttons.forEach(b => {
+    b.onclick = null;
+    b.classList.remove('cursor-pointer', 'hover:border-indigo-400', 'hover:bg-indigo-50/40');
+  });
+
+  document.getElementById('context-streak-display').textContent = `Ratxa: ${state.game.contextStreak} 🔥`;
+  document.getElementById('context-score-display').textContent = `${state.game.contextScore}`;
+
+  const nextBtn = document.getElementById('context-next-btn');
+  nextBtn.classList.remove('hidden');
+}
+
+function nextContextRound() {
+  state.game.contextRoundIndex++;
+  if (state.game.contextRoundIndex >= 10) {
+    finishContextGame();
+  } else {
+    renderContextRound();
+  }
+}
+
+function finishContextGame() {
+  document.getElementById('context-play-area').classList.add('hidden');
+  const resultsArea = document.getElementById('context-results-area');
+  resultsArea.classList.remove('hidden');
+
+  document.getElementById('context-final-score').textContent = `${state.game.contextScore} punts`;
+
+  const recordNotice = document.getElementById('context-record-notice');
+  const prevRecord = state.userStats.contextHighScore || 0;
+  if (state.game.contextScore > prevRecord) {
+    state.userStats.contextHighScore = state.game.contextScore;
+    saveUserStats();
+    recordNotice.classList.remove('hidden');
+    triggerConfetti();
+    playFanfareSound();
+  } else {
+    recordNotice.classList.add('hidden');
+    if (state.game.contextScore >= 700) {
+      triggerConfetti();
+      playFanfareSound();
+    }
+  }
+}
+
+// ==========================================
+// 5H. JOC FINAL: CLASSIFICADOR DE FAMÍLIES
+// ==========================================
+function startFamilySorterGame() {
+  const targetFamKeys = ["no-change", "ought-aught", "i-a-u", "d-to-t", "o-en", "ow-ew-own", "ee-to-e"];
+  const eligibleVerbs = VERBS_DATA.filter(v => targetFamKeys.includes(v.family));
+  const chosenVerbs = shuffleArray(eligibleVerbs).slice(0, 10);
+
+  state.game.familySorterRounds = chosenVerbs.map(v => {
+    const correctFam = v.family;
+    const distractorKeys = shuffleArray(targetFamKeys.filter(k => k !== correctFam)).slice(0, 3);
+    const optionKeys = shuffleArray([correctFam, ...distractorKeys]);
+    const options = optionKeys.map(k => ({
+      key: k,
+      meta: FAMILIES_META[k]
+    }));
+
+    return {
+      verb: v,
+      correctFam,
+      options
+    };
+  });
+
+  state.game.familySorterRoundIndex = 0;
+  state.game.familySorterScore = 0;
+  state.game.familySorterStreak = 0;
+  state.game.familySorterAnswered = false;
+
+  document.getElementById('family-sorter-play-area').classList.remove('hidden');
+  document.getElementById('family-sorter-results-area').classList.add('hidden');
+
+  renderFamilySorterRound();
+}
+
+function renderFamilySorterRound() {
+  const current = state.game.familySorterRounds[state.game.familySorterRoundIndex];
+  if (!current) return;
+
+  state.game.familySorterAnswered = false;
+
+  document.getElementById('family-sorter-round-display').textContent = `${state.game.familySorterRoundIndex + 1} / 10`;
+  document.getElementById('family-sorter-streak-display').textContent = `Ratxa: ${state.game.familySorterStreak} 🔥`;
+  document.getElementById('family-sorter-score-display').textContent = `${state.game.familySorterScore}`;
+
+  const v = current.verb;
+  const v2Clean = v.v2.split('/')[0].trim();
+  const v3Clean = v.v3.split('/')[0].trim();
+  document.getElementById('family-sorter-verb-display').textContent = `${v.v1} - ${v2Clean} - ${v3Clean}`;
+  document.getElementById('family-sorter-cat-display').textContent = `Significat: ${v.cat}`;
+
+  const audioBtn = document.getElementById('family-sorter-audio-btn');
+  if (audioBtn) {
+    audioBtn.onclick = () => speakEnglish(`${v.v1}, ${v2Clean}, ${v3Clean}`);
+  }
+
+  const feedbackBox = document.getElementById('family-sorter-feedback-box');
+  feedbackBox.classList.add('hidden');
+  feedbackBox.innerHTML = '';
+
+  const nextBtn = document.getElementById('family-sorter-next-btn');
+  nextBtn.classList.add('hidden');
+  const nextBtnText = nextBtn.querySelector('span');
+  if (nextBtnText) {
+    nextBtnText.textContent = state.game.familySorterRoundIndex === 9 ? "Veure resultats finals" : "Següent verb";
+  }
+
+  const grid = document.getElementById('family-sorter-options-grid');
+  grid.innerHTML = '';
+
+  current.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = "family-opt-btn bg-white p-4 rounded-2xl border-2 border-slate-200 hover:border-amber-500 hover:bg-amber-50/40 transition-all font-display text-left flex flex-col justify-between shadow-xs cursor-pointer group";
+    btn.onclick = () => checkFamilySorterAnswer(opt.key);
+    btn.innerHTML = `
+      <span class="font-bold text-slate-900 text-sm sm:text-base group-hover:text-amber-800">${opt.meta.name}</span>
+      <span class="text-xs text-slate-500 mt-1 italic">Exemple: ${opt.meta.example}</span>
+    `;
+    grid.appendChild(btn);
+  });
+}
+
+function checkFamilySorterAnswer(selectedKey) {
+  if (state.game.familySorterAnswered) return;
+  state.game.familySorterAnswered = true;
+
+  const current = state.game.familySorterRounds[state.game.familySorterRoundIndex];
+  const isCorrect = (selectedKey === current.correctFam);
+  const correctMeta = FAMILIES_META[current.correctFam];
+  const grid = document.getElementById('family-sorter-options-grid');
+  const buttons = grid.querySelectorAll('.family-opt-btn');
+
+  const v = current.verb;
+  const v2Clean = v.v2.split('/')[0].trim();
+  const v3Clean = v.v3.split('/')[0].trim();
+  speakEnglish(`${v.v1}, ${v2Clean}, ${v3Clean}`);
+
+  const feedbackBox = document.getElementById('family-sorter-feedback-box');
+  feedbackBox.classList.remove('hidden');
+
+  if (isCorrect) {
+    playSuccessSound();
+    const roundPoints = 100 + (state.game.familySorterStreak * 20);
+    state.game.familySorterScore += roundPoints;
+    state.game.familySorterStreak += 1;
+
+    buttons.forEach((btn, idx) => {
+      const opt = current.options[idx];
+      if (opt.key === selectedKey) {
+        btn.className = "family-opt-btn bg-emerald-50 p-4 rounded-2xl border-2 border-emerald-500 text-emerald-950 font-display text-left flex flex-col justify-between shadow-sm";
+        btn.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-sm sm:text-base text-emerald-900">✓ ${opt.meta.name}</span>
+            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">+${roundPoints} pts</span>
+          </div>
+          <span class="text-xs text-emerald-700 mt-1 italic">Exemple: ${opt.meta.example}</span>
+        `;
+      }
+    });
+
+    feedbackBox.className = "p-4 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-950 text-sm space-y-1.5";
+    feedbackBox.innerHTML = `
+      <div class="font-bold flex items-center gap-2 text-emerald-800">
+        <span>🎉 Exacte! "${v.v1}" pertany a la família "${correctMeta.name}".</span>
+      </div>
+      <p class="text-xs leading-relaxed text-emerald-900">
+        <strong>Patró:</strong> ${correctMeta.explanation}
+      </p>
+    `;
+  } else {
+    playErrorSound();
+    state.game.familySorterStreak = 0;
+
+    buttons.forEach((btn, idx) => {
+      const opt = current.options[idx];
+      if (opt.key === selectedKey) {
+        btn.className = "family-opt-btn bg-rose-50 p-4 rounded-2xl border-2 border-rose-400 text-rose-950 font-display text-left flex flex-col justify-between shadow-sm";
+        btn.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-sm sm:text-base text-rose-900">✗ ${opt.meta.name}</span>
+            <span class="text-xs font-semibold text-rose-600">Incorrecte</span>
+          </div>
+          <span class="text-xs text-rose-700 mt-1 italic">Exemple: ${opt.meta.example}</span>
+        `;
+      } else if (opt.key === current.correctFam) {
+        btn.className = "family-opt-btn bg-amber-50 p-4 rounded-2xl border-2 border-amber-400 text-amber-950 font-display text-left flex flex-col justify-between shadow-sm";
+        btn.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-sm sm:text-base text-amber-900">✓ ${opt.meta.name}</span>
+            <span class="text-xs font-bold text-amber-700">Família correcta</span>
+          </div>
+          <span class="text-xs text-amber-700 mt-1 italic">Exemple: ${opt.meta.example}</span>
+        `;
+      }
+    });
+
+    feedbackBox.className = "p-4 rounded-2xl border border-rose-200 bg-rose-50 text-rose-950 text-sm space-y-1.5";
+    feedbackBox.innerHTML = `
+      <div class="font-bold flex items-center gap-2 text-rose-800">
+        <span>❌ "${v.v1}" pertany a la família "${correctMeta.name}".</span>
+      </div>
+      <p class="text-xs leading-relaxed text-rose-900">
+        <strong>Patró:</strong> ${correctMeta.explanation}
+      </p>
+    `;
+  }
+
+  buttons.forEach(b => {
+    b.onclick = null;
+    b.classList.remove('cursor-pointer', 'hover:border-amber-500', 'hover:bg-amber-50/40');
+  });
+
+  document.getElementById('family-sorter-streak-display').textContent = `Ratxa: ${state.game.familySorterStreak} 🔥`;
+  document.getElementById('family-sorter-score-display').textContent = `${state.game.familySorterScore}`;
+
+  const nextBtn = document.getElementById('family-sorter-next-btn');
+  nextBtn.classList.remove('hidden');
+}
+
+function nextFamilySorterRound() {
+  state.game.familySorterRoundIndex++;
+  if (state.game.familySorterRoundIndex >= 10) {
+    finishFamilySorterGame();
+  } else {
+    renderFamilySorterRound();
+  }
+}
+
+function finishFamilySorterGame() {
+  document.getElementById('family-sorter-play-area').classList.add('hidden');
+  const resultsArea = document.getElementById('family-sorter-results-area');
+  resultsArea.classList.remove('hidden');
+
+  document.getElementById('family-sorter-final-score').textContent = `${state.game.familySorterScore} punts`;
+
+  const recordNotice = document.getElementById('family-sorter-record-notice');
+  const prevRecord = state.userStats.familySorterHighScore || 0;
+  if (state.game.familySorterScore > prevRecord) {
+    state.userStats.familySorterHighScore = state.game.familySorterScore;
+    saveUserStats();
+    recordNotice.classList.remove('hidden');
+    triggerConfetti();
+    playFanfareSound();
+  } else {
+    recordNotice.classList.add('hidden');
+    if (state.game.familySorterScore >= 700) {
+      triggerConfetti();
+      playFanfareSound();
+    }
   }
 }
 
