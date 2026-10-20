@@ -57,16 +57,16 @@ Cal obtenir com a mínim un **80% d'encerts** per desbloquejar la medalla corres
 
 ## Jocs finals
 
-Quan es treballa amb el conjunt complet de verbs, Verb Quest ofereix diversos modes:
+L'**Arena de tots els verbs irregulars** ofereix actualment **8 jocs finals** que treballen amb el conjunt complet dels 108 verbs:
 
 - **Contrarellotge - Speed Rush** amb temps limitat i combos.
 - **Mode supervivència** amb tres vides i comodins.
 - **Detector d'intrusos** per identificar formes incorrectes habituals.
 - **Trencaclosques de trios** per connectar V1, V2 i V3.
-- **Verbs en context** amb frases contextualitzades.
+- **Verbs en context** amb frases contextualitzades i selecció de la forma adequada.
 - **Classificador de famílies** segons patrons morfològics i fonètics.
 - **Simulacre d'examen** amb nota sobre 10 i certificat A4 imprimible o exportable a PDF.
-- **Ruleta dels verbs** per a activitats orals o de grup.
+- **Ruleta dels verbs** que representa els 11 packs i pot seleccionar qualsevol dels 108 verbs per a activitats orals o de grup.
 
 El **Diccionari** permet cercar per anglès o català i incorpora text a veu en anglès.
 
