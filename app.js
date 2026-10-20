@@ -1673,7 +1673,21 @@ window.addEventListener('beforeprint', () => {
 });
 
 // --- JOC FINAL 4: LA RULETA DELS VERBS (LUCKY WHEEL) ---
+function buildWheelPacks() {
+  return Array.from({ length: 11 }, (_, index) => {
+    const id = index + 1;
+    const verbs = VERBS_DATA.filter(v => v.pack === id);
+    return { id, verbs, count: verbs.length };
+  });
+}
+
+function normalizeWheelAngle(angle) {
+  const tau = Math.PI * 2;
+  return ((angle % tau) + tau) % tau;
+}
+
 function setupWheel() {
+  state.game.wheelAngle = normalizeWheelAngle(state.game.wheelAngle || 0);
   drawWheel();
 }
 
@@ -1683,57 +1697,63 @@ function drawWheel() {
   const ctx = canvas.getContext('2d');
   const size = canvas.width;
   const radius = size / 2;
+  const tau = Math.PI * 2;
+  const wheelPacks = buildWheelPacks();
+  const totalVerbs = VERBS_DATA.length;
 
   ctx.clearRect(0, 0, size, size);
 
-  // Agafem una mostra de 12 verbs per pintar la ruleta estèticament
-  const wheelVerbs = VERBS_DATA.slice(0, 12);
-  const arc = (Math.PI * 2) / wheelVerbs.length;
-
-  const colors = [
-    '#6366f1', '#ec4899', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6',
-    '#14b8a6', '#f43f5e', '#06b6d4', '#84cc16', '#a855f7', '#f97316'
-  ];
+  const colors = ['#4f46e5', '#4338ca', '#6366f1', '#3730a3'];
 
   ctx.save();
   ctx.translate(radius, radius);
   ctx.rotate(state.game.wheelAngle);
 
-  wheelVerbs.forEach((v, i) => {
-    const angle = i * arc;
+  let cursor = 0;
+  wheelPacks.forEach((pack, i) => {
+    const arc = tau * (pack.count / totalVerbs);
+    const start = cursor;
+    const end = start + arc;
+    const mid = start + arc / 2;
+    const selected = !state.game.wheelSpinning && state.game.wheelSelectedVerb?.pack === pack.id;
+
     ctx.beginPath();
     ctx.fillStyle = colors[i % colors.length];
     ctx.moveTo(0, 0);
-    ctx.arc(0, 0, radius - 8, angle, angle + arc);
+    ctx.arc(0, 0, radius - 8, start, end);
     ctx.fill();
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = selected ? '#f59e0b' : '#ffffff';
+    ctx.lineWidth = selected ? 6 : 3;
     ctx.stroke();
 
-    // Text del verb
     ctx.save();
-    ctx.rotate(angle + arc / 2);
+    ctx.rotate(mid);
     ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 15px "Plus Jakarta Sans", sans-serif';
-    ctx.fillText(v.v1, radius - 24, 5);
+    ctx.font = '700 14px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText(`Pack ${pack.id}`, radius - 25, 0);
     ctx.restore();
+
+    cursor = end;
   });
 
-  // Cercle central daurat
+  // El centre explica l'abast real de la selecció.
   ctx.beginPath();
-  ctx.arc(0, 0, 36, 0, Math.PI * 2);
+  ctx.arc(0, 0, 40, 0, tau);
   ctx.fillStyle = '#ffffff';
   ctx.fill();
   ctx.strokeStyle = '#f59e0b';
-  ctx.lineWidth = 6;
+  ctx.lineWidth = 5;
   ctx.stroke();
 
-  ctx.fillStyle = '#4f46e5';
-  ctx.font = 'bold 14px "Space Grotesk", sans-serif';
+  ctx.fillStyle = '#312e81';
+  ctx.font = '700 22px "Space Grotesk", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('VERBS', 0, 0);
+  ctx.fillText('108', 0, -6);
+  ctx.font = '700 10px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('VERBS', 0, 15);
 
   ctx.restore();
 }
@@ -1747,29 +1767,45 @@ function spinWheel() {
 
   document.getElementById('wheel-result-card').classList.add('hidden');
 
-  // Selecciona un verb aleatori dels 108!
+  // Cada verb dels 108 té la mateixa probabilitat de ser seleccionat.
   const chosenVerb = VERBS_DATA[Math.floor(Math.random() * VERBS_DATA.length)];
   state.game.wheelSelectedVerb = chosenVerb;
 
-  // Animació de gir
-  const extraRotations = 5 + Math.random() * 3;
-  const targetAngle = state.game.wheelAngle + extraRotations * Math.PI * 2;
+  // La fletxa s'atura al sector del pack al qual pertany el verb escollit.
+  const tau = Math.PI * 2;
+  const wheelPacks = buildWheelPacks();
+  const chosenPackIndex = wheelPacks.findIndex(pack => pack.id === chosenVerb.pack);
+  const verbsBefore = wheelPacks
+    .slice(0, chosenPackIndex)
+    .reduce((total, pack) => total + pack.count, 0);
+  const chosenPack = wheelPacks[chosenPackIndex];
+  const sectorStart = tau * (verbsBefore / VERBS_DATA.length);
+  const sectorArc = tau * (chosenPack.count / VERBS_DATA.length);
+  const sectorMid = sectorStart + sectorArc / 2;
+  const pointerAngle = -Math.PI / 2;
+
+  const startAngle = state.game.wheelAngle;
+  const desiredAngle = normalizeWheelAngle(pointerAngle - sectorMid);
+  const deltaToTarget = normalizeWheelAngle(desiredAngle - normalizeWheelAngle(startAngle));
+  const extraRotations = 5 + Math.floor(Math.random() * 3);
+  const targetAngle = startAngle + extraRotations * tau + deltaToTarget;
   const startTime = performance.now();
-  const duration = 3200; // 3.2 segons
+  const duration = 3200;
 
   function animate(now) {
     const elapsed = now - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    // Easing cubic out
     const easeOut = 1 - Math.pow(1 - progress, 3);
 
-    state.game.wheelAngle = targetAngle * easeOut;
+    state.game.wheelAngle = startAngle + (targetAngle - startAngle) * easeOut;
     drawWheel();
 
     if (progress < 1) {
       requestAnimationFrame(animate);
     } else {
+      state.game.wheelAngle = normalizeWheelAngle(targetAngle);
       state.game.wheelSpinning = false;
+      drawWheel();
       if (spinBtn) spinBtn.disabled = false;
       revealWheelChallenge();
     }
@@ -1787,6 +1823,9 @@ function revealWheelChallenge() {
 
   const card = document.getElementById('wheel-result-card');
   card.classList.remove('hidden');
+
+  const packBadge = document.getElementById('wheel-res-pack');
+  if (packBadge) packBadge.textContent = `Pack ${v.pack}`;
 
   document.getElementById('wheel-res-v1').textContent = v.v1;
   document.getElementById('wheel-res-cat').textContent = `Significat: ${v.cat}`;

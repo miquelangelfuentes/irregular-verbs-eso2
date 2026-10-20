@@ -903,17 +903,22 @@
           <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Tornar a l'arena de jocs
         </button>
         <h2 class="font-display font-extrabold text-3xl text-slate-900">La ruleta dels verbs 🎡</h2>
-        <p class="text-sm text-slate-600">Gira la ruleta per triar un verb a l'atzar i superar el repte a classe o individualment!</p>
+        <p class="text-sm text-slate-600">La ruleta representa els 11 packs. Cada gir pot seleccionar qualsevol dels 108 verbs de la llista.</p>
       </div>
 
       <!-- Ruleta Visual -->
       <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-xl text-center space-y-6">
         
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold">
+          <i data-lucide="shuffle" class="w-4 h-4"></i>
+          <span>11 packs - 108 verbs possibles</span>
+        </div>
+
         <div class="wheel-container">
           <!-- Fletxa indicadora -->
           <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-20 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[24px] border-t-amber-500 filter drop-shadow"></div>
           
-          <canvas id="wheel-canvas" width="380" height="380" class="w-full h-full"></canvas>
+          <canvas id="wheel-canvas" width="380" height="380" class="w-full h-full" role="img" aria-label="Ruleta amb 11 sectors, un per cada pack dels 108 verbs irregulars"></canvas>
         </div>
 
         <div>
@@ -925,7 +930,10 @@
         <!-- Targeta de resultat de la ruleta -->
         <div id="wheel-result-card" class="hidden p-6 rounded-2xl bg-indigo-50 border-2 border-indigo-200 text-left space-y-4 animate-float">
           <div class="flex items-center justify-between">
-            <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-600 text-white">Verb seleccionat</span>
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-600 text-white">Verb seleccionat</span>
+              <span id="wheel-res-pack" class="px-3 py-1 rounded-full text-xs font-bold bg-white text-indigo-700 border border-indigo-200">Pack</span>
+            </div>
             <button onclick="speakEnglish(state.game.wheelSelectedVerb.v1)" class="p-2 rounded-full bg-white text-indigo-600 shadow-sm" title="Escoltar" aria-label="Escolta la pronunciació">
               <i data-lucide="volume-2" class="w-4 h-4"></i>
             </button>
@@ -1168,7 +1176,7 @@
 
   <!-- SCRIPTS DE L'APLICACIÓ -->
   <script src="verbs-data.js?v=4.0"></script>
-  <script src="app.js?v=4.0"></script>
+  <script src="app.js?v=4.1"></script>
   <script src="enhancements.js?v=4.0"></script>
   <script src="accessibility.js?v=4.0"></script>
   <script>
