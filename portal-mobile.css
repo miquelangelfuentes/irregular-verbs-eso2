@@ -1,0 +1,115 @@
+/* Millores específiques per a navegació i interacció en mòbil. */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  header > div {
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+  }
+
+  header > div > div {
+    gap: .5rem !important;
+  }
+
+  header a[href='index.html'],
+  header button[aria-label='Torna a l’inici'] {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    gap: .5rem !important;
+  }
+
+  header a[href='index.html'] > div:first-child,
+  header button[aria-label='Torna a l’inici'] > div:first-child {
+    flex: 0 0 2.5rem;
+  }
+
+  header a[href='index.html'] > .shrink-0.whitespace-nowrap,
+  header button[aria-label='Torna a l’inici'] > div:last-child {
+    min-width: 0 !important;
+  }
+
+  header a[href='index.html'] > .shrink-0.whitespace-nowrap > div:last-child,
+  header button[aria-label='Torna a l’inici'] .font-display {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  header nav {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  header nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .portal-theme-toggle,
+  header button[aria-label*='sonors'],
+  header button[title*='sonors'] {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  main {
+    min-width: 0;
+  }
+
+  main input,
+  main select,
+  main textarea {
+    min-height: 2.75rem;
+    font-size: 1rem !important;
+  }
+
+  main .overflow-x-auto {
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  [role='dialog'],
+  #examModalContainer {
+    max-width: 100vw;
+  }
+}
+
+@media (max-width: 479px) {
+  main {
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+  }
+
+  .wheel-container {
+    width: min(100%, 20rem);
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (pointer: coarse) {
+  main button,
+  header button,
+  main a[class*='rounded'],
+  header a[class*='rounded'] {
+    min-height: 2.75rem;
+  }
+}
