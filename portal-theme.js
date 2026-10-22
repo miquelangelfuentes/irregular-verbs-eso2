@@ -2,6 +2,14 @@
   const STORAGE_KEY = 'eso2-portal-theme';
   const root = document.documentElement;
 
+  if (!document.querySelector('link[data-portal-mobile]')) {
+    const mobileStyles = document.createElement('link');
+    mobileStyles.rel = 'stylesheet';
+    mobileStyles.href = 'portal-mobile.css?v=1';
+    mobileStyles.dataset.portalMobile = 'true';
+    document.head.appendChild(mobileStyles);
+  }
+
   function getStoredTheme() {
     try {
       const value = localStorage.getItem(STORAGE_KEY);
