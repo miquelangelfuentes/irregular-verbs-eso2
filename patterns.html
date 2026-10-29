@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Pattern Games | Verb Quest 2n ESO</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3.1">
+  <link rel="stylesheet" href="portal-theme.css?v=3">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="portal-theme.js?v=3"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-height: 100vh; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .55; }
+    a { color: inherit; }
+
+    .page-shell { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: color-mix(in srgb, var(--portal-surface) 94%, transparent);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--portal-border);
+    }
+    .topbar-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--portal-brand-600);
+      color: white;
+    }
+    .brand-icon svg { width: 21px; height: 21px; }
+    .brand-copy { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .brand-title { font-family: var(--portal-font-display); color: var(--portal-text); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: .1rem .55rem;
+      border-radius: 999px;
+      background: var(--portal-brand-50);
+      color: var(--portal-brand-700);
+      border: 1px solid var(--portal-brand-200);
+      font-size: .72rem;
+      font-weight: 800;
+    }
+    .header-actions { display: flex; align-items: center; gap: .5rem; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      min-height: 40px;
+      padding: .45rem .75rem;
+      border-radius: 12px;
+      border: 1px solid var(--portal-border);
+      background: var(--portal-surface-soft);
+      text-decoration: none;
+      color: var(--portal-text);
+      font-weight: 750;
+      font-size: .9rem;
+    }
+    .back-link:hover { background: var(--portal-brand-50); color: var(--portal-brand-700); }
+    .back-link svg { width: 17px; height: 17px; }
+
+    main { padding: 2rem 0 3.5rem; }
+    .hero {
+      border-radius: 24px;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      background: linear-gradient(135deg, #4338ca 0%, #312e81 55%, #5b21b6 100%);
+      color: white;
+      box-shadow: 0 18px 55px rgba(49, 46, 129, .18);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      right: -90px;
+      top: -110px;
+      background: rgba(255, 255, 255, .09);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+    .eyebrow svg { width: 17px; height: 17px; }
+    h1, h2, h3 { margin-top: 0; }
+    .hero h1 {
+      font-family: var(--portal-font-display);
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      line-height: 1.05;
+      margin: .9rem 0 .85rem;
+      letter-spacing: -.035em;
+    }
+    .hero p { margin: 0; color: #e0e7ff; font-size: 1rem; max-width: 670px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
+    .hero-button {
+      min-height: 44px;
+      padding: .65rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: white;
+      color: #312e81;
+      font-weight: 850;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .hero-button.secondary { background: rgba(255,255,255,.09); color: white; }
+    .hero-button svg { width: 18px; height: 18px; }
+
+    .section { margin-top: 1.6rem; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: .9rem; }
+    .section-heading h2 { font-family: var(--portal-font-display); font-size: 1.35rem; margin: 0; color: var(--portal-text); }
+    .section-heading p { margin: .2rem 0 0; color: var(--portal-muted); font-size: .92rem; }
+
+    .panel {
+      background: var(--portal-surface);
+      border: 1px solid var(--portal-border);
+      border-radius: 18px;
+      box-shadow: var(--portal-shadow);
+    }
+
+    .filter-panel { padding: 1rem; }
+    .filter-top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; margin-bottom: .8rem; }
+    .filter-count { color: var(--portal-muted); font-size: .9rem; font-weight: 700; }
+    .filter-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .small-button {
+      border: 1px solid var(--portal-border);
+      background: var(--portal-surface-soft);
+      color: var(--portal-text);
+      border-radius: 10px;
+      min-height: 38px;
+      padding: .45rem .7rem;
+      font-weight: 800;
+      font-size: .84rem;
+    }
+    .small-button:hover { border-color: var(--portal-brand-200); background: var(--portal-brand-50); color: var(--portal-brand-700); }
+    .filter-grid { display: flex; flex-wrap: wrap; gap: .55rem; }
+    .filter-chip {
+      border: 1px solid var(--portal-border);
+      background: var(--portal-surface-soft);
+      color: var(--portal-muted);
+      border-radius: 999px;
+      min-height: 40px;
+      padding: .45rem .8rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+    }
+    .filter-chip[aria-pressed="true"] {
+      background: var(--portal-brand-50);
+      color: var(--portal-brand-700);
+      border-color: var(--portal-brand-200);
+    }
+    .filter-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .8; }
+
+    .patterns-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
+    .pattern-card {
+      padding: 1rem;
+      min-height: 148px;
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+    }
+    .pattern-title { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+    .pattern-title strong { font-family: var(--portal-font-display); font-size: 1rem; color: var(--portal-text); }
+    .count-pill { font-size: .72rem; font-weight: 850; color: var(--portal-brand-700); background: var(--portal-brand-50); border-radius: 999px; padding: .15rem .5rem; }
+    .pattern-clue { color: var(--portal-muted); font-size: .84rem; line-height: 1.45; }
+    .pattern-examples { margin-top: auto; color: var(--portal-text); font-weight: 750; font-size: .84rem; }
+
+    .games-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .8rem; }
+    .game-launcher {
+      text-align: left;
+      padding: 1rem;
+      border: 1px solid var(--portal-border);
+      border-radius: 16px;
+      background: var(--portal-surface);
+      color: var(--portal-text);
+      min-height: 148px;
+      transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    }
+    .game-launcher:hover { transform: translateY(-2px); border-color: var(--portal-brand-200); box-shadow: 0 8px 26px rgba(15,23,42,.08); }
+    .game-launcher.active { border-color: var(--portal-brand-500); box-shadow: 0 0 0 2px color-mix(in srgb, var(--portal-brand-500) 18%, transparent); }
+    .game-icon { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: var(--portal-brand-50); color: var(--portal-brand-700); margin-bottom: .8rem; }
+    .game-icon svg { width: 20px; height: 20px; }
+    .game-launcher strong { display: block; font-family: var(--portal-font-display); font-size: .97rem; margin-bottom: .3rem; }
+    .game-launcher span { display: block; color: var(--portal-muted); font-size: .8rem; line-height: 1.35; }
+
+    .play-panel { margin-top: .9rem; padding: clamp(1rem, 3vw, 1.4rem); min-height: 380px; }
+    .play-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-bottom: .9rem; border-bottom: 1px solid var(--portal-border); }
+    .play-title { display: flex; align-items: center; gap: .7rem; }
+    .play-title-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--portal-brand-50); color: var(--portal-brand-700); }
+    .play-title-icon svg { width: 21px; height: 21px; }
+    .play-title h2 { margin: 0; font-family: var(--portal-font-display); font-size: 1.12rem; }
+    .play-title p { margin: .1rem 0 0; color: var(--portal-muted); font-size: .84rem; }
+    .score-badge { border-radius: 999px; background: var(--portal-surface-soft); color: var(--portal-text); border: 1px solid var(--portal-border); padding: .35rem .65rem; font-weight: 850; font-size: .82rem; }
+
+    .game-area { max-width: 760px; margin: 1.3rem auto 0; }
+    .question-label { color: var(--portal-muted); font-size: .82rem; font-weight: 800; margin-bottom: .35rem; }
+    .question-word { font-family: var(--portal-font-display); font-size: clamp(2.1rem, 8vw, 4rem); line-height: 1; color: var(--portal-text); margin: .2rem 0 1.15rem; letter-spacing: -.04em; }
+    .question-word small { display: block; font-family: var(--portal-font-body); font-size: .9rem; color: var(--portal-muted); letter-spacing: 0; margin-top: .45rem; }
+
+    .option-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+    .option-button {
+      min-height: 58px;
+      border-radius: 13px;
+      border: 1px solid var(--portal-border);
+      background: var(--portal-surface-soft);
+      color: var(--portal-text);
+      padding: .7rem .9rem;
+      font-weight: 850;
+      text-align: left;
+    }
+    .option-button:hover:not(:disabled) { border-color: var(--portal-brand-300, #a5b4fc); background: var(--portal-brand-50); }
+    .option-button.correct { border-color: #16a34a; background: color-mix(in srgb, #22c55e 13%, var(--portal-surface)); color: color-mix(in srgb, #166534 85%, var(--portal-text)); }
+    .option-button.wrong { border-color: #e11d48; background: color-mix(in srgb, #f43f5e 12%, var(--portal-surface)); color: color-mix(in srgb, #9f1239 85%, var(--portal-text)); }
+
+    .answer-row { display: flex; gap: .6rem; align-items: stretch; }
+    .answer-input {
+      flex: 1;
+      min-width: 0;
+      min-height: 52px;
+      border: 1px solid var(--portal-border);
+      border-radius: 12px;
+      background: var(--portal-surface-soft);
+      color: var(--portal-text);
+      padding: .7rem .9rem;
+      font-size: 1.05rem;
+      font-weight: 750;
+    }
+    .primary-button {
+      min-height: 50px;
+      border: 1px solid var(--portal-brand-600);
+      background: var(--portal-brand-600);
+      color: white;
+      border-radius: 12px;
+      padding: .65rem 1rem;
+      font-weight: 850;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .45rem;
+    }
+    .primary-button:hover:not(:disabled) { background: var(--portal-brand-700); }
+    .primary-button svg { width: 18px; height: 18px; }
+    .secondary-button {
+      min-height: 46px;
+      border: 1px solid var(--portal-border);
+      background: var(--portal-surface-soft);
+      color: var(--portal-text);
+      border-radius: 12px;
+      padding: .6rem .85rem;
+      font-weight: 800;
+    }
+
+    .feedback {
+      margin-top: .9rem;
+      border-radius: 12px;
+      padding: .75rem .9rem;
+      font-weight: 750;
+      font-size: .9rem;
+      border: 1px solid transparent;
+    }
+    .feedback.success { background: color-mix(in srgb, #22c55e 12%, var(--portal-surface)); border-color: color-mix(in srgb, #22c55e 45%, var(--portal-border)); color: var(--portal-text); }
+    .feedback.error { background: color-mix(in srgb, #f43f5e 10%, var(--portal-surface)); border-color: color-mix(in srgb, #f43f5e 42%, var(--portal-border)); color: var(--portal-text); }
+    .feedback.info { background: var(--portal-brand-50); border-color: var(--portal-brand-200); color: var(--portal-text); }
+    .hidden { display: none !important; }
+
+    .next-row { display: flex; justify-content: flex-end; margin-top: .8rem; }
+
+    .match-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; }
+    .match-card {
+      min-height: 78px;
+      border: 1px solid var(--portal-border);
+      border-radius: 13px;
+      background: var(--portal-surface-soft);
+      color: var(--portal-text);
+      padding: .65rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: 850;
+    }
+    .match-card small { color: var(--portal-muted); font-weight: 750; font-size: .7rem; margin-bottom: .15rem; }
+    .match-card.selected { border-color: var(--portal-brand-500); background: var(--portal-brand-50); color: var(--portal-brand-700); }
+    .match-card.matched { border-color: #16a34a; background: color-mix(in srgb, #22c55e 12%, var(--portal-surface)); opacity: .6; }
+
+    .speed-layout { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; }
+    .timer-box { min-width: 108px; padding: .85rem; border-radius: 15px; border: 1px solid var(--portal-border); background: var(--portal-surface-soft); text-align: center; }
+    .timer-box span { display: block; color: var(--portal-muted); font-size: .72rem; font-weight: 800; }
+    .timer-box strong { font-family: var(--portal-font-display); font-size: 2rem; color: var(--portal-text); }
+
+    .result-card { text-align: center; padding: 1.3rem; border: 1px solid var(--portal-border); border-radius: 16px; background: var(--portal-surface-soft); }
+    .result-card .big-score { font-family: var(--portal-font-display); font-size: 3rem; color: var(--portal-brand-700); line-height: 1; margin: .6rem 0; }
+    .result-card p { color: var(--portal-muted); }
+
+    .footer-note { margin-top: 1.3rem; color: var(--portal-muted); font-size: .82rem; text-align: center; }
+
+    @media (max-width: 980px) {
+      .patterns-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .games-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      .page-shell { width: min(100% - 1rem, 1180px); }
+      main { padding-top: 1rem; }
+      .back-link span { display: none; }
+      .hero { border-radius: 18px; }
+      .patterns-grid { grid-template-columns: 1fr; }
+      .games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .option-grid { grid-template-columns: 1fr; }
+      .match-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .answer-row { flex-direction: column; }
+      .speed-layout { grid-template-columns: 1fr; }
+      .timer-box { display: flex; align-items: center; justify-content: space-between; min-width: 0; }
+      .timer-box strong { font-size: 1.5rem; }
+    }
+    @media (max-width: 430px) {
+      .games-grid { grid-template-columns: 1fr; }
+      .match-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="page-shell topbar-inner">
+      <a class="brand" href="index.html" aria-label="Torna a Verb Quest">
+        <span class="brand-icon"><i data-lucide="zap" aria-hidden="true"></i></span>
+        <span class="brand-copy">
+          <span class="brand-title">Verb Quest</span>
+          <span class="badge">2n ESO</span>
+        </span>
+      </a>
+      <div class="header-actions">
+        <a class="back-link" href="index.html">
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+          <span>Torna al portal</span>
+        </a>
+        <button type="button" class="portal-theme-toggle" aria-label="Activa el mode fosc"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-content">
+        <span class="eyebrow"><i data-lucide="shapes" aria-hidden="true"></i> Irregular verb patterns</span>
+        <h1 id="page-title">Practica els patrons dels verbs irregulars</h1>
+        <p>Treballa els mateixos grups de la fitxa i centra’t en el Past Simple (V2). Pots seleccionar un patró concret abans de començar cada joc.</p>
+        <div class="hero-actions">
+          <button class="hero-button" type="button" onclick="startGame('group')"><i data-lucide="play" aria-hidden="true"></i> Comença a jugar</button>
+          <button class="hero-button secondary" type="button" onclick="document.getElementById('patterns').scrollIntoView({behavior:'smooth'})"><i data-lucide="book-open" aria-hidden="true"></i> Repassa els patrons</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="practice-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="practice-heading">Què vols practicar?</h2>
+          <p>Activa o desactiva grups abans d’obrir un joc.</p>
+        </div>
+      </div>
+      <div class="panel filter-panel">
+        <div class="filter-top">
+          <div id="filter-count" class="filter-count" aria-live="polite"></div>
+          <div class="filter-actions">
+            <button class="small-button" type="button" onclick="selectAllGroups(true)">Selecciona-ho tot</button>
+            <button class="small-button" type="button" onclick="selectAllGroups(false)">Neteja la selecció</button>
+          </div>
+        </div>
+        <div id="group-filters" class="filter-grid" aria-label="Grups de verbs"></div>
+      </div>
+    </section>
+
+    <section id="patterns" class="section" aria-labelledby="patterns-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="patterns-heading">Patrons de la fitxa</h2>
+          <p>Una pista breu abans de posar-te a prova.</p>
+        </div>
+      </div>
+      <div id="patterns-grid" class="patterns-grid"></div>
+    </section>
+
+    <section class="section" aria-labelledby="games-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="games-heading">Tria un joc</h2>
+          <p>Els jocs utilitzen només els grups que tens seleccionats.</p>
+        </div>
+      </div>
+      <div class="games-grid">
+        <button class="game-launcher" data-game="group" type="button" onclick="startGame('group')">
+          <span class="game-icon"><i data-lucide="layout-grid" aria-hidden="true"></i></span>
+          <strong>A quin grup va?</strong>
+          <span>Identifica el patró d’un verb a partir de V1 i V2.</span>
+        </button>
+        <button class="game-launcher" data-game="type" type="button" onclick="startGame('type')">
+          <span class="game-icon"><i data-lucide="keyboard" aria-hidden="true"></i></span>
+          <strong>Escriu el Past Simple</strong>
+          <span>Recupera V2 sense opcions de resposta.</span>
+        </button>
+        <button class="game-launcher" data-game="match" type="button" onclick="startGame('match')">
+          <span class="game-icon"><i data-lucide="panels-top-left" aria-hidden="true"></i></span>
+          <strong>Troba la parella</strong>
+          <span>Relaciona cada base form amb el seu Past Simple.</span>
+        </button>
+        <button class="game-launcher" data-game="intruder" type="button" onclick="startGame('intruder')">
+          <span class="game-icon"><i data-lucide="search-x" aria-hidden="true"></i></span>
+          <strong>Caça l’intrús</strong>
+          <span>Detecta la parella V1 → V2 que és incorrecta.</span>
+        </button>
+        <button class="game-launcher" data-game="speed" type="button" onclick="startGame('speed')">
+          <span class="game-icon"><i data-lucide="timer" aria-hidden="true"></i></span>
+          <strong>Repte de 60 segons</strong>
+          <span>Respon tants Past Simple com puguis abans que s’acabi el temps.</span>
+        </button>
+      </div>
+
+      <div class="panel play-panel" id="play-panel">
+        <div class="play-top">
+          <div class="play-title">
+            <span class="play-title-icon"><i id="play-icon" data-lucide="layout-grid" aria-hidden="true"></i></span>
+            <div>
+              <h2 id="play-title">A quin grup va?</h2>
+              <p id="play-subtitle">Identifica el patró correcte.</p>
+            </div>
+          </div>
+          <div id="score-badge" class="score-badge">0 / 0</div>
+        </div>
+        <div id="game-area" class="game-area"></div>
+      </div>
+    </section>
+
+    <p class="footer-note">La pràctica es basa en els grups de la fitxa aportada i se centra en la relació entre Base Form (V1) i Past Simple (V2).</p>
+  </main>
+
+  <div id="live-region" class="hidden" aria-live="polite"></div>
+
+  <script>
+    const GROUPS = {
+      nochange: {
+        label: 'No change',
+        clue: 'V1 i V2 mantenen la mateixa grafia.',
+        examples: 'cost → cost · cut → cut'
+      },
+      ia: {
+        label: 'I → A',
+        clue: 'La vocal principal canvia de i a a.',
+        examples: 'drink → drank · sing → sang'
+      },
+      o: {
+        label: 'O group',
+        clue: 'La fitxa reuneix aquí passats amb o, oo o ou.',
+        examples: 'drive → drove · find → found'
+      },
+      t: {
+        label: 'T group',
+        clue: 'El Past Simple acaba en t o fa un canvi que porta a t.',
+        examples: 'build → built · sleep → slept'
+      },
+      d: {
+        label: 'D group',
+        clue: 'El Past Simple conserva un so o una terminació amb d.',
+        examples: 'have → had · feed → fed'
+      },
+      ght: {
+        label: 'GHT group',
+        clue: 'El Past Simple acaba en -ght.',
+        examples: 'bring → brought · teach → taught'
+      },
+      ew: {
+        label: 'EW group',
+        clue: 'El Past Simple acaba en -ew.',
+        examples: 'fly → flew · know → knew'
+      },
+      other: {
+        label: 'Other rules',
+        clue: 'Són formes molt irregulars que convé recuperar individualment.',
+        examples: 'go → went · take → took'
+      }
+    };
+
+    const VERBS = [
+      {v1:'cost', v2:'cost', g:'nochange'}, {v1:'cut', v2:'cut', g:'nochange'},
+      {v1:'hit', v2:'hit', g:'nochange'}, {v1:'hurt', v2:'hurt', g:'nochange'},
+      {v1:'let', v2:'let', g:'nochange'}, {v1:'put', v2:'put', g:'nochange'},
+      {v1:'read', v2:'read', g:'nochange', note:'La grafia és igual, però la pronunciació del Past Simple és /red/.'},
+      {v1:'set', v2:'set', g:'nochange'},
+
+      {v1:'begin', v2:'began', g:'ia'}, {v1:'drink', v2:'drank', g:'ia'},
+      {v1:'ring', v2:'rang', g:'ia'}, {v1:'sing', v2:'sang', g:'ia'},
+      {v1:'swim', v2:'swam', g:'ia'}, {v1:'sit', v2:'sat', g:'ia'},
+      {v1:'sink', v2:'sank', g:'ia'},
+
+      {v1:'get', v2:'got', g:'o'}, {v1:'break', v2:'broke', g:'o'},
+      {v1:'find', v2:'found', g:'o'}, {v1:'sell', v2:'sold', g:'o'},
+      {v1:'stand', v2:'stood', g:'o'}, {v1:'tell', v2:'told', g:'o'},
+      {v1:'win', v2:'won', g:'o'}, {v1:'drive', v2:'drove', g:'o'},
+      {v1:'freeze', v2:'froze', g:'o'}, {v1:'forget', v2:'forgot', g:'o'},
+      {v1:'ride', v2:'rode', g:'o'}, {v1:'speak', v2:'spoke', g:'o'},
+      {v1:'steal', v2:'stole', g:'o'}, {v1:'wake', v2:'woke', g:'o'},
+      {v1:'write', v2:'wrote', g:'o'}, {v1:'wear', v2:'wore', g:'o'},
+
+      {v1:'build', v2:'built', g:'t'}, {v1:'bite', v2:'bit', g:'t'},
+      {v1:'leave', v2:'left', g:'t'}, {v1:'lose', v2:'lost', g:'t'},
+      {v1:'meet', v2:'met', g:'t'}, {v1:'feel', v2:'felt', g:'t'},
+      {v1:'send', v2:'sent', g:'t'}, {v1:'spend', v2:'spent', g:'t'},
+      {v1:'sleep', v2:'slept', g:'t'},
+
+      {v1:'have', v2:'had', g:'d'}, {v1:'hear', v2:'heard', g:'d'},
+      {v1:'feed', v2:'fed', g:'d'}, {v1:'pay', v2:'paid', g:'d'},
+      {v1:'say', v2:'said', g:'d'},
+
+      {v1:'bring', v2:'brought', g:'ght'}, {v1:'buy', v2:'bought', g:'ght'},
+      {v1:'catch', v2:'caught', g:'ght'}, {v1:'fight', v2:'fought', g:'ght'},
+      {v1:'teach', v2:'taught', g:'ght'}, {v1:'think', v2:'thought', g:'ght'},
+
+      {v1:'fly', v2:'flew', g:'ew'}, {v1:'draw', v2:'drew', g:'ew'},
+      {v1:'know', v2:'knew', g:'ew'}, {v1:'throw', v2:'threw', g:'ew'},
+      {v1:'grow', v2:'grew', g:'ew'}, {v1:'blow', v2:'blew', g:'ew'},
+
+      {v1:'be', v2:'was/were', g:'other', accept:['was','were','was/were','was / were']},
+      {v1:'come', v2:'came', g:'other'}, {v1:'become', v2:'became', g:'other'},
+      {v1:'eat', v2:'ate', g:'other'}, {v1:'give', v2:'gave', g:'other'},
+      {v1:'go', v2:'went', g:'other'}, {v1:'run', v2:'ran', g:'other'},
+      {v1:'see', v2:'saw', g:'other'}, {v1:'fall', v2:'fell', g:'other'},
+      {v1:'hold', v2:'held', g:'other'}, {v1:'take', v2:'took', g:'other'},
+      {v1:'make', v2:'made', g:'other'}, {v1:'do', v2:'did', g:'other'}
+    ];
+
+    const GAME_META = {
+      group: {title:'A quin grup va?', subtitle:'Identifica el patró correcte.', icon:'layout-grid'},
+      type: {title:'Escriu el Past Simple', subtitle:'Escriu V2 sense opcions.', icon:'keyboard'},
+      match: {title:'Troba la parella', subtitle:'Relaciona V1 amb V2.', icon:'panels-top-left'},
+      intruder: {title:'Caça l’intrús', subtitle:'Troba la parella incorrecta.', icon:'search-x'},
+      speed: {title:'Repte de 60 segons', subtitle:'Respon abans que s’acabi el temps.', icon:'timer'}
+    };
+
+    let selectedGroups = new Set(Object.keys(GROUPS));
+    let activeGame = 'group';
+    let round = null;
+    let speedTimer = null;
+
+    function shuffle(items) {
+      const arr = [...items];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function sample(items, count = 1) {
+      return shuffle(items).slice(0, count);
+    }
+
+    function getPool() {
+      return VERBS.filter(v => selectedGroups.has(v.g));
+    }
+
+    function renderFilters() {
+      const root = document.getElementById('group-filters');
+      root.innerHTML = '';
+      Object.entries(GROUPS).forEach(([key, data]) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'filter-chip';
+        btn.setAttribute('aria-pressed', selectedGroups.has(key) ? 'true' : 'false');
+        btn.innerHTML = `<span class="dot" aria-hidden="true"></span><span>${data.label}</span>`;
+        btn.addEventListener('click', () => {
+          if (selectedGroups.has(key)) selectedGroups.delete(key);
+          else selectedGroups.add(key);
+          renderFilters();
+        });
+        root.appendChild(btn);
+      });
+      const count = getPool().length;
+      document.getElementById('filter-count').textContent = count ? `${count} verbs disponibles` : 'Selecciona almenys un grup per jugar.';
+    }
+
+    function selectAllGroups(select) {
+      selectedGroups = select ? new Set(Object.keys(GROUPS)) : new Set();
+      renderFilters();
+    }
+
+    function renderPatterns() {
+      const root = document.getElementById('patterns-grid');
+      root.innerHTML = '';
+      Object.entries(GROUPS).forEach(([key, data]) => {
+        const count = VERBS.filter(v => v.g === key).length;
+        const card = document.createElement('article');
+        card.className = 'panel pattern-card';
+        card.innerHTML = `
+          <div class="pattern-title"><strong>${data.label}</strong><span class="count-pill">${count} verbs</span></div>
+          <div class="pattern-clue">${data.clue}</div>
+          <div class="pattern-examples">${data.examples}</div>`;
+        root.appendChild(card);
+      });
+    }
+
+    function setActiveLauncher(game) {
+      document.querySelectorAll('.game-launcher').forEach(btn => btn.classList.toggle('active', btn.dataset.game === game));
+    }
+
+    function setPlayHeader(game, scoreText = '0 / 0') {
+      const meta = GAME_META[game];
+      document.getElementById('play-title').textContent = meta.title;
+      document.getElementById('play-subtitle').textContent = meta.subtitle;
+      document.getElementById('score-badge').textContent = scoreText;
+      const icon = document.getElementById('play-icon');
+      icon.setAttribute('data-lucide', meta.icon);
+      lucide.createIcons();
+    }
+
+    function stopSpeedTimer() {
+      if (speedTimer) clearInterval(speedTimer);
+      speedTimer = null;
+    }
+
+    function showNeedSelection() {
+      document.getElementById('game-area').innerHTML = `<div class="result-card"><h3>Selecciona algun grup</h3><p>Activa com a mínim un patró a la secció “Què vols practicar?” i torna a obrir el joc.</p></div>`;
+      document.getElementById('score-badge').textContent = 'Sense verbs';
+    }
+
+    function startGame(game) {
+      stopSpeedTimer();
+      activeGame = game;
+      setActiveLauncher(game);
+      setPlayHeader(game);
+      const pool = getPool();
+      document.getElementById('play-panel').scrollIntoView({behavior:'smooth', block:'start'});
+      if (!pool.length) {
+        showNeedSelection();
+        return;
+      }
+      if (game === 'group') startGroupGame();
+      if (game === 'type') startTypeGame();
+      if (game === 'match') startMatchGame();
+      if (game === 'intruder') startIntruderGame();
+      if (game === 'speed') startSpeedGame();
+    }
+
+    function setFeedback(message, type) {
+      const el = document.getElementById('feedback');
+      if (!el) return;
+      el.className = `feedback ${type}`;
+      el.innerHTML = message;
+      document.getElementById('live-region').textContent = el.textContent;
+    }
+
+    function startGroupGame() {
+      const questions = sample(getPool(), Math.min(10, getPool().length));
+      round = {questions, index:0, score:0, answered:false};
+      renderGroupQuestion();
+    }
+
+    function renderGroupQuestion() {
+      const area = document.getElementById('game-area');
+      if (round.index >= round.questions.length) {
+        renderFinish(round.score, round.questions.length, 'Torna-hi per practicar una combinació nova.', () => startGroupGame());
+        return;
+      }
+      const verb = round.questions[round.index];
+      const wrongGroups = sample(Object.keys(GROUPS).filter(g => g !== verb.g), 3);
+      const options = shuffle([verb.g, ...wrongGroups]);
+      round.answered = false;
+      setPlayHeader('group', `${round.score} / ${round.index}`);
+      area.innerHTML = `
+        <div class="question-label">Pregunta ${round.index + 1} de ${round.questions.length}</div>
+        <div class="question-word">${verb.v1} → ${verb.v2}</div>
+        <div class="option-grid" id="group-options"></div>
+        <div id="feedback" class="hidden"></div>
+        <div class="next-row"><button id="next-button" class="primary-button hidden" type="button">Següent <i data-lucide="arrow-right" aria-hidden="true"></i></button></div>`;
+      const root = document.getElementById('group-options');
+      options.forEach(key => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-button';
+        btn.textContent = GROUPS[key].label;
+        btn.addEventListener('click', () => answerGroup(key, verb, btn));
+        root.appendChild(btn);
+      });
+      document.getElementById('next-button').addEventListener('click', () => { round.index++; renderGroupQuestion(); });
+      lucide.createIcons();
+    }
+
+    function answerGroup(choice, verb, clicked) {
+      if (round.answered) return;
+      round.answered = true;
+      const correct = choice === verb.g;
+      document.querySelectorAll('#group-options .option-button').forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent === GROUPS[verb.g].label) btn.classList.add('correct');
+      });
+      if (correct) {
+        round.score++;
+        setFeedback(`Correcte. <strong>${verb.v1} → ${verb.v2}</strong> forma part de <strong>${GROUPS[verb.g].label}</strong>.`, 'success');
+      } else {
+        clicked.classList.add('wrong');
+        setFeedback(`La resposta és <strong>${GROUPS[verb.g].label}</strong>. ${GROUPS[verb.g].clue}`, 'error');
+      }
+      setPlayHeader('group', `${round.score} / ${round.index + 1}`);
+      document.getElementById('next-button').classList.remove('hidden');
+    }
+
+    function startTypeGame() {
+      const questions = sample(getPool(), Math.min(10, getPool().length));
+      round = {questions, index:0, score:0, answered:false};
+      renderTypeQuestion();
+    }
+
+    function renderTypeQuestion() {
+      const area = document.getElementById('game-area');
+      if (round.index >= round.questions.length) {
+        renderFinish(round.score, round.questions.length, 'Escriure la forma obliga a recuperar-la sense pistes.', () => startTypeGame());
+        return;
+      }
+      const verb = round.questions[round.index];
+      round.answered = false;
+      setPlayHeader('type', `${round.score} / ${round.index}`);
+      area.innerHTML = `
+        <div class="question-label">Escriu el Past Simple (V2)</div>
+        <div class="question-word">${verb.v1}<small>${GROUPS[verb.g].label}</small></div>
+        <form id="type-form" class="answer-row">
+          <label class="hidden" for="type-answer">Past Simple de ${verb.v1}</label>
+          <input id="type-answer" class="answer-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Escriu V2...">
+          <button class="primary-button" type="submit">Comprova <i data-lucide="check" aria-hidden="true"></i></button>
+        </form>
+        <div id="feedback" class="hidden"></div>
+        <div class="next-row"><button id="next-button" class="primary-button hidden" type="button">Següent <i data-lucide="arrow-right" aria-hidden="true"></i></button></div>`;
+      document.getElementById('type-form').addEventListener('submit', e => { e.preventDefault(); answerType(verb); });
+      document.getElementById('next-button').addEventListener('click', () => { round.index++; renderTypeQuestion(); });
+      document.getElementById('type-answer').focus();
+      lucide.createIcons();
+    }
+
+    function answerType(verb) {
+      if (round.answered) return;
+      const input = document.getElementById('type-answer');
+      const value = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+      if (!value) return;
+      round.answered = true;
+      const accepted = (verb.accept || [verb.v2]).map(x => x.toLowerCase());
+      const correct = accepted.includes(value);
+      input.disabled = true;
+      if (correct) {
+        round.score++;
+        setFeedback(`Correcte: <strong>${verb.v1} → ${verb.v2}</strong>.${verb.note ? ` ${verb.note}` : ''}`, 'success');
+      } else {
+        setFeedback(`La forma correcta és <strong>${verb.v2}</strong>.${verb.note ? ` ${verb.note}` : ''}`, 'error');
+      }
+      setPlayHeader('type', `${round.score} / ${round.index + 1}`);
+      document.getElementById('next-button').classList.remove('hidden');
+      document.getElementById('next-button').focus();
+    }
+
+    function startMatchGame() {
+      const pool = getPool();
+      const chosen = sample(pool, Math.min(6, pool.length));
+      round = {chosen, selected:[], matched:new Set(), moves:0};
+      renderMatchBoard();
+    }
+
+    function renderMatchBoard() {
+      const area = document.getElementById('game-area');
+      const cards = shuffle(round.chosen.flatMap((verb, idx) => [
+        {id:`${idx}-v1`, pair:idx, type:'V1', text:verb.v1},
+        {id:`${idx}-v2`, pair:idx, type:'V2', text:verb.v2}
+      ]));
+      round.cards = cards;
+      setPlayHeader('match', `Moviments: ${round.moves}`);
+      area.innerHTML = `
+        <div class="question-label">Selecciona dues targetes que formin la mateixa parella</div>
+        <div id="match-grid" class="match-grid"></div>
+        <div id="feedback" class="feedback info">Relaciona Base Form (V1) amb Past Simple (V2).</div>`;
+      const root = document.getElementById('match-grid');
+      cards.forEach(card => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'match-card';
+        btn.dataset.id = card.id;
+        btn.innerHTML = `<small>${card.type}</small><span>${card.text}</span>`;
+        btn.addEventListener('click', () => selectMatch(card, btn));
+        root.appendChild(btn);
+      });
+    }
+
+    function selectMatch(card, btn) {
+      if (round.matched.has(card.pair) || round.selected.some(s => s.card.id === card.id) || round.selected.length >= 2) return;
+      btn.classList.add('selected');
+      round.selected.push({card, btn});
+      if (round.selected.length < 2) return;
+      round.moves++;
+      const [a, b] = round.selected;
+      const isPair = a.card.pair === b.card.pair && a.card.type !== b.card.type;
+      if (isPair) {
+        round.matched.add(a.card.pair);
+        a.btn.classList.remove('selected'); b.btn.classList.remove('selected');
+        a.btn.classList.add('matched'); b.btn.classList.add('matched');
+        a.btn.disabled = true; b.btn.disabled = true;
+        round.selected = [];
+        setFeedback('Parella correcta.', 'success');
+        setPlayHeader('match', `Moviments: ${round.moves}`);
+        if (round.matched.size === round.chosen.length) {
+          setTimeout(() => renderFinish(round.chosen.length, round.chosen.length, `Ho has resolt en ${round.moves} moviments.`, () => startMatchGame(), 'Completat'), 350);
+        }
+      } else {
+        setFeedback('Aquestes dues targetes no formen parella.', 'error');
+        setTimeout(() => {
+          a.btn.classList.remove('selected'); b.btn.classList.remove('selected');
+          round.selected = [];
+        }, 650);
+        setPlayHeader('match', `Moviments: ${round.moves}`);
+      }
+    }
+
+    function startIntruderGame() {
+      round = {index:0, score:0, total:8, answered:false};
+      renderIntruderQuestion();
+    }
+
+    function renderIntruderQuestion() {
+      const pool = getPool();
+      if (round.index >= round.total) {
+        renderFinish(round.score, round.total, 'L’intrús t’obliga a comparar cada parella amb cura.', () => startIntruderGame());
+        return;
+      }
+      const correctVerbs = sample(pool, Math.min(4, pool.length));
+      if (correctVerbs.length < 2) {
+        document.getElementById('game-area').innerHTML = `<div class="result-card"><h3>Calen més verbs</h3><p>Selecciona un grup amb més verbs o activa un altre patró.</p></div>`;
+        return;
+      }
+      while (correctVerbs.length < 4) correctVerbs.push(sample(pool, 1)[0]);
+      const wrongIndex = Math.floor(Math.random() * 4);
+      const source = correctVerbs[wrongIndex];
+      const alternatives = VERBS.filter(v => v.v2 !== source.v2 && v.v1 !== source.v1);
+      const wrongPast = sample(alternatives, 1)[0].v2;
+      const options = correctVerbs.map((v, i) => ({v1:v.v1, v2:i === wrongIndex ? wrongPast : v.v2, wrong:i === wrongIndex, correctV2:v.v2}));
+      round.answered = false;
+      round.current = options;
+      setPlayHeader('intruder', `${round.score} / ${round.index}`);
+      document.getElementById('game-area').innerHTML = `
+        <div class="question-label">Quina parella és incorrecta?</div>
+        <div class="option-grid" id="intruder-options"></div>
+        <div id="feedback" class="hidden"></div>
+        <div class="next-row"><button id="next-button" class="primary-button hidden" type="button">Següent <i data-lucide="arrow-right" aria-hidden="true"></i></button></div>`;
+      const root = document.getElementById('intruder-options');
+      options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-button';
+        btn.innerHTML = `<strong>${opt.v1}</strong> → ${opt.v2}`;
+        btn.addEventListener('click', () => answerIntruder(i, btn));
+        root.appendChild(btn);
+      });
+      document.getElementById('next-button').addEventListener('click', () => { round.index++; renderIntruderQuestion(); });
+      lucide.createIcons();
+    }
+
+    function answerIntruder(index, clicked) {
+      if (round.answered) return;
+      round.answered = true;
+      const chosen = round.current[index];
+      const wrong = round.current.find(x => x.wrong);
+      document.querySelectorAll('#intruder-options .option-button').forEach((btn, i) => {
+        btn.disabled = true;
+        if (round.current[i].wrong) btn.classList.add('correct');
+      });
+      if (chosen.wrong) {
+        round.score++;
+        setFeedback(`Correcte. <strong>${wrong.v1} → ${wrong.v2}</strong> és l’intrús. La forma correcta és <strong>${wrong.correctV2}</strong>.`, 'success');
+      } else {
+        clicked.classList.add('wrong');
+        setFeedback(`L’intrús era <strong>${wrong.v1} → ${wrong.v2}</strong>. Hauria de ser <strong>${wrong.v1} → ${wrong.correctV2}</strong>.`, 'error');
+      }
+      setPlayHeader('intruder', `${round.score} / ${round.index + 1}`);
+      document.getElementById('next-button').classList.remove('hidden');
+    }
+
+    function startSpeedGame() {
+      round = {score:0, attempts:0, seconds:60, active:false, current:null};
+      setPlayHeader('speed', 'Punts: 0');
+      document.getElementById('game-area').innerHTML = `
+        <div class="result-card">
+          <i data-lucide="timer" aria-hidden="true" style="width:34px;height:34px;color:var(--portal-brand-700)"></i>
+          <h3 style="margin:.7rem 0 .35rem">60 segons</h3>
+          <p>Tria el Past Simple correcte. El temps comença quan premis el botó.</p>
+          <button class="primary-button" type="button" onclick="beginSpeedRound()"><i data-lucide="play" aria-hidden="true"></i> Comença</button>
+        </div>`;
+      lucide.createIcons();
+    }
+
+    function beginSpeedRound() {
+      round.active = true;
+      round.seconds = 60;
+      renderSpeedQuestion();
+      speedTimer = setInterval(() => {
+        round.seconds--;
+        const timer = document.getElementById('speed-seconds');
+        if (timer) timer.textContent = round.seconds;
+        if (round.seconds <= 0) finishSpeedGame();
+      }, 1000);
+    }
+
+    function renderSpeedQuestion() {
+      if (!round.active) return;
+      const pool = getPool();
+      const verb = sample(pool, 1)[0];
+      const distractors = sample([...new Set(VERBS.filter(v => v.v1 !== verb.v1).map(v => v.v2).filter(v2 => v2 !== verb.v2))], 3);
+      const options = shuffle([verb.v2, ...distractors]);
+      round.current = verb;
+      setPlayHeader('speed', `Punts: ${round.score}`);
+      document.getElementById('game-area').innerHTML = `
+        <div class="speed-layout">
+          <div>
+            <div class="question-label">Quin és el Past Simple?</div>
+            <div class="question-word">${verb.v1}</div>
+            <div class="option-grid" id="speed-options"></div>
+          </div>
+          <div class="timer-box"><span>Temps</span><strong id="speed-seconds">${round.seconds}</strong></div>
+        </div>`;
+      const root = document.getElementById('speed-options');
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-button';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => answerSpeed(opt));
+        root.appendChild(btn);
+      });
+    }
+
+    function answerSpeed(choice) {
+      if (!round.active) return;
+      round.attempts++;
+      if (choice === round.current.v2) round.score++;
+      renderSpeedQuestion();
+    }
+
+    function finishSpeedGame() {
+      stopSpeedTimer();
+      round.active = false;
+      const accuracy = round.attempts ? Math.round((round.score / round.attempts) * 100) : 0;
+      setPlayHeader('speed', `Punts: ${round.score}`);
+      document.getElementById('game-area').innerHTML = `
+        <div class="result-card">
+          <div class="question-label">Temps!</div>
+          <div class="big-score">${round.score}</div>
+          <h3>respostes correctes</h3>
+          <p>Precisió: ${accuracy}% (${round.score} de ${round.attempts})</p>
+          <button class="primary-button" type="button" onclick="startSpeedGame()"><i data-lucide="rotate-cw" aria-hidden="true"></i> Torna-hi</button>
+        </div>`;
+      lucide.createIcons();
+    }
+
+    function renderFinish(score, total, note, restart, label = null) {
+      const pct = total ? Math.round((score / total) * 100) : 0;
+      document.getElementById('score-badge').textContent = label || `${score} / ${total}`;
+      document.getElementById('game-area').innerHTML = `
+        <div class="result-card">
+          <div class="question-label">Ronda completada</div>
+          <div class="big-score">${pct}%</div>
+          <h3>${score} de ${total} correctes</h3>
+          <p>${note}</p>
+          <button id="restart-game" class="primary-button" type="button"><i data-lucide="rotate-cw" aria-hidden="true"></i> Torna-hi</button>
+        </div>`;
+      document.getElementById('restart-game').addEventListener('click', restart);
+      lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderFilters();
+      renderPatterns();
+      setActiveLauncher('group');
+      startGroupGame();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
